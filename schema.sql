@@ -6,10 +6,11 @@
 CREATE TABLE runs (
     run_id serial PRIMARY KEY NOT NULL,
     git_sha1 character(40) NOT NULL,
+    git_describe text, -- will be null until first tag is made on repo
     run_began timestamp with time zone NOT NULL,
-    run_ended timestamp with time zone NOT NULL,
-    git_describe text NOT NULL,
-    automated boolean DEFAULT false NOT NULL
+    run_ended timestamp with time zone, -- will be null until run completes
+    automated boolean DEFAULT false NOT NULL,
+    notes text -- may be null    
 );
 COMMENT ON TABLE runs IS 'information about individual runs of the profiler, which are usually triggered by git commits via the continuous integration server';
 COMMENT ON COLUMN runs.automated IS 'indicates whether the run was automatically started by the continuous integration server';
