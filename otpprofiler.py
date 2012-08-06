@@ -41,10 +41,10 @@ cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, aut
 run_id = cur.fetchone()[0]
 print "run id", run_id
 
-"""Convenience method to insert all key-value pairs from a Python dictionary into a table
-interpreting the dictionary keys as column names. Can optionally return a column from the
-inserted row. This is useful for getting the automatically generated serial ID of the new row."""
 def insert (cursor, table, d, returning=None) :
+    """Convenience method to insert all key-value pairs from a Python dictionary into a table
+    interpreting the dictionary keys as column names. Can optionally return a column from the
+    inserted row. This is useful for getting the automatically generated serial ID of the new row."""
     # keys and values are guaranteed to be in the same order by python
     colnames = ','.join(d.keys())
     placeholders = ','.join(['%s' for _ in d.values()])
