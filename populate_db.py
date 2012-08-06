@@ -21,11 +21,11 @@ arriveBys = (True, False)
 params = list(itertools.product(times, walks, modes, mins, arriveBys))
 
 cur = conn.cursor()
-cur.executemany("INSERT INTO requests (time, maxWalkDistance, modes, min, arriveBy) VALUES (%s, %s, %s, %s, %s)", params)
-conn.commit()
+# NOTE the use of double quotes to force case-sensitivity for column names. These columns represent 
+# query parameters that will be substituted directly into URLs, and URLs are defined to be case-sensitive.  
+cur.executemany('INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy") VALUES (%s, %s, %s, %s, %s)', params)
 
 # Initialize the otpprofiler DB with random endpoints and user-defined endpoints
-
 import csv
 cur = conn.cursor()
 for filename in ["endpoints_random.csv"] : #, "endpoints.csv"] :
@@ -34,5 +34,7 @@ for filename in ["endpoints_random.csv"] : #, "endpoints.csv"] :
     sql = "INSERT INTO endpoints (random, lon, lat, name, notes) VALUES (true, %(lon)s, %(lat)s, 'rand'||%(n)s, %(name)s )"
     for line in reader :
         cur.execute(sql, line)
+
+# Commit the transaction
 conn.commit()
 

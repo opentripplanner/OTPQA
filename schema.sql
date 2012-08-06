@@ -6,7 +6,7 @@
 CREATE TABLE runs (
     run_id serial PRIMARY KEY NOT NULL,
     git_sha1 character(40) NOT NULL,
-    git_describe text, -- will be null until first tag is made on repo
+    git_describe text, -- will be null for runs before the first tag is made on the repo
     run_began timestamp with time zone NOT NULL,
     run_ended timestamp with time zone, -- will be null until run completes
     automated boolean DEFAULT false NOT NULL,
@@ -34,13 +34,16 @@ COMMENT ON COLUMN endpoints.notes IS 'optional additional information about this
 
 -- Table: requests
 CREATE TABLE requests (
+    -- NOTE the use of double quotes to force case-sensitivity for column names. 
+    -- These columns represent query parameters that will be substituted directly into URLs,
+    -- and URLs are defined to be case-sensitive.  
     request_id serial PRIMARY KEY NOT NULL,
     time time without time zone NOT NULL,
-    maxWalkDistance integer NOT NULL,
-    modes text NOT NULL,
+    "maxWalkDistance" integer NOT NULL,
+    mode text NOT NULL,
     min text NOT NULL,
-    arriveBy boolean NOT NULL,
-    UNIQUE (time, maxWalkDistance, modes, min, arriveBy)
+    "arriveBy" boolean NOT NULL,
+    UNIQUE (time, "maxWalkDistance", mode, min, "arriveBy")
 );
 COMMENT ON TABLE requests IS 'query parameters used to reproducibly build requests for all origin and destination points';
 
