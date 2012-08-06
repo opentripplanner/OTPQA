@@ -6,7 +6,8 @@ import subprocess, urllib
 
 DATE = '08/14/2012'
 URL = "http://localhost:8080/opentripplanner-api-webapp/ws/plan?"
-
+SHOW_PARAMS = True
+SHOW_URL = False
 # depends on peer authentication
 try:
     conn = psycopg2.connect("dbname='otpprofiler'")
@@ -14,11 +15,6 @@ try:
 except:
     print "unable to connect to the database"
     exit(-1)
-
-## fetch endpoint rows as dictionary
-#cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#cur.execute("SELECT * FROM endpoints")
-#endpoints = cur.fetchall();
 
 def getGitInfo(directory=None):
     """Get information about the git repository in the current (or specified) directory.
@@ -50,7 +46,6 @@ def insert (cursor, table, d, returning=None) :
     colnames = ','.join(d.keys())
     placeholders = ','.join(['%s' for _ in d.values()])
     sql = "INSERT INTO %s (%s) VALUES (%s)" % (table, colnames, placeholders) 
-    print sql
     if returning != None :
         sql += " RETURNING %s" % (returning)
     cursor.execute(sql, d.values())
@@ -58,14 +53,15 @@ def insert (cursor, table, d, returning=None) :
         result = cursor.fetchone()
         return result[0]
     
-# TODO: concat lat and lon into proper format for URL
+# note double quotes in SQL string to force case-sensitivity
 PARAMS_SQL = """ SELECT requests.*,
     origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
     targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
     FROM requests, endpoints AS origins, endpoints AS targets; """
 params_cur = conn.cursor('params_cur', cursor_factory=psycopg2.extras.DictCursor)
+# here we should be applying a WHERE clause based on some command line parameters to allow shorter runs
 params_cur.execute(PARAMS_SQL)
-for params in params_cur : # fetchall takes a while...
+for params in params_cur : # fetchall takes time and mem, use a server-side named cursor
     params = dict(params) # could also use a RealDictCursor
     request_id = params.pop('request_id')
     oid = params.pop('oid')
@@ -75,16 +71,18 @@ for params in params_cur : # fetchall takes a while...
     params['date'] = DATE
     # Tomcat server + spaces in URLs -> HTTP 505 confusion
     url = URL + urllib.urlencode(params)
-    print url
-    print params
+    if SHOW_PARAMS :
+        print params
+    if SHOW_URL :
+        print url
     req = urllib2.Request(url)
     req.add_header('Accept', 'application/json')
     start_time = time.time()
     response = urllib2.urlopen(req)
     end_time = time.time()
     elapsed = end_time - start_time
-    print response.code
     if response.code != 200 :
+        print "not 200"
         continue
     try :
         content = response.read()
@@ -93,6 +91,7 @@ for params in params_cur : # fetchall takes a while...
     except :
         print 'no itineraries'
         continue
+    print len(itineraries), 'itineraries'
     row = { 'run_id' : run_id,
             'request_id' : request_id,
             'origin_id' : oid,
@@ -111,7 +110,7 @@ for params in params_cur : # fetchall takes a while...
                 'ride_time_sec' : 0,
                 'start_time' : "2012-01-01 8:00",
                 'duration' : '%d sec' % 0 }
-        insert (cur, 'itineraries', row) # no return (key) value needed
+        insert (cur, 'itineraries', row) # no return (automatic serial key) value needed
 
 # Commit in one giant transaction
 conn.commit()
