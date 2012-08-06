@@ -44,7 +44,8 @@ print "run id", run_id
 def insert (cursor, table, d, returning=None) :
     """Convenience method to insert all key-value pairs from a Python dictionary into a table
     interpreting the dictionary keys as column names. Can optionally return a column from the
-    inserted row. This is useful for getting the automatically generated serial ID of the new row."""
+    inserted row. This is useful for getting the automatically generated serial ID of the new row.
+    """
     # keys and values are guaranteed to be in the same order by python
     colnames = ','.join(d.keys())
     placeholders = ','.join(['%s' for _ in d.values()])
@@ -99,9 +100,8 @@ for params in params_cur : # fetchall takes a while...
             'response_time' : str(elapsed) + 'sec',
             'membytes' : 0 }
     result_id = insert (cur, 'results', row, returning='result_id') 
-    itinerary_number = 0
-    for itinerary in itineraries :
-        itinerary_number += 1
+    # Create a row for each itinerary within this single trip planner result
+    for (itinerary_number, itinerary) in enumerate(itineraries) :
         row = { 'result_id' : result_id,
                 'itinerary_number' : itinerary_number,
                 'n_legs' : 0,
@@ -112,6 +112,8 @@ for params in params_cur : # fetchall takes a while...
                 'start_time' : "2012-01-01 8:00",
                 'duration' : '%d sec' % 0 }
         insert (cur, 'itineraries', row) # no return (key) value needed
+
+# Commit in one giant transaction
 conn.commit()
 
 
