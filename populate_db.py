@@ -12,8 +12,8 @@ except:
     
 # Initialize the otpprofiler DB 'requests' table with query parameters
 # FIXME: this is creating requests for varying walk distances with walk and bike modes, which are meaningless    
-times = ["%02d:%02d:00" % (h, m) for h in range(5, 24, 2) for m in range(0, 60, 30)]
-walks = [500, 1000, 2000, 3000, 5000, 10000, 2000000]
+times = ["%02d:%02d:00" % (h, m) for h in [7, 9, 14, 23] for m in [55, 25]]
+walks = [250, 2000, 40000]
 modes = ["WALK,TRANSIT", "BICYCLE,TRANSIT", "WALK", "BICYCLE"]
 mins = ["QUICK"]
 arriveBys = (True, False)
