@@ -48,33 +48,37 @@ CREATE TABLE requests (
 COMMENT ON TABLE requests IS 'query parameters used to reproducibly build requests for all origin and destination points';
 
 
--- Table: results
-CREATE TABLE results (
-    result_id serial PRIMARY KEY NOT NULL,
+-- Table: responses
+CREATE TABLE responses (
+    -- replace surrogate key with composite key?
+    response_id serial PRIMARY KEY NOT NULL,
     run_id integer NOT NULL REFERENCES runs,
     request_id integer NOT NULL REFERENCES requests,
     origin_id integer NOT NULL REFERENCES endpoints (endpoint_id),
     target_id integer NOT NULL REFERENCES endpoints (endpoint_id),
-    UNIQUE (run_id, request_id, origin_id, target_id),
+    UNIQUE (run_id, response_id, origin_id, target_id),
     response_time interval NOT NULL, 
     membytes integer NOT NULL
 );
-COMMENT ON TABLE results IS 'summary information about the responses received from the trip planning API during profiling';
+COMMENT ON TABLE responses IS 'summary information about the responses received from the trip planning API during profiling';
 
 
 -- Table: itineraries
 CREATE TABLE itineraries (
-    result_id integer NOT NULL REFERENCES results,
+    response_id integer NOT NULL REFERENCES responses,
     itinerary_number smallint NOT NULL,
-    PRIMARY KEY (result_id, itinerary_number),
-    -- we could go yet another level and add a legs table, but let's forgo that for now.
+    PRIMARY KEY (response_id, itinerary_number),
+    start_time timestamp with time zone NOT NULL,
+    duration interval NOT NULL,
     n_legs smallint,
     n_vehicles smallint,
     walk_distance integer,
-    wait_time_sec integer,
-    ride_time_sec integer,
-    start_time timestamp with time zone,
-    duration interval
+    wait_time_sec smallint,
+    ride_time_sec smallint,
+    -- we could add a legs table or a composite type, but let's forgo that and use arrays for now.
+    routes text[],
+    trips text[],
+    waits integer[]
 );
 COMMENT ON TABLE itineraries IS 'information about the individual itineraries that make up a trip planner response';
 

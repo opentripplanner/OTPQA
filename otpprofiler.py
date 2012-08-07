@@ -7,14 +7,7 @@ import subprocess, urllib
 DATE = '08/14/2012'
 URL = "http://localhost:8080/opentripplanner-api-webapp/ws/plan?"
 SHOW_PARAMS = True
-SHOW_URL = False
-# depends on peer authentication
-try:
-    conn = psycopg2.connect("dbname='otpprofiler'")
-    cur = conn.cursor()
-except:
-    print "unable to connect to the database"
-    exit(-1)
+SHOW_URL = True
 
 def getGitInfo(directory=None):
     """Get information about the git repository in the current (or specified) directory.
@@ -32,11 +25,6 @@ def getGitInfo(directory=None):
         version = None
     return (sha1, version)
     
-cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated)"
-            "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", getGitInfo())
-run_id = cur.fetchone()[0]
-print "run id", run_id
-
 def insert (cursor, table, d, returning=None) :
     """Convenience method to insert all key-value pairs from a Python dictionary into a table
     interpreting the dictionary keys as column names. Can optionally return a column from the
@@ -53,15 +41,60 @@ def insert (cursor, table, d, returning=None) :
         result = cursor.fetchone()
         return result[0]
     
+def sqlarray (list):
+    return '{%s}' % (','.join(list))
+
+def summarize (itinerary) :
+    routes = []
+    trips = []
+    waits = []
+    n_vehicles = 0
+    n_legs = 0
+    for leg in itinerary['legs'] :
+        n_legs += 1
+        if 'route' in leg and len(leg['route']) > 0 :
+            routes.append(leg['route'])
+            n_vehicles += 1
+        #trips.append(leg['trip'])
+        #waits.append(leg['wait'])
+    ret = { 
+        'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)),
+        'duration' : '%d msec' % int(itinerary['duration']),
+        'n_legs' : n_legs,
+        'n_vehicles' : n_vehicles,
+        'walk_distance' : itinerary['walkDistance'],
+        'wait_time_sec' : itinerary['waitingTime'],
+        'ride_time_sec' : itinerary['transitTime'],
+        'routes' : sqlarray(routes),
+        'trips' : sqlarray(trips),
+        'waits' : sqlarray(waits) }
+    return ret
+    
+# depends on peer authentication
+try:
+    # create separate connection for reading, to allow use of both a server-side cursor
+    # and progressive commits
+    read_conn = psycopg2.connect("dbname='otpprofiler'")
+    read_cur = read_conn.cursor('read_cur', cursor_factory=psycopg2.extras.DictCursor)
+    write_conn = psycopg2.connect("dbname='otpprofiler'")
+    write_cur = write_conn.cursor()
+except:
+    print "unable to connect to the database"
+    exit(-1)
+
+write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated)"
+            "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", getGitInfo())
+run_id = write_cur.fetchone()[0]
+print "run id", run_id
+
 # note double quotes in SQL string to force case-sensitivity
 PARAMS_SQL = """ SELECT requests.*,
     origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
     targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
     FROM requests, endpoints AS origins, endpoints AS targets; """
-params_cur = conn.cursor('params_cur', cursor_factory=psycopg2.extras.DictCursor)
 # here we should be applying a WHERE clause based on some command line parameters to allow shorter runs
-params_cur.execute(PARAMS_SQL)
-for params in params_cur : # fetchall takes time and mem, use a server-side named cursor
+read_cur.execute(PARAMS_SQL)
+for params in read_cur : # fetchall takes time and mem, use a server-side named cursor
     params = dict(params) # could also use a RealDictCursor
     request_id = params.pop('request_id')
     oid = params.pop('oid')
@@ -98,22 +131,13 @@ for params in params_cur : # fetchall takes time and mem, use a server-side name
             'target_id' : tid,
             'response_time' : str(elapsed) + 'sec',
             'membytes' : 0 }
-    result_id = insert (cur, 'results', row, returning='result_id') 
+    response_id = insert (write_cur, 'responses', row, returning='response_id') 
     # Create a row for each itinerary within this single trip planner result
     for (itinerary_number, itinerary) in enumerate(itineraries) :
-        row = { 'result_id' : result_id,
-                'itinerary_number' : itinerary_number,
-                'n_legs' : 0,
-                'n_vehicles' : 0,
-                'walk_distance' : 0,
-                'wait_time_sec' : 0,
-                'ride_time_sec' : 0,
-                'start_time' : "2012-01-01 8:00",
-                'duration' : '%d sec' % 0 }
-        insert (cur, 'itineraries', row) # no return (automatic serial key) value needed
-
-# Commit in one giant transaction
-conn.commit()
-
+        row = summarize (itinerary)
+        row['response_id'] = response_id
+        row['itinerary_number'] = itinerary_number
+        insert (write_cur, 'itineraries', row) # no return (automatic serial key) value needed
+    write_conn.commit()
 
 
