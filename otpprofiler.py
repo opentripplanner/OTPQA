@@ -95,12 +95,22 @@ def run() :
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
 
-    # note double quotes in SQL string to force case-sensitivity
+    # note double quotes in SQL string to force case-sensitivity on query param columns.
+    # origin/destination matrix is constrained to be lower-triangular since we do both 
+    # depart-after and arrive-by searches. this halves the number of searches.
+    # the set of all combinations is filtered such that only the 'typical' requests (i.e. tuples of
+    # query parameters) are combined with the (more numerous) random endpoints, but all reqests are 
+    # combined with the (presumably less numerous) explicitly defined endpoints.
+    # that is, in every combination retained, the request is either considered typical, or in the
+    # case that the request is atypical, the endpoints are not random. 
+    # only like pairs of endpoints are considered (random to random, nonrandom to nonrandom).
     PARAMS_SQL = """ SELECT requests.*,
         origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
         targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
-        FROM requests, endpoints AS origins, endpoints AS targets; """
-    # here we should be applying a WHERE clause based on some command line parameters to allow shorter runs
+        FROM requests, endpoints AS origins, endpoints AS targets
+        WHERE oid < tid AND 
+              origins.random = destinations.random AND 
+              (requests.typical IS TRUE OR origins.random IS FALSE); """
     read_cur.execute(PARAMS_SQL)
     for params in read_cur : # fetchall takes time and mem, use a server-side named cursor
         params = dict(params) # could also use a RealDictCursor
