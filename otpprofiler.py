@@ -2,15 +2,15 @@
 
 import psycopg2, psycopg2.extras
 import urllib2, time, itertools, json
-import subprocess, urllib
+import subprocess, urllib, random
 
 DATE = '08/14/2012'
 # split out base and specific endpoint
 URL_BASE = "http://localhost:8080/opentripplanner-api-webapp/ws/"
 URL_PLAN = URL_BASE + 'plan?'
 URL_META = URL_BASE + 'metadata'
-SHOW_PARAMS = True
-SHOW_URL = True
+SHOW_PARAMS = False
+SHOW_URL = False
 
 
 def getGitInfo(directory=None):
@@ -24,9 +24,8 @@ def getGitInfo(directory=None):
             os.chdir(directory)
             sha1 = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
             version = subprocess.check_output(['git', 'describe', 'HEAD'])
-        except:
+        except :
             print "Error reading git info from directory", directory
-            print e
             return None
     else :
         try :
@@ -40,9 +39,8 @@ def getGitInfo(directory=None):
             objs = json.loads(content)['serverVersion']
             version = objs['version']
             sha1 = objs['commit']
-        except e : 
+        except : 
             print "Error requesting metadata from server. Is it running?"
-            print e
             return None
     print "sha1 of commit is:", sha1
     print "version of OTP is:", version
@@ -116,6 +114,7 @@ def run() :
         exit(-2)
     write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated)"
                 "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", gitInfo)
+    write_conn.commit() # commit to make sure now() is evaluated before run starts                
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
 
@@ -136,7 +135,16 @@ def run() :
               origins.random = targets.random AND 
               (requests.typical IS TRUE OR origins.random IS FALSE); """
     read_cur.execute(PARAMS_SQL)
-    for params in read_cur : # fetchall takes time and mem, use a server-side named cursor
+    all_params = read_cur.fetchall()
+    random.shuffle(all_params)
+    n = 0
+    N = len(all_params)
+    t0 = time.time()
+    for params in all_params : # fetchall takes time and mem, use a server-side named cursor
+        n += 1
+        t = (time.time() - t0) / 60.0
+        T = (N * t) / n
+        print "Request %d/%d, time %0.2f min of %0.2f (estimated) " % (n, N, t, T)
         params = dict(params) # could also use a RealDictCursor
         request_id = params.pop('request_id')
         oid = params.pop('oid')
@@ -157,33 +165,46 @@ def run() :
         response = urllib2.urlopen(req)
         end_time = time.time()
         elapsed = end_time - start_time
+        n_itin = 0
         if response.code != 200 :
             print "not 200"
-            continue
-        try :
-            content = response.read()
-            objs = json.loads(content)
-            itineraries = objs['plan']['itineraries']
-        except :
-            print 'no itineraries'
-            continue
-        print len(itineraries), 'itineraries'
+            status = 'failed'
+        else :
+            try :
+                content = response.read()
+                objs = json.loads(content)
+                itineraries = objs['plan']['itineraries']
+                n_itin = len(itineraries)
+                print n_itin, 'itineraries'
+                # check response for timeout flag
+                status = 'complete'
+                # status = 'timed out'
+            except :
+                print 'no itineraries'
+                status = 'no paths'
+                
         row = { 'run_id' : run_id,
                 'request_id' : request_id,
                 'origin_id' : oid,
                 'target_id' : tid,
-                'response_time' : str(elapsed) + 'sec',
-                'membytes' : 0 }
+                'total_time' : str(elapsed) + ' seconds',
+                'avg_time' : None if n_itin == 0 else '%f seconds' % (float(elapsed) / n_itin),
+                'status' : status,
+                'membytes' : None }
         response_id = insert (write_cur, 'responses', row, returning='response_id') 
+        
         # Create a row for each itinerary within this single trip planner result
-        for (itinerary_number, itinerary) in enumerate(itineraries) :
-            row = summarize (itinerary)
-            row['response_id'] = response_id
-            row['itinerary_number'] = itinerary_number
-            insert (write_cur, 'itineraries', row) # no return (automatic serial key) value needed
+        if (n_itin > 0) :
+            for (itinerary_number, itinerary) in enumerate(itineraries) :
+                row = summarize (itinerary)
+                row['response_id'] = response_id
+                row['itinerary_number'] = itinerary_number + 1
+                insert (write_cur, 'itineraries', row) # no return (automatic serial key) value needed
         write_conn.commit()
-
-
+    
+    write_cur.execute( "UPDATE runs SET run_ended=now() WHERE run_id=%s", (run_id,) )
+    write_conn.commit()
+    
 if __name__=="__main__":
     # parse args
     run()

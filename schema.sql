@@ -51,6 +51,7 @@ COMMENT ON TABLE requests IS 'query parameters used to reproducibly build reques
 
 
 -- Table: responses
+CREATE TYPE response_status AS ENUM ('complete', 'timed out', 'failed', 'no paths');
 CREATE TABLE responses (
     -- replace surrogate key with composite key?
     response_id serial PRIMARY KEY NOT NULL,
@@ -59,8 +60,10 @@ CREATE TABLE responses (
     origin_id integer NOT NULL REFERENCES endpoints (endpoint_id),
     target_id integer NOT NULL REFERENCES endpoints (endpoint_id),
     UNIQUE (run_id, response_id, origin_id, target_id),
-    response_time interval NOT NULL, 
-    membytes integer NOT NULL
+    status response_status NOT NULL,
+    total_time interval NOT NULL, 
+    avg_time interval, -- per itinerary, redundant but useful. NULL when there are 0 itineraries
+    membytes integer
 );
 COMMENT ON TABLE responses IS 'summary information about the responses received from the trip planning API during profiling';
 
@@ -75,8 +78,8 @@ CREATE TABLE itineraries (
     n_legs smallint,
     n_vehicles smallint,
     walk_distance integer,
-    wait_time_sec smallint,
-    ride_time_sec smallint,
+    wait_time_sec integer,
+    ride_time_sec integer,
     -- we could add a legs table or a composite type, but let's forgo that and use arrays for now.
     routes text[],
     trips text[],

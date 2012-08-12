@@ -13,25 +13,36 @@ except:
 # Initialize the otpprofiler DB 'requests' table with query parameters.
 # Note that on-street modes are not walk-limited, so we don't want to vary the max walk param there.
 # another way to do this would be to store the various values in tables, and construct this
-# view as a constrained product of all the other tables (probably eliminating the synthetic keys)
-times = ["%02d:%02d:00" % (h, m) for h in [7, 9, 14, 23] for m in [55, 25]]
-walk_limited_modes = ( ["WALK,TRANSIT", "BICYCLE,TRANSIT"], [250, 2000, 40000] )
-non_walk_limited_modes = ( ["WALK", "BICYCLE"], [2000] )
-mins = ["QUICK"]
-arriveBys = (True, False)
+# view as a constrained product of all the other tables (probably eliminating the synthetic keys).
+
+# (time, arriveBy)
+times = [ ("08:50:00", True ),
+          ("14:00:00", True ),
+          ("18:00:00", False),
+          ("23:45:00", False) ]
+
+# (mode, walk, min)
+modes = [ (mode, walk, "QUICK") 
+    for mode in ["WALK,TRANSIT", "BICYCLE,TRANSIT"] 
+    for walk in [250, 2000, 40000] ]
+modes.append( ("WALK", 2000, "QUICK") )
+modes.extend( [("BICYCLE", 2000, minimize) for minimize in ["QUICK", "SAFE", "FLAT"]] )
+
+all_params = [(time, walk, mode, minimize, arriveBy) 
+    for (time, arriveBy) in times 
+    for (mode, walk, minimize) in modes] 
 
 cur = conn.cursor()
-for modes, walks in (walk_limited_modes, non_walk_limited_modes) :
-    params = itertools.product(times, walks, modes, mins, arriveBys)
+for params in all_params :
     # NOTE the use of double quotes to force case-sensitivity for column names. These columns 
     # represent query parameters that will be substituted directly into URLs, and URLs are defined 
     # to be case-sensitive.  
-    cur.executemany("""INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy", typical) 
+    cur.execute("""INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy", typical) 
         VALUES (%s, %s, %s, %s, %s, FALSE)""", params)
 
 # designate 'typical' parameter combinations
-cur.execute("""UPDATE requests SET typical=TRUE WHERE time='07:55:00' 
-    AND "maxWalkDistance"='2000' AND mode != 'BICYCLE,TRANSIT' AND "arriveBy" IS FALSE""")
+cur.execute("""UPDATE requests SET typical=TRUE WHERE time='08:50:00' 
+    AND "maxWalkDistance"='2000' AND mode NOT LIKE '%BICYCLE%'""")
 
 # Commit the transaction
 conn.commit()
