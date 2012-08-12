@@ -13,7 +13,7 @@ except:
 # Initialize the otpprofiler DB 'requests' table with query parameters.
 # Note that on-street modes are not walk-limited, so we don't want to vary the max walk param there.
 # another way to do this would be to store the various values in tables, and construct this
-# view as a constraned product of all the other tables (probably eliminating the synthetic keys)
+# view as a constrained product of all the other tables (probably eliminating the synthetic keys)
 times = ["%02d:%02d:00" % (h, m) for h in [7, 9, 14, 23] for m in [55, 25]]
 walk_limited_modes = ( ["WALK,TRANSIT", "BICYCLE,TRANSIT"], [250, 2000, 40000] )
 non_walk_limited_modes = ( ["WALK", "BICYCLE"], [2000] )

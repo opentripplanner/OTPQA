@@ -6,29 +6,48 @@ import subprocess, urllib
 
 DATE = '08/14/2012'
 # split out base and specific endpoint
-URL = "http://localhost:8080/opentripplanner-api-webapp/ws/plan?"
+URL_BASE = "http://localhost:8080/opentripplanner-api-webapp/ws/"
+URL_PLAN = URL_BASE + 'plan?'
+URL_META = URL_BASE + 'metadata'
 SHOW_PARAMS = True
 SHOW_URL = True
 
 
 def getGitInfo(directory=None):
-    """Get information about the git repository in the current (or specified) directory.
-    Returns a tuple of (sha1, version) where sha1 is the hash of the HEAD commit, and version
-    is the output of 'git describe', which includes the last tag and how many commits have been made
-    on top of that tag.
+    """Get information about the git repository in specified directory, or of an OTP server if
+    no directory is specified. Returns a tuple of (sha1, version) where sha1 is the hash of the 
+    HEAD commit, and version is the output of 'git describe', which includes the last tag and how 
+    many commits have been made on top of that tag.
     """
     if directory != None :
-        os.chdir(directory)
-    sha1 = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
-    assert(len(sha1) == 40)
-    try:
-        version = subprocess.check_output(['git', 'describe', 'HEAD'])
-    except:
-        version = None
+        try:
+            os.chdir(directory)
+            sha1 = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
+            version = subprocess.check_output(['git', 'describe', 'HEAD'])
+        except:
+            print "Error reading git info from directory", directory
+            print e
+            return None
+    else :
+        try :
+            req = urllib2.Request(URL_META)
+            req.add_header('Accept', 'application/json')
+            response = urllib2.urlopen(req)
+            if response.code != 200 :
+                print "Server metadata response was not 200"
+                return None
+            content = response.read()
+            objs = json.loads(content)['serverVersion']
+            version = objs['version']
+            sha1 = objs['commit']
+        except e : 
+            print "Error requesting metadata from server. Is it running?"
+            print e
+            return None
+    print "sha1 of commit is:", sha1
+    print "version of OTP is:", version
     return (sha1, version)
-    # store version number subelements in separate fields, request from server not filesystem.
-    
-    
+                      
 def insert (cursor, table, d, returning=None) :
     """Convenience method to insert all key-value pairs from a Python dictionary into a table
     interpreting the dictionary keys as column names. Can optionally return a column from the
@@ -79,6 +98,7 @@ def summarize (itinerary) :
 
 def run() :
     # depends on peer authentication
+    # replace with sqlAlchemy?
     try:
         # create separate connection for reading, to allow use of both a server-side cursor
         # and progressive commits
@@ -87,11 +107,15 @@ def run() :
         write_conn = psycopg2.connect("dbname='otpprofiler'")
         write_cur = write_conn.cursor()
     except:
-        print "unable to connect to the database"
+        print "Unable to connect to the database. Exiting."
         exit(-1)
 
+    gitInfo = getGitInfo()
+    if gitInfo == None :
+        print "Failed to identify OTP version. Exiting."
+        exit(-2)
     write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated)"
-                "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", getGitInfo())
+                "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", gitInfo)
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
 
@@ -122,7 +146,7 @@ def run() :
         #    continue
         params['date'] = DATE
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
-        url = URL + urllib.urlencode(params)
+        url = URL_PLAN + urllib.urlencode(params)
         if SHOW_PARAMS :
             print params
         if SHOW_URL :
