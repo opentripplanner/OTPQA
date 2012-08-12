@@ -108,8 +108,8 @@ def run() :
         origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
         targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
         FROM requests, endpoints AS origins, endpoints AS targets
-        WHERE oid < tid AND 
-              origins.random = destinations.random AND 
+        WHERE origins.endpoint_id < targets.endpoint_id AND 
+              origins.random = targets.random AND 
               (requests.typical IS TRUE OR origins.random IS FALSE); """
     read_cur.execute(PARAMS_SQL)
     for params in read_cur : # fetchall takes time and mem, use a server-side named cursor
@@ -117,8 +117,9 @@ def run() :
         request_id = params.pop('request_id')
         oid = params.pop('oid')
         tid = params.pop('tid')
-        if oid == tid :
-            continue
+        # not necessary if OD properly constrained in SQL 
+        #if oid == tid :
+        #    continue
         params['date'] = DATE
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
         url = URL + urllib.urlencode(params)

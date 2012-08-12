@@ -4,9 +4,12 @@ sudo -u postgres dropdb otpprofiler
 echo Creating db...
 sudo -u postgres createdb -O abyrd otpprofiler
 echo Applying schema...
-psql -d otpprofiler -f ../OTPProfiler/schema.sql
+psql -d otpprofiler -f ./schema.sql
 echo Generating endpoints...
-java -cp ../OpenTripPlanner/opentripplanner-graph-builder/target/graph-builder.jar org.opentripplanner.graph_builder.GraphStats --graph /var/otp/graphs/arbor/Graph.obj -o endpoints_random.csv endpoints -n 60
+java -cp ../OpenTripPlanner/opentripplanner-graph-builder/target/graph-builder.jar \
+     org.opentripplanner.graph_builder.GraphStats \
+     --graph /var/otp/graphs/pdx/Graph.obj \
+     -o endpoints_random.csv endpoints -n 50 --radius 200 
 echo Populating request parameters and endpoints tables...
 python ./populate_db.py
 

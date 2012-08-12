@@ -10,6 +10,7 @@ CREATE TABLE runs (
     run_began timestamp with time zone NOT NULL,
     run_ended timestamp with time zone, -- will be null until run completes
     automated boolean DEFAULT false NOT NULL,
+    username text,
     notes text -- may be null    
 );
 COMMENT ON TABLE runs IS 'information about individual runs of the profiler, which are usually triggered by git commits via the continuous integration server';
@@ -43,6 +44,7 @@ CREATE TABLE requests (
     mode text NOT NULL,
     min text NOT NULL,
     "arriveBy" boolean NOT NULL,
+    typical boolean NOT NULL,
     UNIQUE (time, "maxWalkDistance", mode, min, "arriveBy")
 );
 COMMENT ON TABLE requests IS 'query parameters used to reproducibly build requests for all origin and destination points';
