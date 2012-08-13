@@ -6,6 +6,14 @@ from matplotlib.pyplot import figure, show
 from scipy.stats import gaussian_kde
 from numpy.random import normal
 from numpy import arange
+import math
+
+def log_support(low, high, n) :
+    ll = math.log(low)
+    lh = math.log(high)
+    lstep = (lh - ll) / n
+    ls = [ll + lstep * i for i in range(n)]
+    return [10**x for x in ls]
 
 def violin_plot(data, bp=False, scale=False, labels=None):
     '''
@@ -13,6 +21,7 @@ def violin_plot(data, bp=False, scale=False, labels=None):
     '''
     fig=figure()
     ax = fig.add_subplot(111)
+    ax.set_yscale('log')
     dist = len(data)
     w = min(0.15*max(dist,1.0),0.5)
     for p,d in enumerate(data):
@@ -20,6 +29,7 @@ def violin_plot(data, bp=False, scale=False, labels=None):
         m = k.dataset.min() #lower bound of violin
         M = k.dataset.max() #upper bound of violin
         x = arange(m,M,(M-m)/100.) # support for violin
+        x = log_support(m, M, 100)        
         v = k.evaluate(x) #violin profile (density curve)
         if scale :
             v = v/v.max()*w #scaling the violin to the available space

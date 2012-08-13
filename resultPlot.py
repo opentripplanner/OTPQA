@@ -25,5 +25,5 @@ for run_id in run_ids :
     times = [row[0].total_seconds() for row in cur] # convert datetime.timedelta to fractional seconds
     data.append(times)
 
-violin.violin_plot(data, bp=True, labels=labels)
+violin.violin_plot(data, bp=True, scale=True, labels=labels)
 
