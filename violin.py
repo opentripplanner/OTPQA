@@ -23,20 +23,20 @@ def violin_plot(data, bp=False, scale=False, labels=None):
     ax = fig.add_subplot(111)
     ax.set_yscale('log')
     dist = len(data)
-    w = min(0.15*max(dist,1.0),0.5)
+    w = min(0.15*max(dist,1.0), 0.5)
     for p,d in enumerate(data):
         k = gaussian_kde(d) #calculates the kernel density
         m = k.dataset.min() #lower bound of violin
         M = k.dataset.max() #upper bound of violin
-        x = arange(m,M,(M-m)/100.) # support for violin
+        x = arange(m, M, (M-m) / 100.) # support for violin
         x = log_support(m, M, 100)        
         v = k.evaluate(x) #violin profile (density curve)
         if scale :
-            v = v/v.max()*w #scaling the violin to the available space
-        ax.fill_betweenx(x,p,v+p,facecolor='y',alpha=0.3)
-        ax.fill_betweenx(x,p,-v+p,facecolor='y',alpha=0.3)
+            v = v / v.max() * w #scaling the violin to the available space
+        ax.fill_betweenx(x, p, v+p, facecolor='y', alpha=0.3)
+        ax.fill_betweenx(x, p, -v+p, facecolor='y', alpha=0.3)
     if bp:
-        ax.boxplot(data,notch=1,positions=range(len(data)),vert=1)
+        ax.boxplot(data, notch=1, positions=range(len(data)) ,vert=1)
     if labels != None :
         ax.set_xticklabels(labels)
     show()
