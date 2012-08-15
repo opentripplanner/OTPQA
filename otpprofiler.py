@@ -81,7 +81,7 @@ def summarize (itinerary) :
         #trips.append(leg['trip'])
         #waits.append(leg['wait'])
     ret = { 
-        'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)),
+        'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
         'duration' : '%d msec' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
