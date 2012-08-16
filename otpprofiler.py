@@ -3,6 +3,7 @@
 import psycopg2, psycopg2.extras
 import urllib2, time, itertools, json
 import subprocess, urllib, random
+from sys import argv
 
 DATE = '08/14/2012'
 # split out base and specific endpoint
@@ -81,7 +82,7 @@ def summarize (itinerary) :
         #trips.append(leg['trip'])
         #waits.append(leg['wait'])
     ret = { 
-        'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)),
+        'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
         'duration' : '%d msec' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
@@ -94,7 +95,7 @@ def summarize (itinerary) :
     return ret
     
 
-def run() :
+def run(note = '') :
     # depends on peer authentication
     # replace with sqlAlchemy?
     try:
@@ -112,8 +113,8 @@ def run() :
     if gitInfo == None :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
-    write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated)"
-                "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", gitInfo)
+    write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated, notes)"
+                "VALUES (%s, now(), NULL, %s, TRUE, %s) RETURNING run_id", (gitInfo[0], gitInfo[1], note))
     write_conn.commit() # commit to make sure now() is evaluated before run starts                
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
@@ -149,6 +150,7 @@ def run() :
         request_id = params.pop('request_id')
         oid = params.pop('oid')
         tid = params.pop('tid')
+        #params['reverseOptimizeOnTheFly'] = 'true'
         # not necessary if OD properly constrained in SQL 
         #if oid == tid :
         #    continue
@@ -207,6 +209,9 @@ def run() :
     
 if __name__=="__main__":
     # parse args
-    run()
+    if len(argv) > 1:
+        run(argv[1])
+    else:
+        run()
 
 
