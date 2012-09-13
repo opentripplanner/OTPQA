@@ -24,7 +24,7 @@ java -cp $CHECKOUT/opentripplanner-graph-builder/target/graph-builder.jar \
      /var/otp/graphs/pdx_baseline/graph-builder.xml
 
 #sudo cp git/OpenTripPlanner/opentripplanner-api-webapp/target/opentripplanner-api-webapp.war /var/lib/tomcat6/webapps/
-#sudo cp git/OpenTripPlanner/opentripplanner-api-webapp/target/opentripplanner-webapp.war /var/lib/tomcat6/webapps/
+#sudo cp git/OpenTripPlanner/opentripplanner-webapp/target/opentripplanner-webapp.war /var/lib/tomcat6/webapps/
 # restart will cause the webapps to be unpackaged and restarted
 #sudo service tomcat6 restart
 
