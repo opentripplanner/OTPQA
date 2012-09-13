@@ -219,7 +219,18 @@ if __name__=="__main__":
     parser.add_argument('-d', '--database', default='otpprofiler') 
     parser.add_argument('-n', '--notes') 
     args = parser.parse_args() 
+    # if no note is provided, use the CPU info from the machine running this script
+    if args.notes == None :
+        ncpu = 0
+        cpu = "unknown"
+        cpuinfo = open('/proc/cpuinfo', 'r')
+        for line in cpuinfo :
+            if 'model name' in line :
+                ncpu += 1
+                cpu = line.split(': ')[1].strip()
+    args.notes = '%s with %d logical cores' % (cpu, ncpu)
     print args 
+
     # args is a non-iterable, non-mapping Namespace (allowing usage as args.name), so convert it to a dict
     run(vars(args))
 
