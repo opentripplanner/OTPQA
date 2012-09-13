@@ -95,6 +95,8 @@ def summarize (itinerary) :
     
 
 def run(connect_args) :
+    notes = connect_args.pop('notes')
+
     # connection on local UNIX domain socket without password requires peer authentication
     # replace with sqlAlchemy?
     try:
@@ -113,8 +115,8 @@ def run(connect_args) :
     if gitInfo == None :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
-    write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated)"
-                "VALUES (%s, now(), NULL, %s, TRUE) RETURNING run_id", gitInfo)
+    write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated, notes)"
+                "VALUES (%s, now(), NULL, %s, TRUE, %s) RETURNING run_id", gitInfo + (notes,))
     write_conn.commit() # commit to make sure now() is evaluated before run starts                
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
@@ -215,6 +217,7 @@ if __name__=="__main__":
     parser.add_argument('-u', '--user', default='ubuntu') 
     parser.add_argument('-P', '--port', type=int, default='8000') 
     parser.add_argument('-d', '--database', default='otpprofiler') 
+    parser.add_argument('-n', '--notes') 
     args = parser.parse_args() 
     print args 
     # args is a non-iterable, non-mapping Namespace (allowing usage as args.name), so convert it to a dict
