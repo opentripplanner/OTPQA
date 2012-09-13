@@ -2,14 +2,14 @@
 echo Dropping db...
 sudo -u postgres dropdb otpprofiler
 echo Creating db...
-sudo -u postgres createdb -O abyrd otpprofiler
+sudo -u postgres createdb -O ubuntu otpprofiler
 echo Applying schema...
 psql -d otpprofiler -f ./schema.sql
 echo Generating endpoints...
-java -cp ../OpenTripPlanner/opentripplanner-graph-builder/target/graph-builder.jar \
+java -Xmx6G -cp ../OpenTripPlanner/opentripplanner-graph-builder/target/graph-builder.jar \
      org.opentripplanner.graph_builder.GraphStats \
-     --graph /var/otp/graphs/pdx/Graph.obj \
-     -o endpoints_random.csv endpoints -n 50 --radius 200 
+     --graph /var/otp/graphs/pdx_baseline/Graph.obj \
+     -o endpoints_random.csv endpoints -n 50 -s --radius 2000 
 echo Populating request parameters and endpoints tables...
 python ./populate_db.py
 

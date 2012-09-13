@@ -28,7 +28,6 @@ CREATE TABLE endpoints (
 );
 COMMENT ON TABLE endpoints IS 'origin or destination points for profiling queries';
 COMMENT ON COLUMN endpoints.random IS 'whether or not the endpoint was generated as a random batch';
-COMMENT ON COLUMN endpoints.location IS 'the (lon,lat) of the endpoint';
 COMMENT ON COLUMN endpoints.name IS 'a human-readable name for endpoints, especially those manually entered rather than randomly generated';
 COMMENT ON COLUMN endpoints.notes IS 'optional additional information about this endpoint';
 
