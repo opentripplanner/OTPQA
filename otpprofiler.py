@@ -12,7 +12,6 @@ URL_META = URL_BASE + 'metadata'
 SHOW_PARAMS = False
 SHOW_URL = False
 
-
 def getGitInfo(directory=None):
     """Get information about the git repository in specified directory, or of an OTP server if
     no directory is specified. Returns a tuple of (sha1, version) where sha1 is the hash of the 
@@ -96,9 +95,22 @@ def summarize (itinerary) :
 
 def run(connect_args) :
     notes = connect_args.pop('notes')
+    retry = connect_args.pop('retry')
 
-    # connection on local UNIX domain socket without password requires peer authentication
-    # replace with sqlAlchemy?
+    gitInfo = getGitInfo()
+    while retry > 0 and gitInfo == None:
+        print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
+        time.sleep(5)
+        gitInfo = getGitInfo()
+        retry -= 1
+        
+    if gitInfo == None :
+        print "Failed to identify OTP version. Exiting."
+        exit(-2)
+
+    # Connection on local UNIX domain socket without password requires peer authentication
+    # Replace with sqlAlchemy?
+    # Presumably by the time OTP server is up, Postgres should also be up.
     try:
         # create separate connection for reading, to allow use of both a server-side cursor
         # and progressive commits
@@ -111,10 +123,6 @@ def run(connect_args) :
         print "Unable to connect to the database. Exiting."
         exit(-1)
 
-    gitInfo = getGitInfo()
-    if gitInfo == None :
-        print "Failed to identify OTP version. Exiting."
-        exit(-2)
     write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated, notes)"
                 "VALUES (%s, now(), NULL, %s, TRUE, %s) RETURNING run_id", gitInfo + (notes,))
     write_conn.commit() # commit to make sure now() is evaluated before run starts                
@@ -218,6 +226,7 @@ if __name__=="__main__":
     parser.add_argument('-P', '--port', type=int, default='8000') 
     parser.add_argument('-d', '--database', default='otpprofiler') 
     parser.add_argument('-n', '--notes') 
+    parser.add_argument('-r', '--retry', type=int, default=3) 
     args = parser.parse_args() 
     # if no note is provided, use the CPU info from the machine running this script
     if args.notes == None :
