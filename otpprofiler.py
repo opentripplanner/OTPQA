@@ -40,7 +40,7 @@ def getGitInfo(directory=None):
             version = objs['version']
             sha1 = objs['commit']
         except : 
-            print "Error requesting metadata from server. Is it running?"
+            print "Error requesting metadata from OTP server. Is it running?"
             return None
     print "sha1 of commit is:", sha1
     print "version of OTP is:", version
@@ -94,16 +94,17 @@ def summarize (itinerary) :
     return ret
     
 
-def run() :
-    # depends on peer authentication
+def run(connect_args) :
+    # connection on local UNIX domain socket without password requires peer authentication
     # replace with sqlAlchemy?
     try:
         # create separate connection for reading, to allow use of both a server-side cursor
         # and progressive commits
-        read_conn = psycopg2.connect("dbname='otpprofiler'")
+        read_conn = psycopg2.connect(**connect_args)
         read_cur = read_conn.cursor('read_cur', cursor_factory=psycopg2.extras.DictCursor)
-        write_conn = psycopg2.connect("dbname='otpprofiler'")
+        write_conn = psycopg2.connect(**connect_args)
         write_cur = write_conn.cursor()
+        print "Connections established to database server."
     except:
         print "Unable to connect to the database. Exiting."
         exit(-1)
@@ -205,8 +206,18 @@ def run() :
     write_cur.execute( "UPDATE runs SET run_ended=now() WHERE run_id=%s", (run_id,) )
     write_conn.commit()
     
+import argparse
 if __name__=="__main__":
-    # parse args
-    run()
+    import argparse # optparse is deprecated
+    parser = argparse.ArgumentParser(description='perform an otp profiler run') 
+    parser.add_argument('host') 
+    parser.add_argument('-p', '--password')
+    parser.add_argument('-u', '--user', default='ubuntu') 
+    parser.add_argument('-P', '--port', type=int, default='8000') 
+    parser.add_argument('-d', '--database', default='otpprofiler') 
+    args = parser.parse_args() 
+    print args 
+    # args is a non-iterable, non-mapping Namespace (allowing usage as args.name), so convert it to a dict
+    run(vars(args))
 
 
