@@ -3,6 +3,7 @@
 --
 
 -- Table: runs
+CREATE TYPE run_type AS ENUM ('calibration', 'commit', 'manual');
 CREATE TABLE runs (
     run_id serial PRIMARY KEY NOT NULL,
     git_sha1 character(40) NOT NULL,
@@ -10,7 +11,9 @@ CREATE TABLE runs (
     run_began timestamp with time zone NOT NULL,
     run_ended timestamp with time zone, -- will be null until run completes
     automated boolean DEFAULT false NOT NULL,
-    username text,
+    user_name text,
+    cpu_name text, -- name of the server's processor, from /proc/cpuinfo on the server via OTP API
+    cpu_cores smallint, -- number of logical cores in the processor (including hyperthreading 'cores')
     notes text -- may be null    
 );
 COMMENT ON TABLE runs IS 'information about individual runs of the profiler, which are usually triggered by git commits via the continuous integration server';
@@ -85,5 +88,20 @@ CREATE TABLE itineraries (
     waits integer[]
 );
 COMMENT ON TABLE itineraries IS 'information about the individual itineraries that make up a trip planner response';
+
+
+-- Table: workers
+CREATE TABLE workers (
+    request_id character(12),
+    reservation_id character(12),
+    instance_id character(12),
+    requested timestamp with time zone NOT NULL,
+    fulfilled timestamp with time zone,
+    phoned_home timestamp with time zone,
+    terminated timestamp with time zone,
+    time_to_live interval NOT NULL,
+    confirmed_dead boolean
+);
+COMMENT ON TABLE workers IS 'a table to track spot instance creation and termination';
 
 

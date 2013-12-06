@@ -24,6 +24,6 @@ for run_id in run_ids :
         AND requests.mode LIKE '%%,TRANSIT'; """, (run_id,) )
     times = [row[0].total_seconds() for row in cur] # convert datetime.timedelta to fractional seconds
     data.append(times)
-
+print data
 violin.violin_plot(data, bp=True, scale=True, labels=labels)
 

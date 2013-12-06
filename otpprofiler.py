@@ -6,44 +6,45 @@ import subprocess, urllib, random
 
 DATE = '08/14/2012'
 # split out base and specific endpoint
-URL_BASE = "http://localhost:8080/opentripplanner-api-webapp/ws/"
+URL_BASE = "http://localhost:8080/otp-rest-servlet/ws/"
 URL_PLAN = URL_BASE + 'plan?'
-URL_META = URL_BASE + 'metadata'
+URL_META = URL_BASE + 'serverinfo'
 SHOW_PARAMS = False
-SHOW_URL = False
+SHOW_URL = True
 
-def getGitInfo(directory=None):
-    """Get information about the git repository in specified directory, or of an OTP server if
-    no directory is specified. Returns a tuple of (sha1, version) where sha1 is the hash of the 
-    HEAD commit, and version is the output of 'git describe', which includes the last tag and how 
-    many commits have been made on top of that tag.
+def getServerInfo():
+    """Get information about the server that is being profiled. Returns a tuple of:
+    (sha1, version, cpuName, nCores)
+    where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which 
+    includes the last tag and how many commits have been made on top of that tag), 
+    cpuName is the model of the cpu as reported by /proc/cpuinfo via the OTP serverinfo API,
+    and nCores is the number of (logical) cores reported by that same API, including hyperthreading. 
     """
-    if directory != None :
-        try:
-            os.chdir(directory)
-            sha1 = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
-            version = subprocess.check_output(['git', 'describe', 'HEAD'])
-        except :
-            print "Error reading git info from directory", directory
+    try :
+        req = urllib2.Request(URL_META)
+        req.add_header('Accept', 'application/json')
+        response = urllib2.urlopen(req)
+        if response.code != 200 :
+            print "Server metadata response was not 200"
             return None
-    else :
-        try :
-            req = urllib2.Request(URL_META)
-            req.add_header('Accept', 'application/json')
-            response = urllib2.urlopen(req)
-            if response.code != 200 :
-                print "Server metadata response was not 200"
-                return None
-            content = response.read()
-            objs = json.loads(content)['serverVersion']
-            version = objs['version']
-            sha1 = objs['commit']
-        except : 
-            print "Error requesting metadata from OTP server. Is it running?"
-            return None
+        content = response.read()
+        objs = json.loads(content)
+        print "Server metadata response: ", objs
+        version = objs['serverVersion']['version']
+        sha1 = objs['serverVersion']['commit']
+        # would also be nice to have build date
+        cpuName = objs['cpuName']
+        nCores = objs['nCores']
+    except urllib2.URLError : 
+        # This is a normal condition while waiting for server to come up, trap exception and return None.
+        # Any problem with decoding the server response will still blow up the program with an exception.
+        print "Error requesting metadata from OTP server. Is it running?"
+        return None
     print "sha1 of commit is:", sha1
     print "version of OTP is:", version
-    return (sha1, version)
+    print "processor type is:", cpuName
+    print "number of logical cores is:", nCores
+    return (sha1, version, cpuName, nCores)
                       
 def insert (cursor, table, d, returning=None) :
     """Convenience method to insert all key-value pairs from a Python dictionary into a table
@@ -96,19 +97,26 @@ def summarize (itinerary) :
 def run(connect_args) :
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
+    fast  = connect_args.pop('fast')
 
-    gitInfo = getGitInfo()
-    while retry > 0 and gitInfo == None:
+#    info = ("0xABCD", "0.7.13-S", "blah", 8)
+    info = getServerInfo()
+    while retry > 0 and info == None:
         print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
         time.sleep(5)
-        gitInfo = getGitInfo()
+        info = getServerInfo()
         retry -= 1
         
-    if gitInfo == None :
+    if info == None :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
 
-    # Connection on local UNIX domain socket without password requires peer authentication
+    connect_args.pop('host')
+    #connect_args.pop('password')
+    connect_args.pop('port')
+    connect_args.pop('user')
+    # Connection on local UNIX domain socket without password will by default use peer authentication
+    # Peer authentication will be used if host, port, and user are not present (popped out of args dictionary)
     # Replace with sqlAlchemy?
     # Presumably by the time OTP server is up, Postgres should also be up.
     try:
@@ -123,8 +131,11 @@ def run(connect_args) :
         print "Unable to connect to the database. Exiting."
         exit(-1)
 
-    write_cur.execute("INSERT INTO runs (git_sha1, run_began, run_ended, git_describe, automated, notes)"
-                "VALUES (%s, now(), NULL, %s, TRUE, %s) RETURNING run_id", gitInfo + (notes,))
+    import getpass
+    user_name = getpass.getuser()
+    write_cur.execute("INSERT INTO runs (run_began, run_ended, automated, git_sha1, git_describe, "
+                "cpu_name, cpu_cores, notes, user_name)"
+                "VALUES (now(), NULL, TRUE, %s, %s, %s, %s, %s, %s) RETURNING run_id", info + (notes, user_name))
     write_conn.commit() # commit to make sure now() is evaluated before run starts                
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
@@ -138,13 +149,22 @@ def run(connect_args) :
     # that is, in every combination retained, the request is either considered typical, or in the
     # case that the request is atypical, the endpoints are not random. 
     # only like pairs of endpoints are considered (random to random, nonrandom to nonrandom).
-    PARAMS_SQL = """ SELECT requests.*,
+    if fast :
+        PARAMS_SQL = """ SELECT requests.*,
+        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
+        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
+        FROM requests, endpoints AS origins, endpoints AS targets
+        WHERE origins.random IS FALSE AND targets.random IS TRUE AND 
+          (requests.typical IS TRUE); """
+    else :
+        PARAMS_SQL = """ SELECT requests.*,
         origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
         targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
         FROM requests, endpoints AS origins, endpoints AS targets
         WHERE origins.endpoint_id < targets.endpoint_id AND 
-              origins.random = targets.random AND 
-              (requests.typical IS TRUE OR origins.random IS FALSE); """
+          origins.random = targets.random AND 
+          (requests.typical IS TRUE OR origins.random IS FALSE); """
+
     read_cur.execute(PARAMS_SQL)
     all_params = read_cur.fetchall()
     random.shuffle(all_params)
@@ -189,6 +209,8 @@ def run(connect_args) :
                 print n_itin, 'itineraries'
                 # check response for timeout flag
                 status = 'complete'
+                path_times = objs['debug']['pathTimes']
+                print path_times
                 # status = 'timed out'
             except :
                 print 'no itineraries'
@@ -221,6 +243,7 @@ if __name__=="__main__":
     import argparse # optparse is deprecated
     parser = argparse.ArgumentParser(description='perform an otp profiler run') 
     parser.add_argument('host') 
+    parser.add_argument('-f', '--fast', action='store_true', default=False) 
     parser.add_argument('-p', '--password')
     parser.add_argument('-u', '--user', default='ubuntu') 
     parser.add_argument('-P', '--port', type=int, default='8000') 
@@ -228,16 +251,6 @@ if __name__=="__main__":
     parser.add_argument('-n', '--notes') 
     parser.add_argument('-r', '--retry', type=int, default=3) 
     args = parser.parse_args() 
-    # if no note is provided, use the CPU info from the machine running this script
-    if args.notes == None :
-        ncpu = 0
-        cpu = "unknown"
-        cpuinfo = open('/proc/cpuinfo', 'r')
-        for line in cpuinfo :
-            if 'model name' in line :
-                ncpu += 1
-                cpu = line.split(': ')[1].strip()
-    args.notes = '%s with %d logical cores' % (cpu, ncpu)
     print args 
 
     # args is a non-iterable, non-mapping Namespace (allowing usage as args.name), so convert it to a dict
