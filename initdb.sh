@@ -6,9 +6,9 @@ sudo -u postgres createdb -O $USER otpprofiler
 echo Applying schema...
 psql -d otpprofiler -f ./schema.sql
 # endpoints should be generated once and stored with baseline graph inputs
-# java -Xmx6G -cp ../OpenTripPlanner/opentripplanner-graph-builder/target/graph-builder.jar \
+# java -Xmx6G -cp OTP_PATH/otp.jar \
 #     org.opentripplanner.graph_builder.GraphStats \
-#     --graph /var/otp/graphs/pdx_baseline/Graph.obj \
+#     --graph GRAPH_PATH/Graph.obj \
 #     -o endpoints_random.csv endpoints -n 50 -s --radius 2000 
 echo Populating request parameters and endpoints tables...
 python ./populate_db.py

@@ -6,9 +6,8 @@ import subprocess, urllib, random
 
 DATE = '08/14/2012'
 # split out base and specific endpoint
-URL_BASE = "http://localhost:8080/otp-rest-servlet/ws/"
-URL_PLAN = URL_BASE + 'plan?'
-URL_META = URL_BASE + 'serverinfo'
+URL_BASE = "http://localhost:8080/otp/"
+URL_PLAN = URL_BASE + 'routers/default/plan?'
 SHOW_PARAMS = False
 SHOW_URL = True
 
@@ -21,7 +20,7 @@ def getServerInfo():
     and nCores is the number of (logical) cores reported by that same API, including hyperthreading. 
     """
     try :
-        req = urllib2.Request(URL_META)
+        req = urllib2.Request(URL_BASE)
         req.add_header('Accept', 'application/json')
         response = urllib2.urlopen(req)
         if response.code != 200 :
