@@ -63,12 +63,6 @@ cursor.execute ("""
 """, (original, comparison))
 
 result = cursor.fetchall ()
-
-for row in result:
-	for column in row:
-		if column == [None]:
-			del column[:]
-
 output.writerows (result)
 
 cursor.close ()
