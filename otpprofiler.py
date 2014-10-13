@@ -4,15 +4,14 @@ import psycopg2, psycopg2.extras
 import urllib2, time, itertools, json
 import subprocess, urllib, random
 
-DATE = '08/14/2012'
+DATE = '10/13/2014'
 # split out base and specific endpoint
-URL_BASE = "http://localhost:8080/otp-rest-servlet/ws/"
-URL_PLAN = URL_BASE + 'plan?'
-URL_META = URL_BASE + 'serverinfo'
+#URL_BASE = "http://localhost:8080/otp-rest-servlet/ws/"
+#URL_PLAN = URL_BASE + 'plan?'
 SHOW_PARAMS = False
 SHOW_URL = True
 
-def getServerInfo():
+def getServerInfo(host):
     """Get information about the server that is being profiled. Returns a tuple of:
     (sha1, version, cpuName, nCores)
     where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which 
@@ -20,8 +19,11 @@ def getServerInfo():
     cpuName is the model of the cpu as reported by /proc/cpuinfo via the OTP serverinfo API,
     and nCores is the number of (logical) cores reported by that same API, including hyperthreading. 
     """
+    url_meta = "http://"+host+"/otp/"
+
     try :
-        req = urllib2.Request(URL_META)
+        print "grabbing metadata from %s"%url_meta
+        req = urllib2.Request(url_meta)
         req.add_header('Accept', 'application/json')
         response = urllib2.urlopen(req)
         if response.code != 200 :
@@ -99,20 +101,21 @@ def run(connect_args) :
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
 
+    host = connect_args.pop('host')
+
 #    info = ("0xABCD", "0.7.13-S", "blah", 8)
-    info = getServerInfo()
+    info = getServerInfo(host)
     while retry > 0 and info == None:
         print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
         time.sleep(5)
-        info = getServerInfo()
+        info = getServerInfo(host)
         retry -= 1
         
     if info == None :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
 
-    connect_args.pop('host')
-    #connect_args.pop('password')
+    connect_args.pop('password')
     connect_args.pop('port')
     connect_args.pop('user')
     # Connection on local UNIX domain socket without password will by default use peer authentication
@@ -122,6 +125,9 @@ def run(connect_args) :
     try:
         # create separate connection for reading, to allow use of both a server-side cursor
         # and progressive commits
+
+        print connect_args
+
         read_conn = psycopg2.connect(**connect_args)
         read_cur = read_conn.cursor('read_cur', cursor_factory=psycopg2.extras.DictCursor)
         write_conn = psycopg2.connect(**connect_args)
@@ -185,7 +191,7 @@ def run(connect_args) :
         #    continue
         params['date'] = DATE
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
-        url = URL_PLAN + urllib.urlencode(params)
+        url = "http://"+host+"/otp/routers/default/plan?" + urllib.urlencode(params)
         if SHOW_PARAMS :
             print params
         if SHOW_URL :
@@ -201,18 +207,19 @@ def run(connect_args) :
             print "not 200"
             status = 'failed'
         else :
-            try :
-                content = response.read()
-                objs = json.loads(content)
+            content = response.read()
+            objs = json.loads(content)
+
+            if 'plan' in objs:
                 itineraries = objs['plan']['itineraries']
                 n_itin = len(itineraries)
                 print n_itin, 'itineraries'
                 # check response for timeout flag
                 status = 'complete'
-                path_times = objs['debug']['pathTimes']
+                path_times = objs['debugOutput']['pathTimes']
                 print path_times
                 # status = 'timed out'
-            except :
+            else:
                 print 'no itineraries'
                 status = 'no paths'
                 
@@ -251,7 +258,6 @@ if __name__=="__main__":
     parser.add_argument('-n', '--notes') 
     parser.add_argument('-r', '--retry', type=int, default=3) 
     args = parser.parse_args() 
-    print args 
 
     # args is a non-iterable, non-mapping Namespace (allowing usage as args.name), so convert it to a dict
     run(vars(args))
