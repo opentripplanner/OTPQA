@@ -1,0 +1,16 @@
+BEGIN;
+CREATE TEMPORARY TABLE results ON COMMIT DROP AS SELECT origin_id, target_id, request_id, run_id, COUNT (itinerary_number) AS itineraries FROM responses NATURAL LEFT JOIN itineraries GROUP BY response_id ORDER BY origin_id, target_id, request_id, run_id ASC;
+SELECT original.origin_id, original.target_id, original.request_id, original.itineraries AS original_itineraries, comparison.itineraries AS comparison_itineraries FROM results AS original, results AS comparison WHERE original.origin_id = comparison.origin_id AND original.target_id = comparison.target_id AND original.request_id = comparison.request_id AND original.itineraries != comparison.itineraries AND original.run_id = 1 AND comparison.run_id = 2;
+COMMIT;
+BEGIN;
+CREATE TEMPORARY TABLE results ON COMMIT DROP AS SELECT * FROM responses NATURAL LEFT JOIN itineraries ORDER BY origin_id, target_id, request_id, run_id ASC;
+SELECT original.origin_id, original.target_id, original.request_id, original.duration AS original_duration, comparison.duration AS comparison_duration FROM results AS original, results AS comparison WHERE original.origin_id = comparison.origin_id AND original.target_id = comparison.target_id AND original.request_id = comparison.request_id AND original.itinerary_number = comparison.itinerary_number AND original.duration != comparison.duration AND original.run_id = 1 AND comparison.run_id = 2;
+COMMIT;
+BEGIN;
+CREATE TEMPORARY TABLE results ON COMMIT DROP AS SELECT origin_id, target_id, request_id, run_id, COALESCE (NULLIF (array_agg (itinerary_number), ARRAY[NULL]::smallint[]), ARRAY[]::smallint[]) AS itineraries FROM responses NATURAL LEFT JOIN itineraries GROUP BY response_id ORDER BY origin_id, target_id, request_id, run_id ASC;
+SELECT original.origin_id, original.target_id, original.request_id, original.itineraries AS original_itineraries, comparison.itineraries AS comparison_itineraries FROM results AS original, results AS comparison WHERE original.origin_id = comparison.origin_id AND original.target_id = comparison.target_id AND original.request_id = comparison.request_id AND original.itineraries != comparison.itineraries AND original.run_id = 1 AND comparison.run_id = 2;
+COMMIT;
+BEGIN;
+CREATE TEMPORARY TABLE results ON COMMIT DROP AS SELECT origin_id, target_id, request_id, run_id, array_agg (duration) AS duration_array, array_agg (n_legs) AS n_legs_array, array_agg (n_vehicles) AS n_vehicles_array FROM responses NATURAL LEFT JOIN itineraries GROUP BY response_id ORDER BY origin_id, target_id, request_id, run_id ASC;
+SELECT original.origin_id, original.target_id, original.request_id, original.duration_array AS original_duration_array, comparison.duration_array AS comparison_duration_array, original.n_legs_array AS original_n_legs_array, comparison.n_legs_array AS comparison_n_legs_array, original.n_vehicles_array AS original_n_vehicles_array, comparison.n_vehicles_array AS comparison_n_vehicles_array FROM results AS original, results AS comparison WHERE original.origin_id = comparison.origin_id AND original.target_id = comparison.target_id AND original.request_id = comparison.request_id AND (original.duration_array != comparison.duration_array OR original.n_legs_array != comparison.n_legs_array OR original.n_vehicles_array != comparison.n_vehicles_array) AND original.run_id = 1 AND comparison.run_id = 2;
+COMMIT;

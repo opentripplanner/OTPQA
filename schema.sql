@@ -14,6 +14,7 @@ CREATE TABLE runs (
     user_name text,
     cpu_name text, -- name of the server's processor, from /proc/cpuinfo on the server via OTP API
     cpu_cores smallint, -- number of logical cores in the processor (including hyperthreading 'cores')
+    graph_build_time timestamp with time zone NOT NULL,
     notes text -- may be null    
 );
 COMMENT ON TABLE runs IS 'information about individual runs of the profiler, which are usually triggered by git commits via the continuous integration server';

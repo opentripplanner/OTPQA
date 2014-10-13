@@ -7,17 +7,19 @@ import subprocess, urllib, random
 DATE = '08/14/2012'
 # split out base and specific endpoint
 URL_BASE = "http://localhost:8080/otp/"
-URL_PLAN = URL_BASE + 'routers/default/plan?'
+URL_DEFAULT = URL_BASE + 'routers/default/'
+URL_PLAN = URL_DEFAULT + 'plan?'
 SHOW_PARAMS = False
 SHOW_URL = True
 
 def getServerInfo():
     """Get information about the server that is being profiled. Returns a tuple of:
-    (sha1, version, cpuName, nCores)
+    (sha1, version, cpuName, nCores, buildTime)
     where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which 
     includes the last tag and how many commits have been made on top of that tag), 
     cpuName is the model of the cpu as reported by /proc/cpuinfo via the OTP serverinfo API,
-    and nCores is the number of (logical) cores reported by that same API, including hyperthreading. 
+    nCores is the number of (logical) cores reported by that same API, including hyperthreading,
+    and buildTime is the time (in milliseconds since the epoch) at which the graph in use was built.
     """
     try :
         req = urllib2.Request(URL_BASE)
@@ -34,6 +36,16 @@ def getServerInfo():
         # would also be nice to have build date
         cpuName = objs['cpuName']
         nCores = objs['nCores']
+        req = urllib2.Request(URL_DEFAULT)
+        req.add_header('Accept', 'application/json')
+        response = urllib2.urlopen(req)
+        if response.code != 200 :
+            print "Server default router response was not 200"
+            return None
+        content = response.read()
+        objs = json.loads(content)
+        print "Server default router response: ", objs
+        buildTime = objs['buildTime']
     except urllib2.URLError : 
         # This is a normal condition while waiting for server to come up, trap exception and return None.
         # Any problem with decoding the server response will still blow up the program with an exception.
@@ -43,7 +55,8 @@ def getServerInfo():
     print "version of OTP is:", version
     print "processor type is:", cpuName
     print "number of logical cores is:", nCores
-    return (sha1, version, cpuName, nCores)
+    print "graph build time is:", buildTime
+    return (sha1, version, cpuName, nCores, buildTime)
                       
 def insert (cursor, table, d, returning=None) :
     """Convenience method to insert all key-value pairs from a Python dictionary into a table
@@ -81,7 +94,7 @@ def summarize (itinerary) :
         #waits.append(leg['wait'])
     ret = { 
         'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
-        'duration' : '%d msec' % int(itinerary['duration']),
+        'duration' : '%d s' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
         'walk_distance' : itinerary['walkDistance'],
@@ -133,8 +146,9 @@ def run(connect_args) :
     import getpass
     user_name = getpass.getuser()
     write_cur.execute("INSERT INTO runs (run_began, run_ended, automated, git_sha1, git_describe, "
-                "cpu_name, cpu_cores, notes, user_name)"
-                "VALUES (now(), NULL, TRUE, %s, %s, %s, %s, %s, %s) RETURNING run_id", info + (notes, user_name))
+                "cpu_name, cpu_cores, graph_build_time, notes, user_name) "
+                "VALUES (now(), NULL, TRUE, %s, %s, %s, %s, to_timestamp (%s * 0.001), %s, %s) "
+                "RETURNING run_id", info + (notes, user_name))
     write_conn.commit() # commit to make sure now() is evaluated before run starts                
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
