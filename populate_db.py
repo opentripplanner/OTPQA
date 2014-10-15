@@ -36,13 +36,13 @@ cur = conn.cursor()
 for params in all_params :
     # NOTE the use of double quotes to force case-sensitivity for column names. These columns 
     # represent query parameters that will be substituted directly into URLs, and URLs are defined 
-    # to be case-sensitive.  
-    cur.execute("""INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy", typical) 
-        VALUES (%s, %s, %s, %s, %s, FALSE)""", params)
+    # to be case-sensitive.
 
-# designate 'typical' parameter combinations
-cur.execute("""UPDATE requests SET typical=TRUE WHERE time='08:50:00' 
-    AND "maxWalkDistance"='2000' AND mode NOT LIKE '%BICYCLE%'""")
+    time,maxWalkDist,mode,min,arriveBy = params
+    typical = (time=="08:50:00" and maxWalkDist == 2000 and "BICYCLE" not in mode)
+
+    cur.execute("""INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy", typical) 
+        VALUES (%s, %s, %s, %s, %s, %s)""", params+(typical,))
 
 # Commit the transaction
 conn.commit()
