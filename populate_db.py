@@ -1,6 +1,9 @@
 #!/usr/bin/python2.4
 
 import psycopg2, itertools
+import simplejson
+
+json_out = {}
 
 # connect to database
 # presumably we are using peer authentication and logged in as a user who has a pgsql account
@@ -33,6 +36,7 @@ all_params = [(time, walk, mode, minimize, arriveBy)
     for (mode, walk, minimize) in modes] 
 
 cur = conn.cursor()
+requests_json = []
 for params in all_params :
     # NOTE the use of double quotes to force case-sensitivity for column names. These columns 
     # represent query parameters that will be substituted directly into URLs, and URLs are defined 
@@ -44,19 +48,36 @@ for params in all_params :
     cur.execute("""INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy", typical) 
         VALUES (%s, %s, %s, %s, %s, %s)""", params+(typical,))
 
+    requests_json.append( dict(zip(('time','maxWalkDistance','mode','min','arriveBy','typical'),params+(typical,))) )
+json_out['requests'] = requests_json
+
 # Commit the transaction
 conn.commit()
 
 # Initialize the otpprofiler DB with random endpoints and user-defined endpoints
 import csv
 cur = conn.cursor()
+endpoints_json = []
 for filename, random in [("endpoints_random.csv", True), ("endpoints_custom.csv", False)] :
     endpoints = open(filename)
     reader = csv.DictReader(endpoints)
     sql = """INSERT INTO endpoints (random, lon, lat, name, notes) VALUES (%s, %s, NULL)"""
     sql %= (random, "%(lon)s, %(lat)s, %(name)s" )
-    cur.executemany (sql, reader)
+
+    endpoints = list(reader)
+
+    cur.executemany (sql, endpoints)
+
+
+    for rec in endpoints:
+        endpoint_rec = {'random':random, 'lon':float(rec['lon']), 'lat':float(rec['lat']), 'name':rec['name'], 'notes':None}
+        endpoints_json.append( endpoint_rec )
+json_out['endpoints'] = endpoints_json
 
 # Commit the transaction
 conn.commit()
+
+fpout = open("requests.json","w")
+simplejson.dump(json_out, fpout, indent=2 )
+fpout.close()
 
