@@ -3,6 +3,7 @@
 import psycopg2, psycopg2.extras
 import urllib2, time, itertools, json
 import subprocess, urllib, random
+import simplejson
 
 DATE = '10/13/2014'
 # split out base and specific endpoint
@@ -97,6 +98,8 @@ def summarize (itinerary) :
     
 
 def run(connect_args) :
+    run_time_id = int(time.time())
+
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
@@ -139,12 +142,16 @@ def run(connect_args) :
 
     import getpass
     user_name = getpass.getuser()
+    run_row = info + (notes,user_name)
     write_cur.execute("INSERT INTO runs (run_began, run_ended, automated, git_sha1, git_describe, "
                 "cpu_name, cpu_cores, notes, user_name)"
-                "VALUES (now(), NULL, TRUE, %s, %s, %s, %s, %s, %s) RETURNING run_id", info + (notes, user_name))
+                "VALUES (now(), NULL, TRUE, %s, %s, %s, %s, %s, %s) RETURNING run_id", run_row)
     write_conn.commit() # commit to make sure now() is evaluated before run starts                
     run_id = write_cur.fetchone()[0]
     print "run id", run_id
+
+    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes','user_name'),run_row))
+    run_json['id'] = run_time_id
 
     # note double quotes in SQL string to force case-sensitivity on query param columns.
     # origin/destination matrix is constrained to be lower-triangular since we do both 
@@ -177,6 +184,8 @@ def run(connect_args) :
     n = 0
     N = len(all_params)
     t0 = time.time()
+    response_json = []
+    full_itins_json = []
     for params in all_params : # fetchall takes time and mem, use a server-side named cursor
         n += 1
         t = (time.time() - t0) / 60.0
@@ -232,18 +241,36 @@ def run(connect_args) :
                 'status' : status,
                 'membytes' : None }
         response_id = insert (write_cur, 'responses', row, returning='response_id') 
+        row['response_id'] = response_id
+        row['itins'] = []
+        response_json.append( row )
         
         # Create a row for each itinerary within this single trip planner result
         if (n_itin > 0) :
             for (itinerary_number, itinerary) in enumerate(itineraries) :
-                row = summarize (itinerary)
-                row['response_id'] = response_id
-                row['itinerary_number'] = itinerary_number + 1
-                insert (write_cur, 'itineraries', row) # no return (automatic serial key) value needed
+                itin_row = summarize (itinerary)
+                itin_row['response_id'] = response_id
+                itin_row['itinerary_number'] = itinerary_number + 1
+                
+                full_itin = {'response_id':response_id,'itinerary_number':itinerary_number+1}
+                full_itin['body']=itinerary
+                full_itins_json.append( full_itin )
+
+                insert (write_cur, 'itineraries', itin_row) # no return (automatic serial key) value needed
+                row['itins'].append( itin_row )
         write_conn.commit()
     
     write_cur.execute( "UPDATE runs SET run_ended=now() WHERE run_id=%s", (run_id,) )
     write_conn.commit()
+
+    fpout = open("run_summary.%s.json"%run_time_id,"w")
+    run_json['responses'] = response_json
+    simplejson.dump(run_json, fpout, indent=2)
+    fpout.close()
+
+    fpout = open("full_itins.%s.json"%run_time_id,"w")
+    simplejson.dump( full_itins_json, fpout, indent=2 )
+    fpout.close()
     
 import argparse
 if __name__=="__main__":
