@@ -7,8 +7,6 @@ from copy import copy
 
 DATE = '10/13/2014'
 # split out base and specific endpoint
-#URL_BASE = "http://localhost:8080/otp-rest-servlet/ws/"
-#URL_PLAN = URL_BASE + 'plan?'
 SHOW_PARAMS = False
 SHOW_URL = True
 
