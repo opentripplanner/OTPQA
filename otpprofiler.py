@@ -159,10 +159,6 @@ def run(connect_args) :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
 
-    connect_args.pop('password')
-    connect_args.pop('port')
-    connect_args.pop('user')
-
     run_row = info + (notes,)
     run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes'),run_row))
     run_json['id'] = run_time_id
@@ -276,10 +272,6 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser(description='perform an otp profiler run') 
     parser.add_argument('host') 
     parser.add_argument('-f', '--fast', action='store_true', default=False) 
-    parser.add_argument('-p', '--password')
-    parser.add_argument('-u', '--user', default='ubuntu') 
-    parser.add_argument('-P', '--port', type=int, default='8000') 
-    parser.add_argument('-d', '--database', default='otpprofiler') 
     parser.add_argument('-n', '--notes') 
     parser.add_argument('-r', '--retry', type=int, default=3) 
     args = parser.parse_args() 
