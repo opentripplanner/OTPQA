@@ -1,6 +1,6 @@
 #!/usr/bin/python2.4
 
-import psycopg2, itertools
+import itertools
 import simplejson
 
 json_out = {}
