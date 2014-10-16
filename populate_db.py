@@ -37,7 +37,7 @@ all_params = [(time, walk, mode, minimize, arriveBy)
 
 cur = conn.cursor()
 requests_json = []
-for params in all_params :
+for i, params in enumerate( all_params ) :
     # NOTE the use of double quotes to force case-sensitivity for column names. These columns 
     # represent query parameters that will be substituted directly into URLs, and URLs are defined 
     # to be case-sensitive.
@@ -48,7 +48,7 @@ for params in all_params :
     cur.execute("""INSERT INTO requests (time, "maxWalkDistance", mode, min, "arriveBy", typical) 
         VALUES (%s, %s, %s, %s, %s, %s)""", params+(typical,))
 
-    requests_json.append( dict(zip(('time','maxWalkDistance','mode','min','arriveBy','typical'),params+(typical,))) )
+    requests_json.append( dict(zip(('time','maxWalkDistance','mode','min','arriveBy','typical','id'),params+(typical,i))) )
 json_out['requests'] = requests_json
 
 # Commit the transaction
@@ -69,8 +69,8 @@ for filename, random in [("endpoints_random.csv", True), ("endpoints_custom.csv"
     cur.executemany (sql, endpoints)
 
 
-    for rec in endpoints:
-        endpoint_rec = {'random':random, 'lon':float(rec['lon']), 'lat':float(rec['lat']), 'name':rec['name'], 'notes':None}
+    for i, rec in enumerate( endpoints ):
+        endpoint_rec = {'id':i, 'random':random, 'lon':float(rec['lon']), 'lat':float(rec['lat']), 'name':rec['name'], 'notes':None}
         endpoints_json.append( endpoint_rec )
 json_out['endpoints'] = endpoints_json
 

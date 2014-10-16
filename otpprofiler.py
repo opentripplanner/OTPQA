@@ -4,6 +4,7 @@ import psycopg2, psycopg2.extras
 import urllib2, time, itertools, json
 import subprocess, urllib, random
 import simplejson
+from copy import copy
 
 DATE = '10/13/2014'
 # split out base and specific endpoint
@@ -11,6 +12,65 @@ DATE = '10/13/2014'
 #URL_PLAN = URL_BASE + 'plan?'
 SHOW_PARAMS = False
 SHOW_URL = True
+
+def get_params(fast):
+    requests_json = simplejson.load(open("requests.json"))
+
+    requests = requests_json['requests']
+    endpoints = requests_json['endpoints']
+
+    ret = []
+
+    if fast :
+        for request in requests:
+            if not request['typical']:
+                continue
+            for origin in endpoints:
+                if origin['random']:
+                    continue
+                for target in endpoints:
+                    if target['random']:
+                        continue
+
+                    req = copy(request)
+                    req['oid'] = origin['id']
+                    req['tid'] = target['id']
+                    req['fromPlace'] = "%s,%s"%(origin['lat'],origin['lon'])
+                    req['toPlace'] = "%s,%s"%(target['lat'],target['lon'])
+                    
+                    ret.append( req )
+
+#        PARAMS_SQL = """ SELECT requests.*,
+#        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
+#        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
+#        FROM requests, endpoints AS origins, endpoints AS targets
+#        WHERE origins.random IS FALSE AND targets.random IS TRUE AND 
+#          (requests.typical IS TRUE); """
+    else :
+        for request in requests:
+            for origin in endpoints:
+                for target in endpoints:
+                    if not (origin['id'] < target['id'] and origin['random'] == target['random'] and (request['typical'] or not origin['random'])):
+                        continue
+                   
+
+                    req = copy(request)
+                    req['oid'] = origin['id']
+                    req['tid'] = target['id']
+                    req['fromPlace'] = "%s,%s"%(origin['lat'],origin['lon'])
+                    req['toPlace'] = "%s,%s"%(target['lat'],target['lon'])
+                    
+                    ret.append( req )
+
+#        PARAMS_SQL = """ SELECT requests.*,
+#        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
+#        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
+#        FROM requests, endpoints AS origins, endpoints AS targets
+#        WHERE origins.endpoint_id < targets.endpoint_id AND 
+#          origins.random = targets.random AND 
+#          (requests.typical IS TRUE OR origins.random IS FALSE); """
+
+    return ret
 
 def getServerInfo(host):
     """Get information about the server that is being profiled. Returns a tuple of:
@@ -162,24 +222,9 @@ def run(connect_args) :
     # that is, in every combination retained, the request is either considered typical, or in the
     # case that the request is atypical, the endpoints are not random. 
     # only like pairs of endpoints are considered (random to random, nonrandom to nonrandom).
-    if fast :
-        PARAMS_SQL = """ SELECT requests.*,
-        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
-        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
-        FROM requests, endpoints AS origins, endpoints AS targets
-        WHERE origins.random IS FALSE AND targets.random IS TRUE AND 
-          (requests.typical IS TRUE); """
-    else :
-        PARAMS_SQL = """ SELECT requests.*,
-        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
-        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
-        FROM requests, endpoints AS origins, endpoints AS targets
-        WHERE origins.endpoint_id < targets.endpoint_id AND 
-          origins.random = targets.random AND 
-          (requests.typical IS TRUE OR origins.random IS FALSE); """
 
-    read_cur.execute(PARAMS_SQL)
-    all_params = read_cur.fetchall()
+    all_params = get_params(fast)
+
     random.shuffle(all_params)
     n = 0
     N = len(all_params)
@@ -191,8 +236,11 @@ def run(connect_args) :
         t = (time.time() - t0) / 60.0
         T = (N * t) / n
         print "Request %d/%d, time %0.2f min of %0.2f (estimated) " % (n, N, t, T)
+        print params
         params = dict(params) # could also use a RealDictCursor
-        request_id = params.pop('request_id')
+        print params
+
+        request_id = params.pop('id')
         oid = params.pop('oid')
         tid = params.pop('tid')
         # not necessary if OD properly constrained in SQL 
@@ -240,23 +288,25 @@ def run(connect_args) :
                 'avg_time' : None if n_itin == 0 else '%f seconds' % (float(elapsed) / n_itin),
                 'status' : status,
                 'membytes' : None }
-        response_id = insert (write_cur, 'responses', row, returning='response_id') 
+        #response_id = insert (write_cur, 'responses', row, returning='response_id') 
+        response_id = len(response_json)
         row['response_id'] = response_id
         row['itins'] = []
         response_json.append( row )
+        
         
         # Create a row for each itinerary within this single trip planner result
         if (n_itin > 0) :
             for (itinerary_number, itinerary) in enumerate(itineraries) :
                 itin_row = summarize (itinerary)
-                itin_row['response_id'] = response_id
+                #itin_row['response_id'] = response_id
                 itin_row['itinerary_number'] = itinerary_number + 1
                 
                 full_itin = {'response_id':response_id,'itinerary_number':itinerary_number+1}
                 full_itin['body']=itinerary
                 full_itins_json.append( full_itin )
 
-                insert (write_cur, 'itineraries', itin_row) # no return (automatic serial key) value needed
+                #insert (write_cur, 'itineraries', itin_row) # no return (automatic serial key) value needed
                 row['itins'].append( itin_row )
         write_conn.commit()
     
