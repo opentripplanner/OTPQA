@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import psycopg2, psycopg2.extras
 import urllib2, time, itertools, json
 import subprocess, urllib, random
 import simplejson
@@ -108,27 +107,9 @@ def getServerInfo(host):
     print "processor type is:", cpuName
     print "number of logical cores is:", nCores
     return (sha1, version, cpuName, nCores)
-                      
-def insert (cursor, table, d, returning=None) :
-    """Convenience method to insert all key-value pairs from a Python dictionary into a table
-    interpreting the dictionary keys as column names. Can optionally return a column from the
-    inserted row. This is useful for getting the automatically generated serial ID of the new row.
-    """
-    # keys and values are guaranteed to be in the same order by python
-    colnames = ','.join(d.keys())
-    placeholders = ','.join(['%s' for _ in d.values()])
-    sql = "INSERT INTO %s (%s) VALUES (%s)" % (table, colnames, placeholders) 
-    if returning != None :
-        sql += " RETURNING %s" % (returning)
-    cursor.execute(sql, d.values())
-    if returning != None :
-        result = cursor.fetchone()
-        return result[0]
-    
-    
+
 def sqlarray (list):
     return '{%s}' % (','.join(list))
-
 
 def summarize (itinerary) :
     routes = []
@@ -181,36 +162,9 @@ def run(connect_args) :
     connect_args.pop('password')
     connect_args.pop('port')
     connect_args.pop('user')
-    # Connection on local UNIX domain socket without password will by default use peer authentication
-    # Peer authentication will be used if host, port, and user are not present (popped out of args dictionary)
-    # Replace with sqlAlchemy?
-    # Presumably by the time OTP server is up, Postgres should also be up.
-    try:
-        # create separate connection for reading, to allow use of both a server-side cursor
-        # and progressive commits
 
-        print connect_args
-
-        read_conn = psycopg2.connect(**connect_args)
-        read_cur = read_conn.cursor('read_cur', cursor_factory=psycopg2.extras.DictCursor)
-        write_conn = psycopg2.connect(**connect_args)
-        write_cur = write_conn.cursor()
-        print "Connections established to database server."
-    except:
-        print "Unable to connect to the database. Exiting."
-        exit(-1)
-
-    import getpass
-    user_name = getpass.getuser()
-    run_row = info + (notes,user_name)
-    write_cur.execute("INSERT INTO runs (run_began, run_ended, automated, git_sha1, git_describe, "
-                "cpu_name, cpu_cores, notes, user_name)"
-                "VALUES (now(), NULL, TRUE, %s, %s, %s, %s, %s, %s) RETURNING run_id", run_row)
-    write_conn.commit() # commit to make sure now() is evaluated before run starts                
-    run_id = write_cur.fetchone()[0]
-    print "run id", run_id
-
-    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes','user_name'),run_row))
+    run_row = info + (notes,)
+    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes'),run_row))
     run_json['id'] = run_time_id
 
     # note double quotes in SQL string to force case-sensitivity on query param columns.
@@ -280,7 +234,7 @@ def run(connect_args) :
                 print 'no itineraries'
                 status = 'no paths'
                 
-        row = { 'run_id' : run_id,
+        row = { 'run_id' : run_time_id,
                 'request_id' : request_id,
                 'origin_id' : oid,
                 'target_id' : tid,
@@ -288,7 +242,6 @@ def run(connect_args) :
                 'avg_time' : None if n_itin == 0 else '%f seconds' % (float(elapsed) / n_itin),
                 'status' : status,
                 'membytes' : None }
-        #response_id = insert (write_cur, 'responses', row, returning='response_id') 
         response_id = len(response_json)
         row['response_id'] = response_id
         row['itins'] = []
@@ -306,12 +259,7 @@ def run(connect_args) :
                 full_itin['body']=itinerary
                 full_itins_json.append( full_itin )
 
-                #insert (write_cur, 'itineraries', itin_row) # no return (automatic serial key) value needed
                 row['itins'].append( itin_row )
-        write_conn.commit()
-    
-    write_cur.execute( "UPDATE runs SET run_ended=now() WHERE run_id=%s", (run_id,) )
-    write_conn.commit()
 
     fpout = open("run_summary.%s.json"%run_time_id,"w")
     run_json['responses'] = response_json
