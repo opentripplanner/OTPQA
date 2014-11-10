@@ -149,7 +149,7 @@ def run(connect_args) :
     info = getServerInfo(host)
     while retry > 0 and info == None:
         print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
-        time.sleep(5)
+        time.sleep(10)
         info = getServerInfo(host)
         retry -= 1
         
