@@ -7,7 +7,7 @@ Generate random points with: 
 
     $ python gen_points.py filename num_points
 
-filename can be file with pbf, osm or osm.bz2 extension
+`filename` can be a file in the PBF, OSM XML, or bzipped OSM XML formats, with the extension .pbf, .osm, or .osm.bz2 respectively.
 
 Generate a bunch of requests with: 
 
