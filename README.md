@@ -5,7 +5,9 @@ Keep track of changes in OTP performace
 
 Generate random points with: 
 
-    $ python gen_points.py pbf_filename num_points
+    $ python gen_points.py filename num_points
+
+filename can be file with pbf, osm or osm.bz2 extension
 
 Generate a bunch of requests with: 
 
