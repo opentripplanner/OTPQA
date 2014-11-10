@@ -5,7 +5,7 @@ import subprocess, urllib, random
 import simplejson
 from copy import copy
 
-DATE = '10/13/2014'
+DATE = '11/12/2014'
 # split out base and specific endpoint
 SHOW_PARAMS = False
 SHOW_URL = True
