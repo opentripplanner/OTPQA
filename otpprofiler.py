@@ -195,6 +195,7 @@ def run(connect_args) :
         #if oid == tid :
         #    continue
         params['date'] = DATE
+        params['numItineraries'] = 3
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
         url = "http://"+host+"/otp/routers/default/plan?" + urllib.urlencode(params)
         if SHOW_PARAMS :
@@ -228,7 +229,8 @@ def run(connect_args) :
                 print 'no itineraries'
                 status = 'no paths'
                 
-        row = { 'run_id' : run_time_id,
+        row = { 'url' : url,
+                'run_id' : run_time_id,
                 'request_id' : request_id,
                 'origin_id' : oid,
                 'target_id' : tid,
