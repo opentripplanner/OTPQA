@@ -20,7 +20,7 @@ def main(fn1, fn2):
 	print "mean avg_time"
 	print "1: %.4fs"%r1_avg
 	print "2: %.4fs"%r2_avg
-	print "1->2 diff: %.3f%%"%((r2_avg/r1_avg)*100)
+	print "1->2 diff: %.3f%%"%(((r2_avg-r1_avg)/r1_avg)*100)
 
 if __name__=='__main__':
 	import sys
