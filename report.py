@@ -1,4 +1,5 @@
 import json
+import numpy as np
 
 def parsetime(aa):
 	if aa is None:
@@ -6,30 +7,59 @@ def parsetime(aa):
 
 	return float( aa.split()[0] )
 
-def main(fn1, fn2):
-	print fn1, fn2
+def itins_ridetime_tuple(resp):
+	ret = []
 
-	data1 = json.load( open(fn1) )
-	data2 = json.load( open(fn2) )
-	r1_total_time = [ x for x in [parsetime( item["avg_time"] ) for item in data1["responses"]] if x]
-	r2_total_time = [ x for x in [parsetime( item["avg_time"] ) for item in data2["responses"]] if x]
+	for itin in resp['itins']:
+		ret.append( int(itin['ride_time_sec']) )
 
-	r1_avg = sum(r1_total_time)/len(r1_total_time)
-	r2_avg = sum(r2_total_time)/len(r2_total_time)
+	return tuple(ret)
 
-	print "mean avg_time"
-	print "1: %.4fs"%r1_avg
-	print "2: %.4fs"%r2_avg
-	print "1->2 diff: %.3f%%"%(((r2_avg-r1_avg)/r1_avg)*100)
+def main(filenames):
+
+	datasets = [ json.load( open(fn) ) for fn in filenames ]
+
+	total_times = []
+	for dataset in datasets:
+		total_time = [ x for x in [parsetime( item["avg_time"] ) for item in dataset["responses"]] if x]
+		total_times.append( total_time )
+
+	print "n\tmean(avg_time)\tmedian(avg_time)"
+	for i, total_time in enumerate( total_times ):
+		time_avg = sum(total_time)/len(total_time)
+		time_median = np.median( total_time )
+		print "%d\t%0.4f\t%0.4f"%(i, time_avg,time_median)
+
+
+	# collate responses in every dataset by (origin_id,target_id,request_id) tuple
+	ff = {}
+	for i, dataset in enumerate( datasets ):
+		for resp in dataset['responses']:
+			req_id = (resp['origin_id'], resp['target_id'], resp['request_id'])
+			if req_id not in ff:
+				ff[req_id] = {}
+			ff[req_id][i] = resp
+
+	for key in ff:
+		responses = ff[key]
+		if len(responses)==0:
+			continue
+		print responses[0]['url']
+
+		print key,
+		print "\t",
+		for i in range(len(datasets)):
+			print responses[i]['avg_time'],
+			print "\t",
+			print itins_ridetime_tuple(responses[i]),
+			print "\t",
+		print
 
 if __name__=='__main__':
 	import sys
 
-	if len(sys.argv)<3:
-		print "usage: cmd filename1 filename2"
+	if len(sys.argv)<2:
+		print "usage: cmd fn1 [fn2 [fn3 ...]]"
 		exit()
 
-	fn1 = sys.argv[1]
-	fn2 = sys.argv[2]
-
-	main(fn1,fn2)
+	main(sys.argv[1:])
