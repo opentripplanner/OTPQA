@@ -234,6 +234,7 @@ def run(connect_args) :
                 'request_id' : request_id,
                 'origin_id' : oid,
                 'target_id' : tid,
+                'id_tuple' : "%s-%s-%s"%(oid,tid,request_id),
                 'total_time' : str(elapsed) + ' seconds',
                 'avg_time' : None if n_itin == 0 else '%f seconds' % (float(elapsed) / n_itin),
                 'status' : status,
