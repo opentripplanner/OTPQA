@@ -3,6 +3,8 @@
 import itertools
 import simplejson
 
+TEST_ALL_MODES = False #set to True to make it a hard test with short walk limits and walk-only trips &c.
+
 json_out = {}
     
 # Initialize the otpprofiler DB 'requests' table with query parameters.
@@ -16,12 +18,16 @@ times = [ ("08:50:00", True ),
           ("18:00:00", False),
           ("23:45:00", False) ]
 
-# (mode, walk, min)
-modes = [ (mode, walk, "QUICK") 
-    for mode in ["WALK,TRANSIT", "BICYCLE,TRANSIT"] 
-    for walk in [250, 2000, 40000] ]
-modes.append( ("WALK", 2000, "QUICK") )
-modes.extend( [("BICYCLE", 2000, minimize) for minimize in ["QUICK", "SAFE", "FLAT"]] )
+if TEST_ALL_MODES:
+    # (mode, walk, min)
+    modes = [ (mode, walk, "QUICK") 
+        for mode in ["WALK,TRANSIT", "BICYCLE,TRANSIT"] 
+        for walk in [250, 2000, 40000] ]
+    modes.append( ("WALK", 2000, "QUICK") )
+    modes.extend( [("BICYCLE", 2000, minimize) for minimize in ["QUICK", "SAFE", "FLAT"]] )
+else:
+    # (mode, walk, min)
+    modes = [ ("WALK,TRANSIT", 2000, "QUICK") ]
 
 all_params = [(time, walk, mode, minimize, arriveBy) 
     for (time, arriveBy) in times 
