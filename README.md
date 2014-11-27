@@ -26,4 +26,7 @@ To generate a report run
 
     $ python report.py filename1.json filename2.json
 
+To generate an HTML report, run
+
+    $ python hreport.py f1 [fn2 [fn3 ...]] > report.html
 
