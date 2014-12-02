@@ -1,7 +1,11 @@
 OTPProfiler
 ===========
 
-Keep track of changes in OTP performace
+Keep track of changes in OTP performace.
+
+You will need Python and some Python libraries (simplejson and pyproj). For the libraries, on a Debian based system like Ubuntu you can run:
+
+`$ sudo apt-get install python-simplejson python-pyproj`
 
 Generate random points with: 
 
