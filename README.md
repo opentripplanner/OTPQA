@@ -13,7 +13,7 @@ Generate random points with: 
 
 `dirname` is the name of a directory with OSM and GTFS data.
 
-Generate a bunch of requests with: 
+Generate the request parameters and save the request endpoints with: 
 
     $ python gen_requests.py 
 
