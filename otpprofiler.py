@@ -3,70 +3,49 @@
 import urllib2, time, itertools, json
 import subprocess, urllib, random
 import simplejson
+import pprint
 from copy import copy
 
 DATE = '11/12/2014'
 # split out base and specific endpoint
-SHOW_PARAMS = False
-SHOW_URL = True
+SHOW_PARAMS = True
+SHOW_URL = False
+
+def cycle(seq):
+    "A generator that loops over a sequence forever."
+    # Strangely, there seems to be no library function to do this.
+    # https://docs.python.org/3.4/library/itertools.html#itertools.cycle
+    # has to make a copy of every element in the iterator to obey the iterator interface.
+    while True:
+        for elem in seq:
+            yield elem
+
+def pairs(iterable):
+    "A generator that takes items from a sequence two at a time. (s0, s1), (s2, s3), (s4, s5), ..."
+    it = iter(iterable)
+    for x in it:
+        yield (x, next(it, None))
+
 
 def get_params(fast):
     requests_json = simplejson.load(open("requests.json"))
-
     requests = requests_json['requests']
     endpoints = requests_json['endpoints']
-
+    # Make sure there is an even number of endpoints
+    if len(endpoints) % 2 != 0 :
+        endpoints = endpoints[:-1]
     ret = []
-
-    if fast :
-        for request in requests:
-            if not request['typical']:
-                continue
-            for origin in endpoints:
-                if origin['random']:
-                    continue
-                for target in endpoints:
-                    if target['random']:
-                        continue
-
-                    req = copy(request)
-                    req['oid'] = origin['id']
-                    req['tid'] = target['id']
-                    req['fromPlace'] = "%s,%s"%(origin['lat'],origin['lon'])
-                    req['toPlace'] = "%s,%s"%(target['lat'],target['lon'])
-                    
-                    ret.append( req )
-
-#        PARAMS_SQL = """ SELECT requests.*,
-#        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
-#        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
-#        FROM requests, endpoints AS origins, endpoints AS targets
-#        WHERE origins.random IS FALSE AND targets.random IS TRUE AND 
-#          (requests.typical IS TRUE); """
-    else :
-        for request in requests:
-            for origin in endpoints:
-                for target in endpoints:
-                    if not (origin['id'] < target['id'] and origin['random'] == target['random'] and (request['typical'] or not origin['random'])):
-                        continue
-                   
-
-                    req = copy(request)
-                    req['oid'] = origin['id']
-                    req['tid'] = target['id']
-                    req['fromPlace'] = "%s,%s"%(origin['lat'],origin['lon'])
-                    req['toPlace'] = "%s,%s"%(target['lat'],target['lon'])
-                    
-                    ret.append( req )
-
-#        PARAMS_SQL = """ SELECT requests.*,
-#        origins.endpoint_id AS oid, origins.lat || ',' || origins.lon AS "fromPlace",
-#        targets.endpoint_id AS tid, targets.lat || ',' || targets.lon AS "toPlace"
-#        FROM requests, endpoints AS origins, endpoints AS targets
-#        WHERE origins.endpoint_id < targets.endpoint_id AND 
-#          origins.random = targets.random AND 
-#          (requests.typical IS TRUE OR origins.random IS FALSE); """
-
+    # if fast :
+    # else :
+    for (request, (origin, target)) in zip(cycle(requests), pairs(endpoints)):
+        req = copy(request)
+        req['oid'] = origin['id']
+        req['tid'] = target['id']
+        req['fromPlace'] = "%s,%s"%(origin['lat'],origin['lon'])
+        req['toPlace']   = "%s,%s"%(target['lat'],target['lon'])
+        ret.append( req )
+        print req
+    # TODO yield
     return ret
 
 def getServerInfo(host):
@@ -135,17 +114,12 @@ def summarize (itinerary) :
         'waits' : sqlarray(waits) }
     return ret
     
-
 def run(connect_args) :
-    run_time_id = int(time.time())
-
+	"This is the principal function..."
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
-
     host = connect_args.pop('host')
-
-#    info = ("0xABCD", "0.7.13-S", "blah", 8)
     info = getServerInfo(host)
     while retry > 0 and info == None:
         print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
@@ -157,19 +131,10 @@ def run(connect_args) :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
 
-    run_row = info + (notes,)
-    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes'),run_row))
-    run_json['id'] = run_time_id
-
-    # note double quotes in SQL string to force case-sensitivity on query param columns.
-    # origin/destination matrix is constrained to be lower-triangular since we do both 
-    # depart-after and arrive-by searches. this halves the number of searches.
-    # the set of all combinations is filtered such that only the 'typical' requests (i.e. tuples of
-    # query parameters) are combined with the (more numerous) random endpoints, but all reqests are 
-    # combined with the (presumably less numerous) explicitly defined endpoints.
-    # that is, in every combination retained, the request is either considered typical, or in the
-    # case that the request is atypical, the endpoints are not random. 
-    # only like pairs of endpoints are considered (random to random, nonrandom to nonrandom).
+    # Create a dict describing this particular run of the profiler, which will be output as JSON
+    run_time_id = int(time.time())
+    run_row = info + (notes, run_time_id)
+    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes','id'), run_row))
 
     all_params = get_params(fast)
 
@@ -179,27 +144,23 @@ def run(connect_args) :
     t0 = time.time()
     response_json = []
     full_itins_json = []
-    for params in all_params : # fetchall takes time and mem, use a server-side named cursor
+    pp = pprint.PrettyPrinter(indent=4)
+    for params in all_params : 
         n += 1
         t = (time.time() - t0) / 60.0
         T = (N * t) / n
         print "Request %d/%d, time %0.2f min of %0.2f (estimated) " % (n, N, t, T)
-        print params
-        params = dict(params) # could also use a RealDictCursor
-        print params
-
+        params = dict(params) # TODO necessary? 
         request_id = params.pop('id')
         oid = params.pop('oid')
         tid = params.pop('tid')
-        # not necessary if OD properly constrained in SQL 
-        #if oid == tid :
-        #    continue
         params['date'] = DATE
         params['numItineraries'] = 3
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
-        url = "http://"+host+"/otp/routers/default/plan?" + urllib.urlencode(params)
+        qstring = urllib.urlencode(params)
+        url = "http://"+host+"/otp/routers/default/plan?" + qstring
         if SHOW_PARAMS :
-            print params
+            pp.pprint(params)
         if SHOW_URL :
             print url
         req = urllib2.Request(url)
@@ -257,6 +218,7 @@ def run(connect_args) :
                 full_itins_json.append( full_itin )
 
                 row['itins'].append( itin_row )
+        pp.pprint(row)
 
     fpout = open("run_summary.%s.json"%run_time_id,"w")
     run_json['responses'] = response_json
@@ -274,10 +236,11 @@ if __name__=="__main__":
     parser.add_argument('host') 
     parser.add_argument('-f', '--fast', action='store_true', default=False) 
     parser.add_argument('-n', '--notes') 
-    parser.add_argument('-r', '--retry', type=int, default=3) 
+    parser.add_argument('-r', '--retry', type=int, default=5) 
     args = parser.parse_args() 
 
-    # args is a non-iterable, non-mapping Namespace (allowing usage as args.name), so convert it to a dict
+    # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name), 
+    # so convert it to a dict before passing it into the run function.
     run(vars(args))
 
 
