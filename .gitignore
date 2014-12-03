@@ -1,4 +1,6 @@
 *.py[co]
+*~
+*.json
 
 # Packages
 *.egg
