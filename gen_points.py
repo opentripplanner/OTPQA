@@ -1,21 +1,10 @@
 from imposm.parser import OSMParser
 from random import random, randint, shuffle
-import os
 from zipfile import ZipFile
-import csv
-from pyproj import Geod
-from scipy.spatial import KDTree
 from math import radians, cos
-
-def point_near_points(geod,radius,lon,lat,lons,lats):
-	if len(lons)!=len(lats):
-		raise Exception( "lons and lats not the same size" )
-
-	x,y,dists = geod.inv([lon]*len(lons), [lat]*len(lons), lons, lats)
-	for dist in dists:
-		if dist<=radius:
-			return True
-	return False
+from scipy.spatial import KDTree
+import csv
+import os
 
 def project(coord) :
 	"This projection completely wrecks heading but preserves distances. (lon, lat) -> (x, y)"
@@ -102,7 +91,6 @@ def get_random_points( dirname, nn, radius=2000 ):
 	print "Done."
 
 	print "Choosing nodes near transit at random..."
-	geod = Geod(ellps="WGS84")
 	ret = []
 	intersection_nds = list(intersection_nds)
 	shuffle(intersection_nds)
