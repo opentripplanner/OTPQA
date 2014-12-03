@@ -6,7 +6,7 @@ import simplejson
 import pprint
 from copy import copy
 
-DATE = '11/12/2014'
+DATE = '2014-12-03'
 # split out base and specific endpoint
 SHOW_PARAMS = True
 SHOW_URL = False
