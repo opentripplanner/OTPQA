@@ -48,7 +48,7 @@ json_out['requests'] = requests_json
 # Initialize the otpprofiler DB with random endpoints and user-defined endpoints
 import csv
 endpoints_json = []
-for filename, random in [("endpoints_random.csv", True), ("endpoints_custom.csv", False)] :
+for filename, random in [("endpoints_custom.csv", False), ("endpoints_random.csv", True)] :
     endpoints = open(filename)
     reader = csv.DictReader(endpoints)
 
