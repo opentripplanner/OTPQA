@@ -1,6 +1,8 @@
 *.py[co]
 *~
 *.json
+endpoints_custom.csv
+endpoints_random.csv
 
 # Packages
 *.egg
