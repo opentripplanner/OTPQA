@@ -80,7 +80,8 @@ def get_random_points( dirname, nn, radius=2000 ):
 				nd_coords[id] = (lon, lat)
 
 	print "Getting lat/lon coordinates of intersection nodes..."
-	p = OSMParser(coords_callback=get_coords)
+	# Avoid some sort of deadlock by setting concurrency to 1 (stacktrace shows sem.acquire())
+	p = OSMParser(concurrency=1, coords_callback=get_coords)
 	p.parse(pbffilename)
 	print "Done."
 

@@ -115,7 +115,7 @@ def summarize (itinerary) :
     return ret
     
 def run(connect_args) :
-	"This is the principal function..."
+    "This is the principal function..."
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
