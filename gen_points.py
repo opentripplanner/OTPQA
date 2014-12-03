@@ -1,11 +1,11 @@
 from imposm.parser import OSMParser
-from random import random, randint, choice
+from random import random, randint, shuffle
 import os
 from zipfile import ZipFile
 import csv
 from pyproj import Geod
-
-MAX_TRIES = 10000
+from scipy.spatial import KDTree
+from math import radians, cos
 
 def point_near_points(geod,radius,lon,lat,lons,lats):
 	if len(lons)!=len(lats):
@@ -17,6 +17,14 @@ def point_near_points(geod,radius,lon,lat,lons,lats):
 			return True
 	return False
 
+def project(coord) :
+	"This projection completely wrecks heading but preserves distances. (lon, lat) -> (x, y)"
+	m_per_degree = 111111.0
+	lon, lat = coord
+	y = lat * m_per_degree
+	x = lon * cos(radians(lat)) * m_per_degree
+	return (x, y)
+	
 def get_random_points( dirname, nn, radius=2000 ):
 
 	filenames = os.listdir( dirname )
@@ -28,31 +36,32 @@ def get_random_points( dirname, nn, radius=2000 ):
 		raise Exception(" more than one pbf file in directory" )
 	pbffilename = os.path.join( dirname, pbfs[0] )
 
-	zip_fns = [x for x in filenames if x[-4:]==".zip"]
+	zip_filenames = [x for x in filenames if x[-4:]==".zip"]
 
-	if len(zip_fns)==0:
-		raise Exception( "no gtfs feeds in directory" )
+	if len(zip_filenames)==0:
+		raise Exception( "No GTFS feeds found in directory." )
 
-	stop_lats = []
-	stop_lons = []
-	for fn in zip_fns:
+	print "Collecting stop locations from GTFS files..."
+	stop_coords = []
+	for fn in zip_filenames:
+		print "  ", fn
 		zf = ZipFile( os.path.join( dirname, fn ) )
 		try:
 			fp = zf.open("stops.txt")
 		except KeyError, e:
+			print "This ZIP file does not contain a stops.txt, skipping."
 			continue
-
 		rd = csv.reader(fp)
 		header = rd.next()
 		try:
-			lat_ix = header.index("stop_lat")
-			lon_ix = header.index("stop_lon")
+			lat_idx = header.index("stop_lat")
+			lon_idx = header.index("stop_lon")
 		except ValueError, e:
+			print "Stops.txt does not contain lat or lon columns, skipping."
 			continue 
-
 		for row in rd:
-			stop_lats.append( float(row[lat_ix]) )
-			stop_lons.append( float(row[lon_ix]) )
+			stop_coords.append( (float(row[lon_idx]), float(row[lat_idx])) )
+	print "Done."
 
 	all_nds = set()
 	intersection_nds = set()
@@ -67,45 +76,47 @@ def get_random_points( dirname, nn, radius=2000 ):
 					intersection_nds.add( nd )
 				all_nds.add( nd )
 
-	print "collecting intersection nodes..."
-	p = OSMParser(concurrency=4, ways_callback=road)
+	print "Collecting intersection nodes from PBF file..."
+	print "  ", pbffilename
+	# concurrency is automatically set to number of cores
+	p = OSMParser(ways_callback=road)
 	p.parse(pbffilename)
-	intersection_nds = list(intersection_nds)
-	print "done"
+	all_nds.clear() # cannot del() because it's referenced in a nested scope	
+	print "Done."
 
-	print "get lat/lon coords of nodes..."
 	nd_coords = {}
 	def get_coords(coords):
-		for id,lon,lat in coords:
-			nd_coords[id] = (lon,lat)
+		for id, lon, lat in coords:
+			if (id in intersection_nds):
+				nd_coords[id] = (lon, lat)
 
-	p = OSMParser(concurrency=1, coords_callback=get_coords)
+	print "Getting lat/lon coordinates of intersection nodes..."
+	p = OSMParser(coords_callback=get_coords)
 	p.parse(pbffilename)
+	print "Done."
 
-	print "grab several at random"
+	print "Adding projected GTFS stop locations to a KD tree."
+	# kdtree requires a long-lived immutable input, so make a copy
+	projected_stop_coords = map(project, stop_coords)
+	kdtree = KDTree(projected_stop_coords)
+	print "Done."
+
+	print "Choosing nodes near transit at random..."
 	geod = Geod(ellps="WGS84")
-	nds = set()
 	ret = []
+	intersection_nds = list(intersection_nds)
+	shuffle(intersection_nds)
+	for nd in intersection_nds :
+		# Check that it's within radius of a stop
+		coord = nd_coords[nd]
+		distance, nearest_coord = kdtree.query(project(coord))
+		if distance > radius: 
+			continue
+		ret.append( coord )
+		if len(ret) >= nn: 
+			break
 
-	i = 0
-	while len(ret)<nn:
-		i+=1
-		if i>MAX_TRIES:
-			raise Exception("can't find intersections near stops")
-
-		# pick one we haven't picked before
-		nd = choice(intersection_nds)
-		while nd in nds:
-			nd = choice(intersection_nds)
-
-		# check that it's within radius of a stop
-		lon,lat = nd_coords[nd]
-		if point_near_points( geod, radius, lon,lat, stop_lons,stop_lats ):
-			nds.add( nd )
-			ret.append( nd_coords[nd] )
-
-	print "done"
-
+	print "Done."
 	return ret
 
 if __name__=='__main__':
