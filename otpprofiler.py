@@ -109,6 +109,7 @@ def summarize (itinerary) :
         'walk_distance' : itinerary['walkDistance'],
         'wait_time_sec' : itinerary['waitingTime'],
         'ride_time_sec' : itinerary['transitTime'],
+        # we could just use native JSON lists here instead.
         'routes' : sqlarray(routes),
         'trips' : sqlarray(trips),
         'waits' : sqlarray(waits) }
@@ -176,20 +177,15 @@ def run(connect_args) :
         else :
             content = response.read()
             objs = json.loads(content)
-
             if 'plan' in objs:
                 itineraries = objs['plan']['itineraries']
                 n_itin = len(itineraries)
-                print n_itin, 'itineraries'
                 # check response for timeout flag
                 status = 'complete'
-                path_times = objs['debugOutput']['pathTimes']
-                print path_times
                 # status = 'timed out'
             else:
-                print 'no itineraries'
                 status = 'no paths'
-                
+        print status
         row = { 'url' : url,
                 'run_id' : run_time_id,
                 'request_id' : request_id,
@@ -203,6 +199,7 @@ def run(connect_args) :
         response_id = len(response_json)
         row['response_id'] = response_id
         row['itins'] = []
+        row['debug'] = objs['debugOutput']
         response_json.append( row )
         
         
