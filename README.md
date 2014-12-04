@@ -7,6 +7,10 @@ You will need Python and some Python libraries. For the libraries, on a Debian b
 
 `$ sudo apt-get install python-simplejson python-scipy`
 
+We also use grequests to handle multiple concurrent HTTP requests.
+
+`$ sudo pip install grequests`
+
 Generate random points with: 
 
     $ python gen_points.py dirname num_points
