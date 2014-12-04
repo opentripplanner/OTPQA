@@ -5,11 +5,24 @@ import subprocess, urllib, random
 import simplejson
 import pprint
 from copy import copy
+# python-requests no longer has first-class support for concurrent asynchronous HTTP requests
+# the author has moved it to https://github.com/kennethreitz/grequests
+# python-requests wraps urllib2 providing a much nicer API.
+import grequests
 
 DATE = '2014-12-03'
 # split out base and specific endpoint
-SHOW_PARAMS = True
+SHOW_PARAMS = False
 SHOW_URL = False
+SHOW_RESPONSE = False
+
+# globals to store accumulated responses. one file for summaries, one file for full itineraries.
+response_json = []
+full_itins_json = []
+pp = pprint.PrettyPrinter(indent=4)
+n = 0 # number of responses received
+N = 0 # total number of responses expected
+t0 = 0 # time that search begins
 
 def cycle(seq):
     "A generator that loops over a sequence forever."
@@ -44,7 +57,6 @@ def get_params(fast):
         req['fromPlace'] = "%s,%s"%(origin['lat'],origin['lon'])
         req['toPlace']   = "%s,%s"%(target['lat'],target['lon'])
         ret.append( req )
-        print req
     # TODO yield
     return ret
 
@@ -114,7 +126,56 @@ def summarize (itinerary) :
         'trips' : sqlarray(trips),
         'waits' : sqlarray(waits) }
     return ret
-    
+
+# Generate a callback closure containing the unfinished row.
+# We could potentially avoid this by only saving the URL or query parameters, and not passing in a row.
+def response_callback_factory(row) :
+    def handle_response(response, *args, **kwargs) :
+        global n # avoid "referenced before assignment" weirdness
+        n += 1
+        t = (time.time() - t0) / 60.0
+        T = (N * t) / n
+        print "Request %d/%d, time %0.2f min of %0.2f (estimated) received" % (n, N, t, T), response,
+        n_itin = 0
+        elapsed = 0
+        if response.status_code != 200 :
+            status = 'failed'
+        else :
+            objs = response.json()
+            row['debug'] = objs['debugOutput']
+            elapsed = objs['debugOutput']['totalTime']
+            if 'plan' in objs:
+                itineraries = objs['plan']['itineraries']
+                n_itin = len(itineraries)
+                # check response for timeout flag
+                status = 'complete'
+                # status = 'timed out'
+            else:
+                status = 'no paths'
+        print status
+        response_id = len(response_json) # not threadsafe -- not atomic with following line
+        response_json.append( row )
+        row['status'] = response.status_code
+        row['response_id'] = response_id
+        row['itins'] = []
+        row['total_time'] = str(elapsed) + ' msec'
+        row['avg_time'] = None if n_itin == 0 else '%f msec' % (float(elapsed) / n_itin)
+        # Create a row for each itinerary within this single trip planner result
+        if (n_itin > 0) :
+            for (itinerary_number, itinerary) in enumerate(itineraries) :
+                itin_row = summarize (itinerary)
+                #itin_row['response_id'] = response_id
+                itin_row['itinerary_number'] = itinerary_number + 1
+                full_itin = {'response_id':response_id,'itinerary_number':itinerary_number+1}
+                full_itin['body']=itinerary
+                full_itins_json.append( full_itin )
+                row['itins'].append( itin_row )
+        if SHOW_RESPONSE :
+            pp.pprint(row)
+    # return the function definition, a closure for a specific instance of 'row'
+    return handle_response 
+
+               
 def run(connect_args) :
     "This is the principal function..."
     notes = connect_args.pop('notes')
@@ -138,19 +199,12 @@ def run(connect_args) :
     run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes','id'), run_row))
 
     all_params = get_params(fast)
-
     random.shuffle(all_params)
-    n = 0
-    N = len(all_params)
+    global t0, N # HACK
     t0 = time.time()
-    response_json = []
-    full_itins_json = []
-    pp = pprint.PrettyPrinter(indent=4)
+    N = len(all_params)
+    reqs = []
     for params in all_params : 
-        n += 1
-        t = (time.time() - t0) / 60.0
-        T = (N * t) / n
-        print "Request %d/%d, time %0.2f min of %0.2f (estimated) " % (n, N, t, T)
         params = dict(params) # TODO necessary? 
         request_id = params.pop('id')
         oid = params.pop('oid')
@@ -164,59 +218,25 @@ def run(connect_args) :
             pp.pprint(params)
         if SHOW_URL :
             print url
-        req = urllib2.Request(url)
-        req.add_header('Accept', 'application/json')
-        start_time = time.time()
-        response = urllib2.urlopen(req)
-        end_time = time.time()
-        elapsed = end_time - start_time
-        n_itin = 0
-        if response.code != 200 :
-            print "not 200"
-            status = 'failed'
-        else :
-            content = response.read()
-            objs = json.loads(content)
-            if 'plan' in objs:
-                itineraries = objs['plan']['itineraries']
-                n_itin = len(itineraries)
-                # check response for timeout flag
-                status = 'complete'
-                # status = 'timed out'
-            else:
-                status = 'no paths'
-        print status
         row = { 'url' : url,
                 'run_id' : run_time_id,
                 'request_id' : request_id,
                 'origin_id' : oid,
                 'target_id' : tid,
                 'id_tuple' : "%s-%s-%s"%(oid,tid,request_id),
-                'total_time' : str(elapsed) + ' seconds',
-                'avg_time' : None if n_itin == 0 else '%f seconds' % (float(elapsed) / n_itin),
-                'status' : status,
                 'membytes' : None }
-        response_id = len(response_json)
-        row['response_id'] = response_id
-        row['itins'] = []
-        row['debug'] = objs['debugOutput']
-        response_json.append( row )
-        
-        
-        # Create a row for each itinerary within this single trip planner result
-        if (n_itin > 0) :
-            for (itinerary_number, itinerary) in enumerate(itineraries) :
-                itin_row = summarize (itinerary)
-                #itin_row['response_id'] = response_id
-                itin_row['itinerary_number'] = itinerary_number + 1
-                
-                full_itin = {'response_id':response_id,'itinerary_number':itinerary_number+1}
-                full_itin['body']=itinerary
-                full_itins_json.append( full_itin )
+        # You can't give arguments to the response callback, you have to make a factory function:
+        # "http://stackoverflow.com/questions/25115151/how-to-pass-parameters-to-hooks-in-python-grequests"
+        # Closures are created in Python by function calls.
+        response_callback = response_callback_factory(row)
+        headers = {'Accept': 'application/json'}
+        req = grequests.get(url, headers=headers, hooks=dict(response=response_callback))
+        reqs.append(req)
 
-                row['itins'].append( itin_row )
-        pp.pprint(row)
-
+    # Set max number of concurrent requests to 20, OTP should throttle this via worker threads
+    grequests.map(reqs, size=20) 
+    
+    # Write out all results at the end. Really, this should probably be done in streaming fashion.
     fpout = open("run_summary.%s.json"%run_time_id,"w")
     run_json['responses'] = response_json
     simplejson.dump(run_json, fpout, indent=2)
