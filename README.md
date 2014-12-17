@@ -21,7 +21,7 @@ Generate the request parameters and save the request endpoints with: 
 
     $ python gen_requests.py 
 
-It takes no arguments, assumes the presence of endpoints_random.py and endpoints_custom.py in the same directory.
+It takes no arguments, assumes the presence of endpoints_random.csv and endpoints_custom.csv in the same directory.
 
 Then run the profiler with 
 
