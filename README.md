@@ -1,7 +1,7 @@
-OTPProfiler
-===========
+OTPQA
+=====
 
-Keep track of changes in OTP performace.
+Keep track of changes in OTP performance as development progresses, and catch breaking changes to input data sets by observing changes in routing results.
 
 You will need Python and some Python libraries. For the libraries, on a Debian based system like Ubuntu you can run:
 
