@@ -10,7 +10,7 @@ from copy import copy
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
-DATE = '2014-12-03'
+DATE = '2014-12-30'
 # split out base and specific endpoint
 SHOW_PARAMS = False
 SHOW_URL = False
@@ -86,7 +86,7 @@ def getServerInfo(host):
         # would also be nice to have build date
         cpuName = objs['cpuName']
         nCores = objs['nCores']
-    except urllib2.URLError : 
+    except urllib2.URLError :
         # This is a normal condition while waiting for server to come up, trap exception and return None.
         # Any problem with decoding the server response will still blow up the program with an exception.
         print "Error requesting metadata from OTP server. Is it running?"
@@ -97,23 +97,27 @@ def getServerInfo(host):
     print "number of logical cores is:", nCores
     return (sha1, version, cpuName, nCores)
 
-def sqlarray (list):
-    return '{%s}' % (','.join(list))
-
-def summarize (itinerary) :
+# summarize the result for an itinerary planner request
+def summarize_plan (itinerary) :
     routes = []
     trips = []
     waits = []
+    leg_modes = []
+    leg_times = []
     n_vehicles = 0
     n_legs = 0
     for leg in itinerary['legs'] :
         n_legs += 1
+        leg_modes.append(leg['mode'])
+        leg_times.append((leg['endTime'] - leg['startTime'])/1000)
         if 'route' in leg and len(leg['route']) > 0 :
             routes.append(leg['route'])
+            trips.append(leg['tripId'])
             n_vehicles += 1
-        #trips.append(leg['trip'])
-        #waits.append(leg['wait'])
-    ret = { 
+            wait = (leg['from']['departure'] - leg['from']['arrival'])/1000
+            #print(' - wait = %d'%(wait))
+            waits.append(wait)
+    ret = {
         'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
         'duration' : '%d msec' % int(itinerary['duration']),
         'n_legs' : n_legs,
@@ -121,15 +125,89 @@ def summarize (itinerary) :
         'walk_distance' : itinerary['walkDistance'],
         'wait_time_sec' : itinerary['waitingTime'],
         'ride_time_sec' : itinerary['transitTime'],
-        # we could just use native JSON lists here instead.
-        'routes' : sqlarray(routes),
-        'trips' : sqlarray(trips),
-        'waits' : sqlarray(waits) }
+        'routes' : routes,
+        'trips' : trips,
+        'waits' : waits,
+        'leg_modes' : leg_modes,
+        'leg_times' : leg_times
+    }
     return ret
+
+# summarize the result for a profile request
+def summarize_profile (option) :
+    routes = []
+    trips = []
+    waits = []
+    leg_modes = []
+    leg_times = []
+    n_vehicles = 0
+    n_legs = 0
+    wait_time_sec = 0
+    ride_time_sec = 0
+
+    if 'transit' in option:
+        if 'access' in option:
+            n_legs += 1
+            summarize_profile_non_transit_leg(option['access'], leg_modes, leg_times)
+
+        for transit_leg in option['transit']:
+            n_legs += 1
+            n_vehicles += 1
+            leg_modes.append(transit_leg['mode'])
+
+            avg_wait_time = transit_leg['waitStats']['avg']
+            waits.append(avg_wait_time)
+            wait_time_sec += avg_wait_time
+
+            avg_ride_time = transit_leg['rideStats']['avg']
+            leg_times.append(avg_ride_time)
+            ride_time_sec += avg_ride_time
+
+            if len(transit_leg['routes']) == 1:
+                routes.append(transit_leg['routes'][0]['id'])
+            else:
+                route_ids = []
+                for route in transit_leg['routes']:
+                    route_ids.append(route['id'])
+                routes.append(route_ids)
+
+        if 'egress' in option:
+            n_legs += 1
+            summarize_profile_non_transit_leg(option['egress'], leg_modes, leg_times)
+
+    else:
+        n_legs = 1
+        summarize_profile_non_transit_leg(option['access'], leg_modes, leg_times)
+
+    ret = {
+        'n_legs' : n_legs,
+        'n_vehicles' : n_vehicles,
+        'wait_time_sec' : wait_time_sec,
+        'ride_time_sec' : ride_time_sec,
+        'routes' : routes,
+        'waits' : waits,
+        'leg_modes' : leg_modes,
+        'leg_times' : leg_times
+    }
+    return ret
+
+
+def summarize_profile_non_transit_leg (leg, leg_modes, leg_times) :
+    if len(leg) == 1:
+        leg_modes.append(leg[0]['mode'])
+        leg_times.append(leg[0]['time'])
+    else:
+        modes = []
+        times = []
+        for mode_option in leg:
+            modes.append(mode_option['mode'])
+            times.append(mode_option['time'])
+        leg_modes.append(modes)
+        leg_times.append(times)
 
 # Generate a callback closure containing the unfinished row.
 # We could potentially avoid this by only saving the URL or query parameters, and not passing in a row.
-def response_callback_factory(row) :
+def response_callback_factory(row, profile) :
     def handle_response(response, *args, **kwargs) :
         global n # avoid "referenced before assignment" weirdness
         n += 1
@@ -141,54 +219,79 @@ def response_callback_factory(row) :
         if response.status_code != 200 :
             status = 'failed'
         else :
+            row['itins'] = []
             objs = response.json()
-            row['debug'] = objs['debugOutput']
-            elapsed = objs['debugOutput']['totalTime']
-            if 'plan' in objs:
-                itineraries = objs['plan']['itineraries']
-                n_itin = len(itineraries)
-                # check response for timeout flag
-                status = 'complete'
-                # status = 'timed out'
+            if profile:
+                row['query_type'] = 'profile'
+                if 'options' in objs:
+                    options = objs['options']
+                    n_itin = len(options)
+                    # check response for timeout flag
+                    status = 'complete'
+                    # status = 'timed out'
+                else:
+                    status = 'no paths'
             else:
-                status = 'no paths'
+                row['query_type'] = 'plan'
+                row['debug'] = objs['debugOutput']
+                elapsed = objs['debugOutput']['totalTime']
+                if 'plan' in objs:
+                    itineraries = objs['plan']['itineraries']
+                    n_itin = len(itineraries)
+                    # check response for timeout flag
+                    status = 'complete'
+                    # status = 'timed out'
+                else:
+                    status = 'no paths'
+                row['total_time'] = str(elapsed) + ' msec'
+                row['avg_time'] = None if n_itin == 0 else '%f msec' % (float(elapsed) / n_itin)
+
         print status
         response_id = len(response_json) # not threadsafe -- not atomic with following line
         response_json.append( row )
         row['status'] = response.status_code
         row['response_id'] = response_id
-        row['itins'] = []
-        row['total_time'] = str(elapsed) + ' msec'
-        row['avg_time'] = None if n_itin == 0 else '%f msec' % (float(elapsed) / n_itin)
-        # Create a row for each itinerary within this single trip planner result
-        if (n_itin > 0) :
+
+        # Create a row for each itinerary/option within this single trip planner result
+        if profile:
+            for (option_number, option) in enumerate(options) :
+                option_row = summarize_profile (option)
+                option_row['itinerary_number'] = option_number + 1
+                full_itin = {'response_id':response_id,'itinerary_number':option_number+1}
+                full_itin['body']=option
+                full_itins_json.append( full_itin )
+                row['itins'].append( option_row )
+        else:
             for (itinerary_number, itinerary) in enumerate(itineraries) :
-                itin_row = summarize (itinerary)
+                itin_row = summarize_plan (itinerary)
                 #itin_row['response_id'] = response_id
                 itin_row['itinerary_number'] = itinerary_number + 1
                 full_itin = {'response_id':response_id,'itinerary_number':itinerary_number+1}
                 full_itin['body']=itinerary
                 full_itins_json.append( full_itin )
                 row['itins'].append( itin_row )
+
         if SHOW_RESPONSE :
             pp.pprint(row)
     # return the function definition, a closure for a specific instance of 'row'
-    return handle_response 
+    return handle_response
 
-               
+
 def run(connect_args) :
     "This is the principal function..."
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
     host = connect_args.pop('host')
+    profile = connect_args.pop('profile')
+    print("profile=%s"%profile)
     info = getServerInfo(host)
     while retry > 0 and info == None:
         print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
         time.sleep(10)
         info = getServerInfo(host)
         retry -= 1
-        
+
     if info == None :
         print "Failed to identify OTP version. Exiting."
         exit(-2)
@@ -204,16 +307,27 @@ def run(connect_args) :
     t0 = time.time()
     N = len(all_params)
     reqs = []
-    for params in all_params : 
-        params = dict(params) # TODO necessary? 
+    for params in all_params :
+        params = dict(params) # TODO necessary?
         request_id = params.pop('id')
         oid = params.pop('oid')
         tid = params.pop('tid')
+
         params['date'] = DATE
-        params['numItineraries'] = 3
-        # Tomcat server + spaces in URLs -> HTTP 505 confusion
+        if profile:
+            api_method = 'profile'
+            params['from'] = params.pop('fromPlace')
+            params['to'] = params.pop('toPlace')
+            params['modes'] = params.pop('mode')
+            params['limit'] = 3
+        else:
+            api_method = 'plan'
+            params['numItineraries'] = 3
+
         qstring = urllib.urlencode(params)
-        url = "http://"+host+"/otp/routers/default/plan?" + qstring
+        url = "http://%s/otp/routers/default/%s?%s"%(host, api_method, qstring)
+
+        # Tomcat server + spaces in URLs -> HTTP 505 confusion
         if SHOW_PARAMS :
             pp.pprint(params)
         if SHOW_URL :
@@ -228,14 +342,14 @@ def run(connect_args) :
         # You can't give arguments to the response callback, you have to make a factory function:
         # "http://stackoverflow.com/questions/25115151/how-to-pass-parameters-to-hooks-in-python-grequests"
         # Closures are created in Python by function calls.
-        response_callback = response_callback_factory(row)
+        response_callback = response_callback_factory(row, profile)
         headers = {'Accept': 'application/json'}
         req = grequests.get(url, headers=headers, hooks=dict(response=response_callback))
         reqs.append(req)
 
     # Set max number of concurrent requests to 20, OTP should throttle this via worker threads
-    grequests.map(reqs, size=20) 
-    
+    grequests.map(reqs, size=20)
+
     # Write out all results at the end. Really, this should probably be done in streaming fashion.
     fpout = open("run_summary.%s.json"%run_time_id,"w")
     run_json['responses'] = response_json
@@ -245,18 +359,19 @@ def run(connect_args) :
     fpout = open("full_itins.%s.json"%run_time_id,"w")
     simplejson.dump( full_itins_json, fpout, indent=2 )
     fpout.close()
-    
+
 import argparse
 if __name__=="__main__":
     import argparse # optparse is deprecated
-    parser = argparse.ArgumentParser(description='perform an otp profiler run') 
-    parser.add_argument('host') 
-    parser.add_argument('-f', '--fast', action='store_true', default=False) 
-    parser.add_argument('-n', '--notes') 
-    parser.add_argument('-r', '--retry', type=int, default=5) 
-    args = parser.parse_args() 
+    parser = argparse.ArgumentParser(description='perform an otp profiler run')
+    parser.add_argument('host')
+    parser.add_argument('-f', '--fast', action='store_true', default=False)
+    parser.add_argument('-n', '--notes')
+    parser.add_argument('-r', '--retry', type=int, default=5)
+    parser.add_argument('-p', '--profile', action='store_true', default=False)
+    args = parser.parse_args()
 
-    # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name), 
+    # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name),
     # so convert it to a dict before passing it into the run function.
     run(vars(args))
 
