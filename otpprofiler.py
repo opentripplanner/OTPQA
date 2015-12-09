@@ -10,7 +10,7 @@ from copy import copy
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
-DATE = '2014-12-30'
+DATE = '2015-12-30'
 # split out base and specific endpoint
 SHOW_PARAMS = False
 SHOW_URL = False
@@ -119,7 +119,7 @@ def summarize_plan (itinerary) :
             waits.append(wait)
     ret = {
         'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
-        'duration' : '%d msec' % int(itinerary['duration']),
+        'duration' : '%d sec' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
         'walk_distance' : itinerary['walkDistance'],
