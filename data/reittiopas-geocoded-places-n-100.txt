@@ -1,0 +1,2203 @@
+    100 Herttoniemi(M), Helsinki
+    100 Hämeentie 28, Helsinki
+    100 Hämeentie 81, Helsinki
+    100 Isonvillasaarentie 1, Helsinki
+    100 Jönsaksentie 6, Vantaa
+    100 Karakalliontie 14, Espoo
+    100 Katontekijänkuja 1, Helsinki
+    100 Mattilanpuisto, Kerava
+    100 Mäntytie 1, Helsinki
+    100 Pengerkatu 21, Helsinki
+    100 Pengerkatu 22, Helsinki
+    100 Pihkatie 5, Helsinki
+    100 Pitäjänmäentie 13, Helsinki
+    100 Porvoonkatu 25, Helsinki
+    100 Pähkinätie 3, Vantaa
+    100 Roihuvuorentie 30, Helsinki
+    100 Ruotsinpiha 2, Vantaa
+    100 Samis, Kauniainen
+    100 Scandic Park, Helsinki
+    100 Sellosali, Espoo
+    100 Sörnäistenkatu 1, Helsinki
+    100 Taimistontie 1, Helsinki
+    100 Tehtaankatu 25, Helsinki
+    100 Teknikontie 7, Vantaa
+    100 Vaakatie 1, Helsinki
+    100 Vaasankatu 9, Helsinki
+    101 Alakiventie 1, Helsinki
+    101 Hitsaajankatu 9, Helsinki
+    101 Huopalahdentie 24, Helsinki
+    101 Huopalahdentie 3, Helsinki
+    101 Hämeentie 95, Helsinki
+    101 Ilmalantori 1, Helsinki
+    101 Itsehallintokuja 6, Espoo
+    101 Itäviitta 1, Espoo
+    101 Kaarlenkatu 15, Helsinki
+    101 Kaisaniemenkatu 3, Helsinki
+    101 Kivikko, Helsinki
+    101 Klippinkitie 1, Espoo
+    101 Koskelantie 23, Helsinki
+    101 Koudantie 2, Helsinki
+    101 Kuortaneenkatu 7, Helsinki
+    101 Kuunkehrä 1, Espoo
+    101 Lauttasaarentie 32, Helsinki
+    101 Maasälväntie 16, Helsinki
+    101 Neljäs Linja 26, Helsinki
+    101 Niittykummuntie 6, Espoo
+    101 Opettajantie 3, Espoo
+    101 Perhonkatu 1, Helsinki
+    101 Pietarinkatu 1, Helsinki
+    101 Pohjois-Tapiolan lukio, Espoo
+    101 Pyhtäänkorventie 21, Vantaa
+    101 Riiantie 1, Espoo
+    101 Riistavuorenkuja 8, Helsinki
+    101 Rosendalinrinki 1, Vantaa
+    101 Sammalkalliontie 6, Espoo
+    101 Sibelius-lukio, Helsinki
+    101 Sturenkatu 26, Helsinki
+    101 Säterinkatu 2, Vantaa
+    101 Taavetti Laitisen katu 1, Helsinki
+    101 Takkatie 7, Helsinki
+    101 Talonpojantie 25, Helsinki
+    101 Talvelantie 4, Helsinki
+    101 Tammistonkatu 27, Vantaa
+    101 Vaijeritie 1, Vantaa
+    101 Vallilan varikko, Helsinki
+    101 Yrjönkatu 21, Helsinki
+    102 Alppila, Helsinki
+    102 Apollonkatu, Helsinki
+    102 Arinatie 20, Vantaa
+    102 Backåkersvägen 19, Helsinki
+    102 Brinkinmäentie 1, Espoo
+    102 Bulevardi 40, Helsinki
+    102 Espoontie 25, Espoo
+    102 Hagelstamintie 20, Vantaa
+    102 Hietaniemenkatu 1, Helsinki
+    102 Huopalahdentie 1, Helsinki
+    102 Hämeentie 26, Helsinki
+    102 Hämeentie 70, Helsinki
+    102 Karapellontie 11, Espoo
+    102 Kaupunginteatteri, Helsinki
+    102 Kirstintie 17, Espoo
+    102 Kutomotie 6, Helsinki
+    102 Malminkartanontie 1, Helsinki
+    102 Mestarintie 5, Vantaa
+    102 Mustialankatu 1, Helsinki
+    102 Näyttelijäntie, Helsinki
+    102 Reiherintie 7, Helsinki
+    102 Stoa, Helsinki
+    102 Tenholantie 1, Helsinki
+    102 Töölönkatu 27, Helsinki
+    102 Unioninkatu 39, Helsinki
+    102 Vanamonkuja 1, Vantaa
+    102 Vanha Yrttimaantie 22, Helsinki
+    102 Vattuniemenkatu 16, Helsinki
+    102 Veromäen koulu, Vantaa
+    102 Vieraskuja 1, Espoo
+    103 Fredrikinkatu 48, Helsinki
+    103 Heikinlaaksontie 1, Helsinki
+    103 Hirsalantie 11, Kirkkonummi
+    103 Hirsipadontie 5, Helsinki
+    103 Hämeentie 36, Helsinki
+    103 Kaisaniemenkatu 2, Helsinki
+    103 Karjalankatu 2, Helsinki
+    103 Katajanokanlaituri 1, Helsinki
+    103 Katariina Saksilaisen katu 1, Helsinki
+    103 Kirjurinkuja 1, Espoo
+    103 Kluuvikatu 1, Helsinki
+    103 Koivu-mankkaan tie 5, Espoo
+    103 Kutomotie 12, Helsinki
+    103 Käpyläntie 4, Helsinki
+    103 Linnoitustie 6, Espoo
+    103 Makasiiniterminaali, Helsingfors
+    103 Mannerheimintie 22, Helsinki
+    103 Mannerheimintie 47, Helsinki
+    103 Metsänhoitajankatu 1, Helsinki
+    103 Nuolikuja 6, Vantaa
+    103 Otaranta 6, Espoo
+    103 Pasilanraitio 12, Helsinki
+    103 Porslahdentie 1, Helsinki
+    103 Pursimiehenkatu 25, Helsinki
+    103 Siltasaarenkatu 15, Helsinki
+    103 Siltavoudintie 1, Helsinki
+    103 Simonkallion koulu, Vantaa
+    103 Sotungintie 19, Vantaa
+    103 Valimotie 16, Helsinki
+    103 Vantaanpuisto, Vantaa
+    103 Vattuniemenranta 2, Helsinki
+    103 Vuorikatu 14, Helsinki
+    104 Aalto 6, Espoo
+    104 Asema-aukio 2, Helsinki
+    104 Hagelstamintie 27, Vantaa
+    104 Helsinginkatu 14, Helsinki
+    104 Horsmakuja 4, Vantaa
+    104 Kaivosrinteenkuja 2, Vantaa
+    104 Kamreerintie 2, Espoo
+    104 Kansallisteatteri, Helsinki
+    104 Kaskenkaatajantie 1, Espoo
+    104 Korppaanmäentie 17, Helsinki
+    104 Kurkisuontie 12, Helsinki
+    104 Linnatullinkatu 1, Espoo
+    104 Länsisatamankatu 16, Helsinki
+    104 Maununnevantie 1, Helsinki
+    104 Mechelininkatu 15, Helsinki
+    104 Myyrmäentie 2, Vantaa
+    104 Niittymaantie 1, Espoo
+    104 Osmontie 34, Helsinki
+    104 Pikku Satamakatu 3, Helsinki
+    104 Pohjantori, Espoo
+    104 Tanhuantie 1, Helsinki
+    104 Toinen Linja 10, Helsinki
+    104 Töyrytie 6, Helsinki
+    104 Untamontie 10, Helsinki
+    104 Untamontie 15, Helsinki
+    104 Urheilupuistontie 2, Espoo
+    104 Vyökatu 1, Helsinki
+    104 Vääksyntie 4, Helsinki
+    104 Wallininkuja 3, Helsinki
+    104 Ylistörmä 5, Espoo
+    105 EMMA Espoon modernin taiteen museo, Espoo
+    105 Haapaniemenkatu 12, Helsinki
+    105 Jämeräntaival 3, Espoo
+    105 Keijumäki 1, Espoo
+    105 Kilo Park and Ride, Espoo
+    105 Kiltakuja 1, Espoo
+    105 Kuurinniitty, Espoo
+    105 Kuusitie 11, Helsinki
+    105 Käskynhaltijantie 14, Helsinki
+    105 Läkkisepänkuja 8, Helsinki
+    105 Malmin Kauppatie 8, Helsinki
+    105 Munkkiniemen puistotie 25, Helsinki
+    105 Nuijavuori 1, Espoo
+    105 Otavantie 1, Helsinki
+    105 Pallomylly, Helsinki
+    105 Pasilan kirjasto, Helsinki
+    105 Pukinkuja 2, Helsinki
+    105 Runeberginkatu 32, Helsinki
+    105 Sampsantie 50, Helsinki
+    105 Saunakallio, -
+    105 Soukantie 16, Espoo
+    105 Talttakuja 1, Vantaa
+    105 Tapiolan terveysasema, Espoo
+    105 Teknillinen korkeakoulu, Espoo
+    105 Tukholmankatu 2, Helsinki
+    105 Urheilukatu 9, Helsinki
+    106 Allergiatalo, Helsinki
+    106 Arabiankatu 12, Helsinki
+    106 Arabiankatu 6, Helsinki
+    106 Ensi Linja 2, Helsinki
+    106 Haapaniemenkatu 11, Helsinki
+    106 Isokaari 9, Helsinki
+    106 Isonnevantie 28, Helsinki
+    106 Juvanpuro 1, Espoo
+    106 Kaikukatu 2, Helsinki
+    106 Kaskilaaksontie 1, Espoo
+    106 Kaupintie 11, Helsinki
+    106 Kivikonkaari 49, Helsinki
+    106 Krakankuja 2, Vantaa
+    106 Liuskekuja 1, Helsinki
+    106 Länsisatamankatu 23, Helsinki
+    106 Läntinen Papinkatu 2, Helsinki
+    106 Mannerheimintie 81, Helsinki
+    106 Merenkulkijankatu 1, Espoo
+    106 Mäkitorpantie 30, Helsinki
+    106 Nelikkokuja 1, Espoo
+    106 Paciuksenkatu 29, Helsinki
+    106 Postipuuntie 10, Espoo
+    106 Siltasaarenkatu 13, Helsinki
+    106 Snellmaninkatu 1, Helsinki
+    106 Vaisalantie 8, Espoo
+    106 Vallikatu 1, Espoo
+    106 Vanha Nurmijärventie 62, Vantaa
+    106 Vanha Viertotie 22, Helsinki
+    106 Vattuniemen puistotie 1, Helsinki
+    106 Vesikuja 8, Helsinki
+    106 Westendintie 99, Espoo
+    107 Alppikatu 9, Helsinki
+    107 Annankatu 18, Helsinki
+    107 Erottajankatu 1, Helsinki
+    107 Eteläinen Rautatiekatu 2, Helsinki
+    107 Hansakallio 2, Espoo
+    107 Hämeentie 44, Helsinki
+    107 Hämeentie 67, Helsinki
+    107 Juustenintie 1, Helsinki
+    107 Kala-maija 3, Espoo
+    107 Kalevankatu 8, Helsinki
+    107 Kiviteltankatu 1, Helsinki
+    107 Käskynhaltijantie 11, Helsinki
+    107 Käskynhaltijantie 1, Helsinki
+    107 Linnoitustie 9, Espoo
+    107 Maapallonkatu 8, Espoo
+    107 Piilipuuntie 7, Espoo
+    107 Pikku-Huopalahti, Helsinki
+    107 Pohjantie 2, Espoo
+    107 Rasinkatu 4, Vantaa
+    107 Tammihaantie 2, Espoo
+    107 Tietotie 6, Espoo
+    107 Vilppulantie 1, Helsinki
+    108 Fabianinkatu 1, Helsinki
+    108 Huopalahdentie 10, Helsinki
+    108 Huutokonttori, Helsinki
+    108 Jokiniemi, Vantaa
+    108 Järnvägstorget, Helsingfors
+    108 Kerava railway station, Kerava
+    108 Kirkkojärventie 6, Espoo
+    108 Kutomotie 16, Helsinki
+    108 Kuusikkotie 4, Helsinki
+    108 Leenankuja 1, Espoo
+    108 Majurinkulma 1, Espoo
+    108 Mekaanikonkatu 1, Helsinki
+    108 Mäkelänkatu 54, Helsinki
+    108 Neitsytsaarentie 1, Helsinki
+    108 Pertunpellontie 1, Helsinki
+    108 Rautatieläisenkatu 1, Helsinki
+    108 Ristiaallokonkatu 4, Espoo
+    108 Sakara 2, Helsinki
+    108 Satulamaakarintie 1, Espoo
+    108 Sauvatie 4, Vantaa
+    108 Solnantie 19, Helsinki
+    108 Säterintie 2, Helsinki
+    108 Sörnäisten Rantatie 23, Helsinki
+    108 Taivaskalliontie 1, Helsinki
+    108 Tapanilan erä, Helsinki
+    108 Töölönkatu 3, Helsinki
+    109 Asemakuja 3, Espoo
+    109 Fabianinkatu 7, Helsinki
+    109 Gyldenintie 2, Helsinki
+    109 Helsinginkatu 20, Helsinki
+    109 Hernesaari, Helsinki
+    109 Hämeentie 30, Helsinki
+    109 Itämerenkatu 8, Helsinki
+    109 Katajaharjuntie 1, Helsinki
+    109 Kirstinkatu 4, Helsinki
+    109 Komeetankatu 2, Espoo
+    109 Kuuluttajankatu 1, Helsinki
+    109 Laivalahdenkaari 34, Helsinki
+    109 Lohkopellontie 1, Helsinki
+    109 Lummetie 5, Vantaa
+    109 Maununnevantie 3, Helsinki
+    109 Nihtisilta 4, Espoo
+    109 Olympiakylä, Helsinki
+    109 Piispansilta, Espoo
+    109 Porvoonkatu 19, Helsinki
+    109 Rasinkatu 15, Vantaa
+    109 Runeberginkatu 61, Helsinki
+    109 Tähkätie 4, Helsinki
+    109 Ulvilantie 1, Helsinki
+    109 Unikkotie 3, Helsinki
+    109 Upseerinkatu 3, Espoo
+    110 Adjutantinkatu 8, Espoo
+    110 Heinjoenpolku 2, Espoo
+    110 Helsinki, Helsingfors
+    110 Henttaa, Espoo
+    110 Junkkarinkaari 7, Vantaa
+    110 Lehdeskuja 1, Espoo
+    110 Munkkiniemen puistotie 17, Helsinki
+    110 Postitalo, Helsinki
+    110 Rautalammintie 1, Helsinki
+    110 Ressun lukio, Helsinki
+    110 Satamaradankatu 5, Helsinki
+    110 Suursuonlaita 2, Helsinki
+    110 Trumpettitie 6, Helsinki
+    110 Tuukkalantie 15, Helsinki
+    110 Valimotie, Helsinki
+    110 Äyritie 12, Vantaa
+    111 Erottajankatu 5, Helsinki
+    111 Hiomotie 46, Helsinki
+    111 Hämeentie 34, Helsinki
+    111 Iivisniemenkatu 4, Espoo
+    111 Isonnevantie 1, Helsinki
+    111 Isonniitynkuja 2, Espoo
+    111 Kaivokselantie 8, Vantaa
+    111 Laivalahdenkaari 19, Helsinki
+    111 Leppävaarankatu 1, Espoo
+    111 Maarukankuja 1, Vantaa
+    111 Mannerheimintie 113, Helsinki
+    111 Nuumäki, Espoo
+    111 Näyttelijäntie 16, Helsinki
+    111 Olarinniityntie 4, Espoo
+    111 Otsolahdentie 16, Espoo
+    111 Raiviosuonmäki 3, Vantaa
+    111 Sahaajankatu 20, Helsinki
+    111 Soidinkuja 6, Helsinki
+    111 Tehtaankatu 27, Helsinki
+    111 Tietotie 2, Espoo
+    111 Toivonkatu 1, Helsinki
+    111 Töölön yhteiskoulu, Helsinki
+    111 Vanha Tapanilantie 62, Helsinki
+    111 Viipurinkatu 4, Helsinki
+    111 Viulutie 1, Helsinki
+    111 Vuorenpeikontie 5, Helsinki
+    112 Antaksentie 3, Vantaa
+    112 Castreninkatu 28, Helsinki
+    112 Honkavaarankuja 1, Espoo
+    112 Huokotie 1, Helsinki
+    112 Hämeentie 3, Helsinki
+    112 Kaivokatu 6, Helsinki
+    112 Kastanjakuja 1, Vantaa
+    112 Kielotie 7, Vantaa
+    112 Kivivuorentie 4, Vantaa
+    112 Kluuvikatu 3, Helsinki
+    112 Lokkalantie 14, Helsinki
+    112 Lontoonkatu 9, Helsinki
+    112 Merituulentie 30, Espoo
+    112 Miestentie 2, Espoo
+    112 Museokatu 10, Helsinki
+    112 Mäkelänkatu 30, Helsinki
+    112 Pirkkolan uimahalli, Helsinki
+    112 Porintie 5, Helsinki
+    112 Sokerilinnantie 11, Espoo
+    112 Teknobulevardi 1, Vantaa
+    112 Temppeliaukio Church, Helsinki
+    112 Vanamontie 4, Vantaa
+    112 Viljo Sohkasen katu 1, Vantaa
+    112 Yrjönkatu 18, Helsinki
+    113 Ateneum, Helsinki
+    113 Esikkotie 9, Vantaa
+    113 Everstinkuja 1, Espoo
+    113 Haapaniemistigen 1, Kirkkonummi
+    113 Hakaniemenkatu 7, Helsinki
+    113 Helsinge skola, Vantaa
+    113 Kaanaanpiha 4, Helsinki
+    113 Kaivopuisto, Helsinki
+    113 Karhulantie 2, Helsinki
+    113 Karhutie 1, Kirkkonummi
+    113 Kasöörinkatu 3, Helsinki
+    113 Katajanokanranta 1, Helsinki
+    113 Kirvisenkuja 1, Vantaa
+    113 Kiskottajankuja 1, Espoo
+    113 Konalantie 12, Helsinki
+    113 Kontulankaari 24, Helsinki
+    113 Kruununhaka, Helsinki
+    113 Kuusitie 12, Helsinki
+    113 Laaksolahden urheilukeskus, Espoo
+    113 Lönnrotinkatu 41, Helsinki
+    113 Löydöstie 1, Vantaa
+    113 Mannerheimintie 120, Helsinki
+    113 Mikkelä, Espoo
+    113 Opastinsilta 8, Helsingfors
+    113 Peltokyläntie, Helsinki
+    113 Raikurinne 1, Vantaa
+    113 Sibeliuksenkatu 10, Helsinki
+    113 Siilitie 18, Helsinki
+    113 Unioninkatu 20, Helsinki
+    113 Vanha Turuntie 75, Espoo
+    113 Vanha Viertotie 2, Helsinki
+    113 Yläkiventie 5, Helsinki
+    114 Betonimiehenkuja 3, Espoo
+    114 Gyldenintie 6, Helsinki
+    114 Hakaniemenranta 1, Helsinki
+    114 Hämeentie 124, Helsinki
+    114 Kirstinkatu 2, Helsinki
+    114 Koivuvaarankuja 1, Vantaa
+    114 Kuitinmäen koulu, Espoo
+    114 Liusketie 16, Helsinki
+    114 Maistraatinportti 4, Helsinki
+    114 Matinkartanontie 1, Espoo
+    114 Myllynkivenkuja 4, Vantaa
+    114 Pasilan puistotie 10, Helsinki
+    114 Sepontie 1, Espoo
+    114 Teuvo Pakkalan tie, Helsinki
+    114 Ukonkivenpolku 4, Vantaa
+    114 Ulvilantie 25, Helsinki
+    115 Aamuruskontie 2, Helsinki
+    115 Aleksis Kiven katu 38, Helsinki
+    115 Bulevardi 28, Helsinki
+    115 Bulevardi 6, Helsinki
+    115 Eteläinen Hesperiankatu 22, Helsinki
+    115 Fredrikinkatu 20, Helsinki
+    115 Helsingin medialukio, Helsinki
+    115 Hertaksentie 2, Vantaa
+    115 Katajanokanlaituri 6, Helsingfors
+    115 Kauriintie 4, Helsinki
+    115 Kielotie 21, Vantaa
+    115 Korkeavuorenkatu 1, Helsinki
+    115 Kumpulantie 1, Helsinki
+    115 Kuusisaari, Helsinki
+    115 Myllymatkantie 4, Helsinki
+    115 Nuijamäki 6, Espoo
+    115 Palokunnanmäki 1, Vantaa
+    115 Pronssitie 4, Helsinki
+    115 Rastilantie 5, Helsinki
+    115 Siemenkuja 3, Helsinki
+    115 Takomotie 8, Helsinki
+    115 Väinölänkatu 17, Helsinki
+    116 Aapelinkatu 1, Espoo
+    116 Albertinkatu 25, Helsinki
+    116 Aleksis Kiven katu 52, Helsinki
+    116 Bemböle, Espoo
+    116 Eteläranta 8, Helsinki
+    116 Hevostilantie 1, Espoo
+    116 Hiihtäjäntie 1, Helsinki
+    116 Ilmalankatu 2, Helsinki
+    116 Jakomäentie 8, Helsinki
+    116 Jumbo Shopping Centre, Vantaa
+    116 Kaitaan lukio, Espoo
+    116 Kaivosvoudintie 4, Vantaa
+    116 Keilaranta 10, Espoo
+    116 Keskuskatu 2, Helsingfors
+    116 Kutojantie 4, Espoo
+    116 Kuusitie 4, Helsinki
+    116 Leinikkitie 11, Vantaa
+    116 Maininki 15, Espoo
+    116 Mankkaantie 2, Espoo
+    116 Meriusva 5, Espoo
+    116 Myrskyläntie 22, Helsinki
+    116 Piispanportti 12, Espoo
+    116 Porvoonkatu 14, Helsinki
+    116 Rosendalinkuja 3, Vantaa
+    116 Salmisaarenranta 11, Helsinki
+    116 Sörnäistenkatu 19, Helsinki
+    116 Teuvo Pakkalan tie 1, Helsinki
+    116 Tilanhoitajankaari 8, Helsinki
+    116 Urheilupuistontie 3, Espoo
+    117 Elimäenkatu 5, Helsinki
+    117 Finnoontie 12, Espoo
+    117 Junailijankuja 10, Helsinki
+    117 Kaarlenkatu 11, Helsinki
+    117 Karakalliontie 5, Espoo
+    117 Keilaranta 13, Espoo
+    117 Liusketie 2, Helsinki
+    117 Piispankalliontie 17, Espoo
+    117 Pikku Satamakatu 1, Helsinki
+    117 Pilotti (hotla), Vantaa
+    117 Pitäjänmäentie 14, Helsinki
+    117 Puunhaltijankuja 1, Vantaa
+    117 Suutarila, Helsinki
+    117 Takkatie 1, Helsinki
+    117 Vanha Tapanilantie 1, Helsinki
+    117 Viherlaaksonranta 7, Espoo
+    117 Viikinkaari 4, Helsinki
+    118 Asentajankatu 6, Helsinki
+    118 Bulevardi 7, Helsinki
+    118 Castreninkatu 3, Helsinki
+    118 Haapaniemenkatu 5, Helsinki
+    118 Heureka tiedekeskus, Vantaa
+    118 Itämerenkatu 23, Helsinki
+    118 Kanneltie 8, Helsinki
+    118 Kiviaidankatu 2, Helsinki
+    118 Kivipadontie 4, Helsinki
+    118 Koivuvaarankuja 2, Vantaa
+    118 Käpylänaukio 1, Helsinki
+    118 Laajavuorenkuja 3, Vantaa
+    118 Lehtovuorenkatu 6, Helsinki
+    118 Leinelänkaari 14, Vantaa
+    118 Leppäsuonkatu 9, Helsinki
+    118 Masalan asema, Kirkkonummi
+    118 Mäkelänkatu 13, Helsinki
+    118 Mäkitorpantie 1, Helsinki
+    118 Männikkötie 5, Helsinki
+    118 Nauriskaski, Espoo
+    118 Nervanderinkatu 13, Helsinki
+    118 Petter Wetterin tie 1, Helsinki
+    118 Pirttikorpi 7, Espoo
+    118 Rajatorpantie 41, Vantaa
+    118 Ratatie 11, Vantaa
+    118 Savela, Helsinki
+    118 Sörnäisten Rantatie 22, Helsinki
+    118 Töölönkatu 55, Helsinki
+    119 Eerikinkatu 27, Helsinki
+    119 Harmotie 1, Vantaa
+    119 Helsinginkatu 21, Helsinki
+    119 Hämeentie 6, Helsinki
+    119 Kasarmikatu 21, Helsinki
+    119 Korppaanmäentie 1, Helsinki
+    119 Kotisaarenkatu 3, Helsinki
+    119 Kuntatalo, Helsinki
+    119 Leinikkitie 9, Vantaa
+    119 Lepuski, Espoo
+    119 Martinkeskus, Vantaa
+    119 Niipperin koulu, Espoo
+    120 Elimäenkatu 30, Helsinki
+    120 Erik Palmenin aukio 1, Helsinki
+    120 Hämeentie 54, Helsinki
+    120 Iho- ja allergiasairaala, Helsinki
+    120 Itälahdenkatu 1, Helsinki
+    120 Itämerenkatu 12, Helsinki
+    120 Kaivosrinteentie 2, Vantaa
+    120 Kantelettarentie 8, Helsinki
+    120 Kiviteltankatu 3, Helsinki
+    120 Kontula Park and Ride, Helsinki
+    120 Mankkaankallio 1, Espoo
+    120 Miestentie 9, Espoo
+    120 Nihtisillantie 1, Espoo
+    120 Puolarmetsä, Espoo
+    120 Seulastentie 11, Helsinki
+    120 Siltasaarenkatu 12, Helsinki
+    120 Valimon asema, Helsinki
+    120 Veräjämäki, Helsinki
+    121 Ala-Tikkurila, Helsinki
+    121 Helsinginkatu 28, Helsinki
+    121 Helsinginkatu 2, Helsinki
+    121 Junailijankuja 5, Helsinki
+    121 Kappelitie 6, Espoo
+    121 Koskela, Helsinki
+    121 Koskelantie 39, Helsinki
+    121 Krakantie 2, Vantaa
+    121 Kuunsäde 1, Espoo
+    121 Kyrölä, -
+    121 Kärrynpyöräntie 1, Espoo
+    121 Leiviskätie 1, Helsinki
+    121 Lumikintie 4, Helsinki
+    121 Nelikkotie 8, Espoo
+    121 Pelimannintie 1, Helsinki
+    121 Pitäjänmäentie 1, Helsinki
+    121 Porthaninkatu 9, Helsinki
+    121 Rahakamarinkatu 1, Helsinki
+    121 Rajametsäntie 35, Helsinki
+    121 Risto Rytin tie 33, Helsinki
+    121 Roihuvuorentie 18, Helsinki
+    121 Servin Maijan tie 10, Espoo
+    121 Takomotie 27, Helsinki
+    122 Agronominkatu 26, Helsinki
+    122 Albertinkatu 40, Helsinki
+    122 Alhokuja 8, Helsinki
+    122 Hämeentie 109, Helsinki
+    122 Iivisniementie 1, Espoo
+    122 Järvenpään asema, Kerava
+    122 Kirkkotallintie 1, Kirkkonummi
+    122 Mäkelänkatu, Helsinki
+    122 Pakilantie 8, Helsinki
+    122 Pietari Hannikaisen tie 6, Helsinki
+    122 Puolarinportti 1, Espoo
+    122 Sundsberg, Kirkkonummi
+    122 Suonotkontie 1, Helsinki
+    123 Esterinportti 2, Helsinki
+    123 Helsingin rautatieasema, Helsingfors
+    123 Henrik Lättiläisen katu 1, Helsinki
+    123 Intiankatu 1, Helsinki
+    123 Kaivokatu 10, Helsinki
+    123 Kalevankatu 1, Helsinki
+    123 Kauppakartanonkatu 16, Helsinki
+    123 Lammastie 1, Vantaa
+    123 Lummetie 1, Vantaa
+    123 Mannerheimintie 79, Helsinki
+    123 Maunulan yhteiskoulu, Helsinki
+    123 Mikkolantie 1, Helsinki
+    123 Mäkelänkatu 50, Helsinki
+    123 Otaranta 2, Espoo
+    123 Ramsaynkuja 1, Espoo
+    123 Ratapihantie 1, Helsinki
+    123 Sturenkatu 37, Helsinki
+    123 Vanha Viertotie 21, Helsinki
+    123 Venäläinen koulu, Helsinki
+    124 Alakaupunki, Espoo
+    124 Fleminginkatu 23, Helsinki
+    124 Fleminginkatu 25, Helsinki
+    124 Haapaniemenrinne 1, Espoo
+    124 Kala-matti 1, Espoo
+    124 Kirkkokatu 6, Helsinki
+    124 Kirstintie 30, Espoo
+    124 Kivelän sairaala, Helsinki
+    124 Kylänvanhimmantie 29, Helsinki
+    124 Köydenpunojankatu 8, Helsinki
+    124 Mannerheimintie 14, Helsinki
+    124 Mannerheimintie 3, Helsinki
+    124 Porintie 1, Helsinki
+    124 Rinnekoti, Espoo
+    124 Rörstrandinkatu 1, Helsinki
+    124 Takojankuja 1, Kerava
+    125 Kangasalantie 13, Helsinki
+    125 Katajaharju, Helsinki
+    125 Kauppamiehentie 1, Espoo
+    125 Kämnerintie 4, Helsinki
+    125 Lautatarhankatu 6, Helsinki
+    125 Portti 1, Espoo
+    125 Purotie 8, Helsinki
+    125 Pursimiehenkatu 26, Helsinki
+    125 Suezinkatu 3, Helsinki
+    125 Takomotie 23, Helsinki
+    125 Trillakatu 1, Espoo
+    125 Vilhonvuorenkatu 1, Helsinki
+    125 Väinölänkatu 2, Helsinki
+    126 Dagmarinkatu 3, Helsinki
+    126 Helsinginkatu 15, Helsinki
+    126 HKI, Helsinki
+    126 Isonniitynkatu 3, Helsinki
+    126 Kaitaan koulu, Espoo
+    126 Kanavaranta 7, Helsinki
+    126 Kiillekuja 3, Helsinki
+    126 Koivumäentie 16, Vantaa
+    126 Kontukuja 5, Helsinki
+    126 Lapinlahdenkatu 1, Helsinki
+    126 Liusketie 3, Helsinki
+    126 Pohjoinen Hesperiankatu 1, Helsinki
+    126 Pyhtäänkorvenkuja 6, Vantaa
+    126 Ryytimaa 1, Espoo
+    126 Siltakuja 1, Espoo
+    126 Sörnäisten Rantatie 6, Helsinki
+    126 Tuusulantaival 42, Kerava
+    126 Töölöntullinkatu 1, Helsinki
+    126 Viikintie 1, Helsinki
+    127 Albertinkatu 1, Helsinki
+    127 Aleksis Kiven katu 3, Helsinki
+    127 Castreninkatu 18, Helsinki
+    127 Dagmarinkatu 5, Helsinki
+    127 Helsingintie 10, Kauniainen
+    127 Hiomotie 42, Helsinki
+    127 Itämerenkatu 3, Helsinki
+    127 Itäportti 1, Espoo
+    127 Kaarlenkatu 1, Helsinki
+    127 Kaupintie 14, Helsinki
+    127 Koisotie 4, Vantaa
+    127 Maapadontie 1, Helsinki
+    127 Maininkitie 9, Espoo
+    127 Perkkaantie 3, Espoo
+    127 Poutamäentie 13, Helsinki
+    127 Savelantie 3, Helsinki
+    127 Siilitie 7, Helsinki
+    127 Sturenkatu 25, Helsinki
+    127 Tyynenmerenkatu 3, Helsinki
+    127 Vanha Turuntie 14, Kauniainen
+    128 Aleksanterinkatu 9, Helsinki
+    128 Brahenkatu, Helsinki
+    128 Erkki Melartinin tie 1, Helsinki
+    128 Eteläranta 1, Helsinki
+    128 Hämeenlinnanväylä, Helsinki
+    128 Keilalahdentie 4, Espoo
+    128 Maistraatinkatu 1, Helsinki
+    128 Matinkatu 22, Espoo
+    128 Minnesstensstigen 1, Helsinki
+    128 Mätästie 1, Helsinki
+    128 Porthaninkatu 15, Helsinki
+    128 Ratamestarinkatu 11, Helsinki
+    128 Simonkatu 9, Helsinki
+    128 Unioninkatu 37, Helsinki
+    128 Varikkotie 2, Helsinki
+    128 Viljo Sohkasen katu 3, Vantaa
+    129 Hankasuontie 11, Helsinki
+    129 Kaadekuja 1, Helsinki
+    129 Kaasutehtaankatu 1, Helsinki
+    129 Katajalaakso 1, Espoo
+    129 Kivihaantie 1, Helsinki
+    129 Kivikonkaari 14, Helsinki
+    129 Laajalahdentie 23, Helsinki
+    129 Laurea Leppävaara, Espoo
+    129 Liisankatu 16, Helsinki
+    129 Mannerheimintie 91, Helsinki
+    129 Melkonkatu 1, Helsinki
+    129 Myllypurontie 1, Helsinki
+    129 Myllypurontie 22, Helsinki
+    129 Olympiaranta 1, Helsinki
+    129 Otaniementie 9, Espoo
+    129 Piilipuuntie 31, Espoo
+    129 Rajamänty, Espoo
+    129 Runeberginkatu 43, Helsinki
+    129 Tammasaarenkatu 1, Helsinki
+    129 Unikkotie 5, Vantaa
+    129 Viherkalliontie 7, Espoo
+    130 Anjankuja 3, Espoo
+    130 Haaga, Helsinki
+    130 Hakaniemenranta 6, Helsinki
+    130 Hansatie 4, Espoo
+    130 Hämeentie 85, Helsinki
+    130 Karhunkierros 4, Vantaa
+    130 Kauniala, Kauniainen
+    130 Kivalterintie 20, Helsinki
+    130 Leppälinnunrinne 6, Espoo
+    130 Maasälväntie 5, Helsinki
+    130 Mannerheimintie 40, Helsinki
+    130 Mikonkatu 8, Helsinki
+    130 Otaniementie 1, Espoo
+    130 Vaakatie 6, Helsinki
+    131 Antti Korpin tie 1, Helsinki
+    131 Friisilä, Espoo
+    131 Lintulahdenkuja 4, Helsinki
+    131 Mechelininkatu 3, Helsinki
+    131 Museokatu 1, Helsinki
+    131 Nauvontie 18, Helsinki
+    131 Pasilanraitio 10, Helsinki
+    131 Pyyntitie 1, Espoo
+    131 Ratakatu 1, Helsinki
+    131 Tunnelitie 1, Kauniainen
+    131 Tuulikuja 2, Espoo
+    131 Työpajankatu 13, Helsinki
+    132 Docksgatan, Helsinki
+    132 Energiakuja 3, Helsinki
+    132 Helsinginkatu 13, Helsinki
+    132 Hämeentie 32, Helsinki
+    132 Joupinpuisto 1, Espoo
+    132 Katajanokka Terminal, Helsinki
+    132 Kuuluttajankatu 2, Helsinki
+    132 Lumikintie 3, Helsinki
+    132 Malminkatu 3, Helsinki
+    132 Miestentie 1, Espoo
+    132 Niittyportti 4, Espoo
+    132 Pasilan asema, Helsingfors
+    132 Pohjoinen Hesperiankatu 15, Helsinki
+    132 Seltterikuja 4, Helsinki
+    132 Talin keilahalli, Helsinki
+    132 Televisiokatu 4, Helsinki
+    132 Ukonvaaja 1, Espoo
+    132 Vellamonkatu 1, Helsinki
+    133 Elimäenkatu 1, Helsinki
+    133 Haukilahdensolmu, Espoo
+    133 Kokkokalliontie 3, Helsinki
+    133 Laajasuontie 31, Helsinki
+    133 Mannerheimintie 43, Helsinki
+    133 Otto Brandtin tie 16, Helsinki
+    133 Puistomäki 1, Espoo
+    133 Pääskylänrinne 3, Helsinki
+    133 Radiokatu 11, Helsinki
+    133 Ruoholahdenkatu 21, Helsinki
+    133 Sähkötie 5, Vantaa
+    133 Untamontie 1, Helsinki
+    133 Untamontie 9, Helsinki
+    134 Adolf Lindforsin tie, Helsinki
+    134 Atomitie 5, Helsinki
+    134 Fredrikinkatu 12, Helsinki
+    134 Harustie 7, Helsinki
+    134 Hiekkaharjun asema, Vantaa
+    134 Kielotie 13, Vantaa
+    134 Kipparlahden Silmukka 1, Helsinki
+    134 Koskelantie 5, Helsinki
+    134 Kuunkatu 1, Espoo
+    134 Käpyläntie 2, Helsinki
+    134 Neljäs Linja 2, Helsinki
+    134 Otakallio 1, Espoo
+    134 Sulkapolku 6, Helsinki
+    134 Sumatrantie 1, Helsinki
+    134 Svanströminkuja 1, Helsinki
+    134 Teollisuuskatu 18, Helsinki
+    135 Antaksentie 4, Vantaa
+    135 Arkadiankatu 28, Helsinki
+    135 Eiran aikuislukio, Helsinki
+    135 Emännänkuja 1, Vantaa
+    135 Kampin terminaali, Helsinki
+    135 Kanneltie 2, Helsinki
+    135 Karpalokuja 7, Helsinki
+    135 Katajanokanlaituri 8, Helsinki
+    135 Keilasatama 5, Espoo
+    135 Kyllikinportti 2, Helsinki
+    135 Kylmäojantie 1, Vantaa
+    135 Laajasuontie 35, Helsinki
+    135 Laaksotie 20, Vantaa
+    135 Lapinlahdenkatu 16, Helsinki
+    135 Lönnrotinkatu 1, Helsinki
+    135 Porslahdentie 24, Helsinki
+    135 Snellmaninkatu, Helsinki
+    135 Turunlinnantie 1, Helsinki
+    135 Unioninkatu 45, Helsinki
+    135 Vanha Talvitie 19, Helsinki
+    135 Viikin biokeskus, Helsinki
+    135 Vilppulantie 26, Helsinki
+    136 Eliel Saarisen tie 15, Helsinki
+    136 Heiniitty 5, Espoo
+    136 Herttoniemen sairaala, Helsinki
+    136 Hietapellontie 11, Helsinki
+    136 Kasarminkatu ks. Kasarmikatu, Helsinki
+    136 Klariksentie 1, Espoo
+    136 Kyllikinportti 1, Helsinki
+    136 Käskynhaltijantie 5, Helsinki
+    136 Lehtikallio 4, Vantaa
+    136 Leppälinnunrinne 1, Espoo
+    136 Maistraatinportti 2, Helsinki
+    136 Mannerheimintie 6, Helsinki
+    136 Metsäläntie 2, Helsinki
+    136 Nuijamiestentie 7, Helsinki
+    136 Opastinsilta 9, Helsinki
+    136 Pakkala, Vantaa
+    136 Riistavuorenkuja 4, Helsinki
+    136 Sturenkatu 22, Helsinki
+    136 Talvelantie 6, Helsinki
+    136 Tynnyrintekijänkatu 1, Helsinki
+    137 Etelä-Tapiolan lukio, Espoo
+    137 Fleminginkatu 13, Helsinki
+    137 Henrikintie 5, Helsinki
+    137 Hirsipadontie 7, Helsinki
+    137 Kaisaniemi Park, Helsinki
+    137 Lahtisvägen 759, Sipoo
+    137 Myllynkivenkuja 6, Vantaa
+    137 Neilikkatie 17, Vantaa
+    137 Porkkalankatu 24, Helsinki
+    137 Pyynikintie 1, Helsinki
+    137 Sturenkatu 7, Helsinki
+    137 Suvilahdenkatu 9, Helsinki
+    138 Annankatu 29, Helsinki
+    138 Bulevardi 32, Helsinki
+    138 Eduskuntatalo, Helsinki
+    138 Hyrylä, -
+    138 Hämeentie 17, Helsinki
+    138 Keinulaudantie 7, Helsinki
+    138 Kätilöopisto, Laituri 2, Helsinki
+    138 Maistraatinkatu 7, Helsinki
+    138 Mannerheimintie 20, Helsinki
+    138 Mustialankatu 3, Helsinki
+    138 Pohjolankatu 2, Helsinki
+    138 SMT, Espoo
+    138 Terhotie 1, Vantaa
+    138 Turkismiehentie 8, Helsinki
+    138 Unioninkatu 1, Helsinki
+    138 Valimotie 13, Helsinki
+    138 Vuorenpeikontie 1, Helsinki
+    139 Hämeentie 155, Helsinki
+    139 Kaunispääntie 1, Helsinki
+    139 Matinkylän jäähalli, Espoo
+    139 Pohjolankatu 1, Helsinki
+    139 Tehtaankatu 34, Helsinki
+    139 Tilkuntie 5, Vantaa
+    140 Alppikatu 3, Helsinki
+    140 Eteläesplanadi 1, Helsinki
+    140 Fazerila, Vantaa
+    140 Hagelstamintie 32, Vantaa
+    140 Laajalahdentie 30, Helsinki
+    140 Leppäsuonkatu 7, Helsinki
+    140 Paraistentie 17, Helsinki
+    140 Sanomala, Vantaa
+    140 Sepetlahdentie 1, Espoo
+    140 Servin Maijan tie 6, Espoo
+    140 Sähkötie 3, Vantaa
+    140 Takaniityntie 5, Helsinki
+    140 Upseerinkatu 1, Espoo
+    141 Antaksentie 1, Vantaa
+    141 Atomitie 2, Helsinki
+    141 Eerikinkatu 11, Helsinki
+    141 Kuitinmäki, Espoo
+    141 Ristipellontie 1, Helsinki
+    141 Tietotie 3, Espoo
+    142 Itämerenkatu 5, Helsinki
+    142 Jännetie 1, Helsinki
+    142 Katajanokanranta 21, Helsinki
+    142 Kylänvanhimmantie 25, Helsinki
+    142 Lääkärinkatu 2, Helsinki
+    142 Mannerheimintie 41, Helsinki
+    142 Näyttelijäntie 1, Helsinki
+    142 Radiokatu 22, Helsinki
+    142 Runeberginkatu 22, Helsinki
+    142 Sisarustentie 2, Helsinki
+    142 Sturenkatu 5, Helsinki
+    142 Vähäntuvantie 1, Helsinki
+    142 Välskärinkatu 12, Helsinki
+    143 Juvanmalmi, Espoo
+    143 Kalteentie 1, Helsinki
+    143 Kääpiöidenpolku 4, Helsinki
+    143 Narinkka 1, Helsinki
+    143 Otakaari 3, Espoo
+    143 Pieni Roobertinkatu 1, Helsinki
+    143 Seurasaari, Helsinki
+    143 Siltamäen ostosk., Helsinki
+    143 Vattuniemenkatu 18, Helsinki
+    144 Auroranmäki 1, Espoo
+    144 Haahkatie 15, Helsinki
+    144 Kivalterintie 21, Helsinki
+    144 Käenkuja 8, Helsinki
+    144 Runeberginkatu 40, Helsinki
+    144 Sähkötie 1, Vantaa
+    144 Taivalmäki 1, Espoo
+    144 Tilanhoitajankaari 1, Helsinki
+    144 Ulvilantie 23, Helsinki
+    145 Ajomiehentie 1, Helsinki
+    145 Elimäenkatu 2, Helsinki
+    145 Hämeentie 38, Helsinki
+    145 Jämsänkatu 2, Helsinki
+    145 Kalkkipellontie 4, Espoo
+    145 Kielotie 1, Vantaa
+    145 Mikonkatu 7, Helsinki
+    145 Mätästie 5, Helsinki
+    146 Haahkakuja 5, Helsinki
+    146 Hevosmiehenkatu 13, Helsinki
+    146 Kirkonkyläntie 23, Helsinki
+    146 Kirstinkatu 15, Helsinki
+    146 Lentoasema T1, Vantaa
+    146 Mantelikuja 1, Vantaa
+    146 Sopulirinne 2, Helsinki
+    147 Antaksentie 21, Vantaa
+    147 Asemamiehenkatu 4, Helsinki
+    147 Kirjanpitäjänkuja 4, Espoo
+    147 Kirstinmäki 1, Espoo
+    147 Moisiontie 1, Helsinki
+    147 Robert Huberin tie 4, Vantaa
+    147 Salpausseläntie 13, Helsinki
+    147 Santakatu 2, Helsinki
+    147 Strömbergintie 8, Helsinki
+    147 Valimotie 11, Vantaa
+    148 Aleksis Kiven katu 56, Helsinki
+    148 Kaupintie 1, Helsinki
+    148 Kaupintie 4, Helsinki
+    148 Kutomotie 2, Helsinki
+    148 Latokartanonkaari 9, Helsinki
+    148 Otsolahdentie 5, Espoo
+    148 Petas, Espoo
+    148 Rekolan asema, Vantaa
+    148 Tarhurintie 2, Vantaa
+    148 Valimotie 7, Vantaa
+    148 Vallinoja, Vantaa
+    149 Elimäenkatu 17, Helsinki
+    149 Heikinlaakso, Helsinki
+    149 Hirsipadontie 1, Helsinki
+    149 Jönsaksentie 4, Vantaa
+    149 Kaarelantie 86, Helsinki
+    149 Kampinkuja 2, Helsinki
+    149 Keikarinkuja 1, Vantaa
+    149 Keskuskatu 1, Helsinki
+    149 Käräjäkuja 1, Vantaa
+    149 Nihtitorpankuja 3, Espoo
+    149 Nordenskiöldinkatu 12, Helsinki
+    149 Nöykkiön koulu, Espoo
+    149 Porkkalankatu 5, Helsinki
+    149 Porthaninkatu 1, Helsinki
+    149 Päärautatieasema, Helsinki
+    149 Siltavoudintie 14, Helsinki
+    149 Suvilahdenkatu 1, Helsinki
+    149 Visamäki, Espoo
+    150 Annankatu 1, Helsinki
+    150 Itäinen puistotie 14, Helsinki
+    150 Kalevankatu 3, Helsinki
+    150 Näyttelijäntie 18, Helsinki
+    150 Paciuksenkatu 27, Helsinki
+    150 Siltasaarenkatu 18, Helsinki
+    150 Tuulimyllyntie 1, Helsinki
+    150 Uudenmaankatu 1, Helsinki
+    151 Karakallion koulu, Espoo
+    151 Samaria, Espoo
+    151 Siltavuorenpenger 3, Helsinki
+    151 Tilanhoitajankaari 12, Helsinki
+    152 Aleksanterinkatu 52, Helsinki
+    152 Arabiankatu 1, Helsinki
+    152 Iso Roobertinkatu 1, Helsinki
+    152 Kamreerintie 3, Espoo
+    152 Lehtikuusentie 4, Helsinki
+    152 Puotila metroasema, Helsinki
+    152 Rekipellontie 15, Helsinki
+    152 Valimotie 19, Vantaa
+    152 Vilhonvuorenkatu 11, Helsinki
+    153 Eerikinkatu 1, Helsinki
+    153 Hämeentie 13, Helsinki
+    153 Kaitaa, Espoo
+    153 Kipparinkuja 1, Espoo
+    153 Kivistö, Vantaa
+    153 Koivukyläntie 47, Vantaa
+    153 Kylävainionkuja 6, Espoo
+    153 Louhelan asema, Vantaa
+    153 Paloheinä, Helsinki
+    153 Porvoonkatu 27, Helsinki
+    153 Ruoholahdenkatu 23, Helsinki
+    153 Saanatunturintie 1, Helsinki
+    153 Teknobulevardi 3, Vantaa
+    153 Venevalkamantie 9, Kauniainen
+    153 Viikinranta, Helsinki
+    154 Elimäenkatu 25, Helsinki
+    154 Hämeentie 111, Helsinki
+    154 Kilonkartanontie 1, Espoo
+    154 Kuusikkotie 3, Helsinki
+    154 Lokkalantie 1, Helsinki
+    154 Mannerheimintie 30, Helsinki
+    154 Martinkyläntie 39, Vantaa
+    154 Riihenkulma 1, Helsinki
+    154 Viherlaaksonranta 10, Espoo
+    155 Hakaniemi, Helsinki
+    155 Itätuulenkuja 8, Espoo
+    155 Kaupintie 16, Helsinki
+    155 Leppävaaran lukio, Espoo
+    155 Luoma, Kirkkonummi
+    155 Mannerheimintie 107, Helsinki
+    155 Roomankatu 5, Helsinki
+    155 Soukanaukio, Espoo
+    155 Stenbäckinkatu 1, Helsinki
+    155 Tekniikantie 4, Espoo
+    155 Viittakorpi 1, Espoo
+    155 Yliopistonkatu 1, Helsinki
+    156 Ajomiehentie 14, Helsinki
+    156 Aku Korhosen tie 2, Helsinki
+    156 Hitsaajankatu 1, Helsinki
+    156 Kannelmäki railway station, Helsinki
+    156 Kielotie 11, Vantaa
+    156 Krogiuksentie 17, Helsinki
+    156 Käpyläntie 12, Helsinki
+    156 Lauttasaaren yhteiskoulu, Helsinki
+    156 Malmin lentoasema, Helsinki
+    156 Neitsytpolku 1, Helsinki
+    156 Niittymaanaukea 2, Espoo
+    156 Pengerkatu 1, Helsinki
+    156 Rälssitie 13, Vantaa
+    156 Siilitie 9, Helsinki
+    157 Hakarinne 2, Espoo
+    157 Illenpiha 4, Vantaa
+    157 Jakomäen ostosk., Helsinki
+    157 Marsinkuja 1, Vantaa
+    157 Oltermannintie 32, Helsinki
+    157 Porvoonkatu 15, Helsinki
+    157 Suursuonlaita 1, Helsinki
+    158 Helsinki City, Helsinki
+    158 Hietalahdentori, Helsinki
+    158 Kaarelankuja 2, Helsinki
+    158 Kilpolantie 16, Helsinki
+    158 Otaranta 8, Espoo
+    158 Rapakivenkuja 1, Helsinki
+    158 Sturenkatu 16, Helsinki
+    158 Tilanhoitajankaari 3, Helsinki
+    158 Tilkankatu 2, Helsinki
+    158 Topeliuksenkatu 1, Helsinki
+    158 Trillakatu 5, Espoo
+    159 Lehtikuusentie 1, Helsinki
+    159 Lippajärvi, Espoo
+    159 Mäkitorpantie 3, Helsinki
+    159 Piispanpiha 4, Espoo
+    159 Radiokatu 1, Helsinki
+    159 Ratavartijankatu 5, Helsinki
+    159 Salomonkatu 17, Helsinki
+    159 Suokki, Helsinki
+    160 Kallion kirkko, Helsinki
+    160 Kerttulinkuja 1, Helsinki
+    160 Kulovalkeantie 21, Espoo
+    160 Kyläsaarenkatu 8, Helsinki
+    160 Meritullinkatu 1, Helsinki
+    160 Mäkelänkatu 4, Helsinki
+    160 Näyttelijäntie 15, Helsinki
+    160 Palkkatilanportti 1, Helsinki
+    160 Pyöräilystadion, Helsinki
+    160 Suvilahti, Helsinki
+    160 Töölöntulli 2, Helsinki
+    160 Upseerinkatu 11, Espoo
+    160 Vihdintie 1, Helsinki
+    161 Hämeentie 156, Helsinki
+    161 Hämeentie 9, Helsinki
+    161 Kaisaniemi, Helsinki
+    161 Kipparinkatu 2, Espoo
+    161 Kivalterintie 17, Helsinki
+    161 Kotkatie 6, Espoo
+    161 Kumpulantie 9, Helsinki
+    161 Lipparinne 1, Espoo
+    161 Mechelininkatu 12, Helsinki
+    161 Messeniuksenkatu 1, Helsinki
+    161 Neljäs Linja 1, Helsinki
+    161 Ruotsinpiha 1, Vantaa
+    161 Tilkankatu 39, Helsinki
+    162 Hämeentie 15, Helsinki
+    162 Kasavuorentie 1, Kauniainen
+    162 Mannerheiminaukio 1, Helsinki
+    162 Olarin koulu, Espoo
+    162 Pasilan puistotie 6, Helsinki
+    162 Raumantie 4, Helsinki
+    162 Tammistonkatu 23, Vantaa
+    163 Arkadiankatu 22, Helsinki
+    163 Aurorakoti, Espoo
+    163 Eläintarhantie 5, Helsinki
+    163 Kuunkehrä 2, Espoo
+    163 Lotankatu 1, Espoo
+    163 Martinkyläntie 48, Vantaa
+    163 Merikasarminkatu 1, Helsinki
+    163 Myrttitie 2, Helsinki
+    163 Sörnäisten Rantatie 27, Helsinki
+    164 Hämeentie 11, Helsinki
+    164 Kilonpuiston koulu, Espoo
+    164 Kulorastaantie 3, Vantaa
+    164 Leppäkorpi, Vantaa
+    164 Merimiehenkatu 36, Helsinki
+    164 Siilitie 1, Helsinki
+    164 Ukkostie 1, Helsinki
+    164 Yrjönkatu 24, Helsinki
+    165 Ilmarinkatu 1, Helsinki
+    165 Itätuulenkuja 1, Espoo
+    165 Kirkkonummi railway station, Kirkkonummi
+    165 Louhikkotie 20, Helsinki
+    165 Mannerheimintie 100, Helsinki
+    165 Rasinkatu 10, Vantaa
+    165 Soittajantie 3, Helsinki
+    165 Säterinkatu 6, Espoo
+    165 Tarhurintie 1, Vantaa
+    165 Turuntie 42, Espoo
+    165 Vuorikatu 19, Helsinki
+    166 Annankatu 32, Helsinki
+    166 Jousenkaari 5, Espoo
+    166 Lauttasaarentie 1, Helsinki
+    166 Otaniementie 19, Espoo
+    166 Pirjontie 1, Helsinki
+    167 Gyldenintie 1, Helsinki
+    167 Haapaniemenkatu 14, Helsinki
+    167 Haapaniemenkatu 1, Helsinki
+    167 Ilkantie 3, Helsinki
+    167 Isokaari 1, Helsinki
+    167 Kauniaisten lukio, Kauniainen
+    167 Louhikkotie 1, Helsinki
+    167 Puunhaltijankuja 2, Vantaa
+    168 Haaga-Helia, Helsinki
+    168 Iso puistotie 1, Helsinki
+    168 Kielotie 5, Vantaa
+    168 Mannerheimintie 12, Helsinki
+    168 Vanha Viertotie 9, Helsinki
+    169 Airport T2, Vantaa
+    169 Aleksanterinkatu 15, Helsinki
+    169 Hilapellontie 4, Helsinki
+    169 Jaakonkatu 3, Vantaa
+    169 Lentoasema, terminaali 2, Vantaa
+    169 Nordenskiöldinkatu 20, Helsinki
+    169 Pursimiehenkatu 1, Helsinki
+    170 Kampintori, Helsinki
+    170 Keskuskatu 7, Helsinki
+    170 Kämnerintie 7, Helsinki
+    170 Mannerheimintie 160, Helsinki
+    170 Pursimiehenkatu 29, Helsinki
+    170 Päiväkumpu, Vantaa
+    170 Sörnäisten Rantatie 31, Helsinki
+    171 Huopalahdentie 28, Helsinki
+    171 Iso Paja, Helsinki
+    171 Mannerheimintie 10, Helsinki
+    171 Rajatie 7, Helsinki
+    171 Rastasniityntie 1, Espoo
+    171 Tornihaukantie 6, Espoo
+    171 Välimerenkatu 9, Helsinki
+    172 Alakiventie 2, Helsinki
+    172 Kaivopiha, Helsinki
+    172 Koskelantie 72, Helsinki
+    172 Laajasalo, Helsinki
+    172 Muurala, Espoo
+    172 Panuntie 11, Helsinki
+    172 Rautkalliontie 1, Vantaa
+    172 Ristipellontie 6, Helsinki
+    172 Suvilahdenkatu 10, Helsinki
+    172 Sörnäinen(M), Helsinki
+    172 Töölönkatu 1, Helsinki
+    173 Järvenperän koulu, Espoo
+    173 Kokkokalliontie 9, Helsinki
+    173 Meri-rastilan tie 1, Helsinki
+    173 Pasilanraitio 13, Helsinki
+    173 Unioninkatu 38, Helsinki
+    174 Hämeentie 105, Helsinki
+    174 Junailijankuja 1, Helsinki
+    174 Kolkekannaksentie 1, Espoo
+    174 Laajalahdentie 21, Helsinki
+    174 Lentoasema, terminaali 1, Vantaa
+    174 Niipperi, Espoo
+    174 Tikkurilantie 140, Vantaa
+    174 Vanha Porvoontie 229, Vantaa
+    175 A.i. Virtasen aukio 1, Helsinki
+    175 Heinjoenpolku 1, Espoo
+    175 Juhana Herttuan tie, Helsinki
+    175 Maamiehentie 2, Helsinki
+    175 Mannerheimintie 13, Helsinki
+    175 Museokatu 44, Helsinki
+    175 Myllypuro metroasema, Helsinki
+    175 Niemenmäki, Helsinki
+    175 Soukanniementie 1, Espoo
+    175 Sturenkatu 21, Helsinki
+    175 Tolsa, Kirkkonummi
+    176 Itämerentori 2, Helsinki
+    176 Jakomäentie 10, Helsinki
+    176 Kaivosrinteentie 1, Vantaa
+    176 Karantie 2, Espoo
+    176 Mannerheimintie 170, Helsinki
+    176 Paraistentie 19, Helsinki
+    176 Piilipuuntie 1, Espoo
+    176 Puosunrinne 1, Espoo
+    177 Jarrumiehenkatu 2, Helsinki
+    177 Kyyhkysmäki 2, Espoo
+    177 Mannerheimintie 15, Helsinki
+    177 Mannerheimintie 55, Helsinki
+    177 Palkkatilankatu 9, Helsinki
+    177 Ratsastie 10, Helsinki
+    177 Rautalammintie 2, Helsinki
+    177 Roihuvuorentie 20, Helsinki
+    177 Rummunlyöjänkatu 3, Espoo
+    177 Taimistontie 4, Helsinki
+    177 Venuksentie 6, Vantaa
+    178 Kapteeninkatu 1, Helsinki
+    178 Leppäsuonkatu 11, Helsinki
+    178 Rautatientori, Helsingfors
+    178 Suovakuja 1, Helsinki
+    178 Viikinkaari 2, Helsinki
+    179 Kaisaniemenkatu 1, Helsinki
+    179 Kaivomestarinkatu 1, Espoo
+    179 Keilaranta 21, Espoo
+    179 Kivenlahdenkatu 1, Espoo
+    179 Käpylänkuja 1, Helsinki
+    179 Lehtisaarentie 1, Helsinki
+    179 Ulappakatu 1, Espoo
+    179 Vanha Viertotie 1, Helsinki
+    180 Alppikatu 15, Helsinki
+    180 Länsimäki, Vantaa
+    180 Mannerheimintie 166, Helsinki
+    180 Timpurinkuja 1, Espoo
+    180 Töölönlahdenkatu 3, Helsinki
+    180 Vanhanlinnantie 1, Helsinki
+    180 Vaskihuhdantie 1, Helsinki
+    181 Haapaniemenkatu 6, Helsinki
+    181 Huovitie 5, Helsinki
+    181 Itämerenkatu 11, Helsinki
+    181 Laajalahti, Espoo
+    181 Landbo, Helsinki
+    181 Ruoholahdenkatu 14, Helsinki
+    182 Koivukyläntie 51, Vantaa
+    182 Ojahaantie 5, Vantaa
+    182 Piilipuuntie 21, Espoo
+    182 Ratamestarinkatu 7, Helsinki
+    183 Adolf Lindforsin tie 1, Helsinki
+    183 Katajanokanlaituri 7, Helsinki
+    183 Liisankatu 13, Helsinki
+    183 Myyrmäki railway station, Vantaa
+    183 Otahalli, Espoo
+    183 Otsonkallio 3, Espoo
+    183 Pietarinkatu 15, Helsinki
+    183 Runeberginkatu 4, Helsinki
+    183 Ruosilantie 2, Helsinki
+    183 Tikkurilantie 148, Vantaa
+    183 Tullinpuomi, Helsinki
+    183 Töölönkatu 28, Helsinki
+    184 Kivihaantie 7, Helsinki
+    184 Klariksentie 2, Espoo
+    184 Kluuvikatu 8, Helsinki
+    184 Pirkkolan urheilupuisto, Helsinki
+    184 Sepontie 2, Espoo
+    184 Sturenkatu 11, Helsinki
+    184 Sörkka, Helsinki
+    184 Tali, Helsinki
+    184 Valimopolku 4, Helsinki
+    185 Espoonlahden lukio, Espoo
+    185 Korjaamo kulttuuritehdas, Helsinki
+    185 Pohjoinen Hesperiankatu 23, Helsinki
+    185 Porvoonkatu 5, Helsinki
+    185 Rautalammintie 5, Helsinki
+    185 Tikkurilan urheilupuisto, Vantaa
+    185 Ulvilantie 21, Helsinki
+    186 Eteläranta 10, Helsinki
+    186 Huovitie 1, Helsinki
+    186 Kala-maija 1, Espoo
+    186 Karhunkierros 2, Vantaa
+    186 Matinkatu 1, Espoo
+    186 Pohjoinen Rautatiekatu 9, Helsinki
+    186 Uudenmaankatu 16, Helsinki
+    187 Iso Roobertinkatu, Helsinki
+    187 Kaikukatu 1, Helsinki
+    187 Koivu-Mankkaan tie, Espoo
+    187 Latokartanonkaari 7, Helsinki
+    187 Maakirjantie 2, Espoo
+    187 Mikonkatu 15, Helsinki
+    187 Mäkelänkatu 86, Helsinki
+    187 Pohjois-Haagan yhteiskoulu, Helsinki
+    188 Hämeenkylä, Vantaa
+    188 Karsikkokuja 15, Vantaa
+    188 Malminiitty, Vantaa
+    188 Nordenskiöldinkatu 11, Helsinki
+    189 Askisto, Vantaa
+    189 Kanneltalo, Helsinki
+    189 Mannerheimintie 9, Helsinki
+    189 Paulankatu 2, Helsinki
+    189 Valimotie 21, Helsinki
+    190 Harustie 8, Helsinki
+    190 Ojahaantie 1, Vantaa
+    190 Osmontie 43, Helsinki
+    190 Paciuksenkaari 1, Helsinki
+    190 Revontulentie 7, Espoo
+    190 Von Daehnin katu, Helsinki
+    191 Kutomotie 8, Helsinki
+    191 Naalitie 21, Vantaa
+    191 Talin puistotie 1, Helsinki
+    191 Vilniementie 1, Espoo
+    192 Havukoski, Vantaa
+    192 Kilonkallio 10, Espoo
+    192 Kilonportti 1, Espoo
+    192 Länsituulentie 1, Espoo
+    192 Nordenskiöldinkatu 18, Helsinki
+    192 Radiokatu 20, Helsinki
+    192 Sentnerikuja 1, Helsinki
+    192 Sturenkatu 40, Helsinki
+    192 Tiimalasintie 1, Espoo
+    193 Dynamicum Kumpula, Helsinki
+    193 Kaj Franckin katu 1, Helsinki
+    193 Kamppi, Helsingfors
+    193 Karakalliontie 1, Espoo
+    193 Strömberginkuja 3, Helsinki
+    194 Harjannetie 44, Helsinki
+    194 Hämeentie 19, Helsinki
+    194 Kampen, Helsingfors
+    194 Lämmittäjänkatu 2, Helsinki
+    194 Myyrmäentie 4, Vantaa
+    194 Porttipuistontie 1, Vantaa
+    194 Teollisuuskatu 15, Helsinki
+    195 Alppikatu 5, Helsinki
+    195 Heikkiläntie 7, Helsinki
+    195 Kalastajanmäki 1, Espoo
+    196 Alaportti 1, Espoo
+    196 Kontulankaari 11, Helsinki
+    196 Latokartano, Helsinki
+    196 Maakaari 1, Helsinki
+    197 Arkadiankatu 26, Helsinki
+    197 Eira, Helsinki
+    197 Lintuvaara, Espoo
+    197 Näyttelijäntie 14, Helsinki
+    197 Sturenkatu 13, Helsinki
+    197 Tunturikatu 16, Helsinki
+    197 Tyynenmerenkatu 1, Helsinki
+    197 Vitikka 1, Espoo
+    198 Lehtikuusentie 6, Helsinki
+    198 Perhonkatu 11, Helsinki
+    198 Servin Maijan tie 12, Espoo
+    198 Urho Kekkosen katu 1, Helsinki
+    198 Viikintori 3, Helsinki
+    198 Väinö Tannerin tie 1, Vantaa
+    199 Kylävainiontie 20, Espoo
+    199 Tapionaukio 1, Espoo
+    199 Tilkankatu 1, Helsinki
+    200 Aleksis Kiven katu 9, Helsinki
+    200 Karvaamokuja 2, Helsinki
+    200 Sotungin koulu, Vantaa
+    200 Varisto, Vantaa
+    201 JMT, Espoo
+    201 Kirstintie 1, Espoo
+    201 Laaksolahti, Espoo
+    201 Mannerheimintie 103, Helsinki
+    201 Palkkatilankatu 1, Helsinki
+    201 Ruorimiehenkatu 1, Espoo
+    201 Serkustentie 1, Helsinki
+    202 Elimäenkatu 15, Helsinki
+    202 Latokartanontie 16, Helsinki
+    202 Sturenkatu 18, Helsinki
+    202 Tapiolan urheilupuisto, Espoo
+    203 Haapaniemenkatu 4, Helsinki
+    203 Ida Aalbergin tie 3, Helsinki
+    203 Kaj Franckin katu 4, Helsinki
+    203 Kalastajankuja 1, Espoo
+    203 Lummetie 2, Vantaa
+    203 Näkinkuja 3, Helsinki
+    203 Pajuniityntie 10, Helsinki
+    203 Sauvatie 1, Vantaa
+    203 Vaarala, Vantaa
+    203 Vesirattaanmäki 1, Espoo
+    204 Helsingin luonnontiedelukio, Helsinki
+    204 Mäkelänkatu 47, Helsinki
+    204 Siilitie metroasema, Helsinki
+    205 Paraistentie 18, Helsinki
+    205 Sanomatalo, Helsinki
+    205 Urheilukatu 10, Helsinki
+    206 Mechelininkatu 1 a, Helsinki
+    206 Pihlajisto, Helsinki
+    206 Sörnäisten Rantatie 1, Helsinki
+    206 Tapiola Shopping Centre, Espoo
+    206 Viikin kirjasto, Helsinki
+    207 Brysselinkatu 3, Helsinki
+    207 Haapaniemi, Helsinki
+    207 Hämeentie 152, Helsinki
+    207 Kivihaka, Helsinki
+    207 Maakaari 6, Helsinki
+    207 Mäkelänrinne 5, Helsinki
+    207 Nauvontie 3, Helsinki
+    207 Pasilanraitio 5, Helsinki
+    208 Maauunintie 19, Vantaa
+    208 Pasilankatu 2, Helsinki
+    208 Pohjoinen Rautatiekatu 29, Helsinki
+    208 Tukkitie 18, Helsinki
+    209 Betonimiehenkuja 5, Espoo
+    209 Matinniitty 1, Espoo
+    209 Työpajankatu 2, Helsinki
+    209 Ulvilantie 27, Helsinki
+    210 Killinmäki, Kirkkonummi
+    210 Paavo Nurmen kuja 1, Helsinki
+    210 Puumiehenkuja 2, Espoo
+    210 Puutarhurinkuja 2, Helsinki
+    210 Rastila metroasema, Helsinki
+    210 Servinkuja 1, Espoo
+    210 Suursuon sairaala, Helsinki
+    210 Vantaankosken koulu, Vantaa
+    211 Majurinkatu 12, Espoo
+    211 Sturenkatu 8, Helsinki
+    211 Viikin normaalikoulu, Helsinki
+    212 Kumpulantie 3, Helsinki
+    212 Tähkäkuja 1, Vantaa
+    212 Viikki Library, Helsinki
+    213 Ahertajantie 1, Espoo
+    213 Liikuntamylly, Helsinki
+    213 Nahkahousuntie 5, Helsinki
+    213 Pajuniityntie 1, Helsinki
+    213 Pietari Hannikaisen tie 1, Helsinki
+    213 Pälkäneentie 13, Helsinki
+    213 Sörnäisten Rantatie 33, Helsinki
+    213 Verkkokauppa.com, Helsinki
+    214 Aleksis Kiven katu 11, Helsinki
+    214 Gustaf Hällströmin katu 1, Helsinki
+    215 Mannerheimintie 96, Helsinki
+    216 Asemakuja 1, Espoo
+    216 Exactum Kumpula, Helsinki
+    216 Kylmäojantie 4, Vantaa
+    216 Pasilan poliisitalo, Helsinki
+    216 Strömbergintie 1, Helsinki
+    216 Vasamatie 1, Espoo
+    217 Alppikatu 1, Helsinki
+    217 Alvar Aallon katu 1, Helsinki
+    217 Jaakonkatu 3, Helsinki
+    217 Kulomäki, Vantaa
+    217 Muotoilijankatu 3, Helsinki
+    217 Pohjois-Haagan asema, Helsinki
+    217 Porkkalankatu 22, Helsinki
+    217 Siilitie 13, Helsinki
+    217 Työväen Akatemia, Kauniainen
+    218 Columbus, Helsinki
+    218 Munkkiniemen yhteiskoulu, Helsinki
+    218 Tekniikantie 14, Espoo
+    219 Liisankuja 2, Espoo
+    219 Ohratie 16, Vantaa
+    219 Pasilanraitio 4, Helsinki
+    220 Itälahdenkatu 22, Helsinki
+    220 Läkkisepäntie 23, Helsinki
+    220 Purotie 1, Helsinki
+    220 Ravals, Kirkkonummi
+    220 Tapionaukio 3, Espoo
+    220 Urheilukatu 1, Helsinki
+    221 Kankaretie 11, Helsinki
+    221 Malmitalo, Helsinki
+    221 Peltokyläntie 1, Helsinki
+    221 Revontulentie 1, Espoo
+    221 Runeberginkatu 55, Helsinki
+    221 Suursuonlaita 3, Helsinki
+    221 Töölöntorinkatu 2, Helsinki
+    221 Viipurinkatu 1, Helsinki
+    222 Aleksis Kiven katu 48, Helsinki
+    222 Ohjaajantie 1, Helsinki
+    222 Otakaari 24, Espoo
+    222 Point, Vantaa
+    223 Ala-malmin Tori 1, Helsinki
+    223 Itätuulentie 1, Espoo
+    223 Kirkkojärven koulu, Espoo
+    223 Martinsillantie 10, Espoo
+    223 Otakaari 18, Espoo
+    223 Pekankatu 5, Helsinki
+    223 Vanha Nurmijärventie 21, Vantaa
+    224 Itäviitta 5, Espoo
+    224 Karaportti 3, Espoo
+    224 Louhelantie 1, Vantaa
+    224 Malminkartanon asema, Helsinki
+    224 Nosturi, Helsinki
+    224 Siltamäki, Helsinki
+    224 Vallilan kirjasto, Helsinki
+    224 Vanha Talvitie 14, Helsinki
+    225 Bunkkeri, Helsinki
+    225 Havukosken koulu, Vantaa
+    225 Lumon lukio, Vantaa
+    225 Muurikuja 1, Helsinki
+    225 Niemitie 1, Helsinki
+    225 Näyttelijäntie 24, Helsinki
+    225 Talvikkitie 119, Vantaa
+    226 Eestinlaakso, Espoo
+    226 Hevosmiehenkatu 1, Helsinki
+    226 Lastenlinnantie 2, Helsinki
+    226 Rajatorpantie 8, Vantaa
+    226 Tyynenmerenkatu 7, Helsinki
+    226 Vanha Turuntie 14, Espoo
+    227 Bulevardi 2, Helsinki
+    227 Kurkisuontie 9, Helsinki
+    227 Mannerheimintie 29, Helsinki
+    227 Tapiolan uimahalli, Espoo
+    228 Hämeentie 2, Helsinki
+    228 Roihuvuori, Helsinki
+    229 Hevosenkenkä 3, Espoo
+    229 Käpyläntie 11, Helsinki
+    229 Läkkisepäntie 21, Helsinki
+    229 Porvoonkatu 3, Helsinki
+    230 Espoon kulttuurikeskus, Espoo
+    230 Liisankatu 1, Helsinki
+    230 Servin Maijan tie 1, Espoo
+    231 Maininkitie 1, Espoo
+    231 TKK, Espoo
+    231 Urheilukatu 5, Helsinki
+    232 Eskolantie 1, Helsinki
+    232 Merivalkama 1, Espoo
+    232 Paasivuorenkatu 5, Helsinki
+    232 Simonkatu 1, Helsinki
+    232 Toinen Linja 14, Helsinki
+    232 Viikinkaari 9, Helsinki
+    233 Eerikinkatu 24, Helsinki
+    233 Malmin Kauppatie 18, Helsinki
+    233 Siltapellonkuja 2, Helsinki
+    233 Viikinportti 2, Helsinki
+    234 Maistraatinportti 3, Helsinki
+    234 Opastinsilta 6, Helsinki
+    234 Siltavoudintie 24, Helsinki
+    234 Viljelijäntie 1, Helsinki
+    234 Väinö Auerin katu 11, Helsinki
+    235 Mannerheimintie 168, Helsinki
+    235 Moisiontie 3, Helsinki
+    235 Sörnäinen Metro Station, Helsinki
+    235 Talonpojantie 5, Helsinki
+    235 Virtatie 4, Vantaa
+    236 Espoontie 21, Espoo
+    236 Kauniaisten asema, Kauniainen
+    236 Martinlaakson lukio, Vantaa
+    236 Pasilanraitio 1, Helsinki
+    236 Televisiokatu 1, Helsinki
+    237 Kirkkokatu 1, Espoo
+    237 Koivukylän koulu, Vantaa
+    237 Kuikkakuja 1, Vantaa
+    237 Pirkkola, Helsinki
+    237 Soukankaari 1, Espoo
+    237 Tilanhoitajankaari 6, Helsinki
+    238 Ahertajantie 2, Espoo
+    238 Arabiankatu 2, Helsinki
+    238 Rautatieläisenkatu 5, Helsinki
+    238 Valimotie 27, Helsinki
+    239 Jorvas, Kirkkonummi
+    239 Kaivokatu 8, Helsinki
+    239 Töölön halli, Helsinki
+    240 Kankaretie 9, Helsinki
+    240 Karaportti 1, Espoo
+    240 Kinopalatsi, Helsinki
+    240 Teollisuuskatu 1, Helsinki
+    240 Tietotie 9, Vantaa
+    240 Turvalaaksontie 1, Vantaa
+    240 Ympyrätalo, Helsinki
+    241 Alempi Talonpojantie 4, Helsinki
+    241 Esport Center, Espoo
+    241 Mechelininkatu 36, Helsinki
+    242 Keilaniemi, Espoo
+    242 Linnankatu 9, Helsingfors
+    242 Pieni Roobertinkatu 12, Helsinki
+    242 Syystie 1, Helsinki
+    243 Itämerenkatu 1, Helsinki
+    243 Lähettilääntie 1, Vantaa
+    243 Ratatie 22, Vantaa
+    244 Kullervonkatu 11, Helsinki
+    244 Kulttuuriaukio 2, Espoo
+    244 Malmin hautausmaa, Helsinki
+    244 Mikonkatu 1, Helsinki
+    245 Arabia kauppakeskus, Helsinki
+    245 Ilkantie 1, Helsinki
+    245 Keilaranta 14, Espoo
+    247 Malmi Park and Ride, Helsinki
+    247 Mäkelänrinteen aikuislukio, Helsinki
+    247 Uutiskatu 5, Helsinki
+    248 Erätie 3, Helsinki
+    248 Mannerheimintie 5, Helsinki
+    248 Miestentie 3, Espoo
+    249 Hämeentie 157, Helsinki
+    249 Munkkivuoren ostosk., Helsinki
+    249 Rautatieasema, Helsingfors
+    250 Fabianinkatu 26, Helsinki
+    250 Linnoituksentie 2, Helsinki
+    250 Opastinsilta 1, Helsinki
+    250 Runeberginkatu 1, Helsinki
+    250 Ruusulankatu 1, Helsinki
+    250 Vaasankatu 2, Helsinki
+    250 Yrjönkatu 30, Helsinki
+    251 Avaruuskatu 4, Espoo
+    251 Mannerheimintie 93, Helsinki
+    252 Kirurginen sairaala, Helsinki
+    252 Savonkatu 4, Helsinki
+    252 Silmupolku 1, Helsinki
+    252 Tikkurilan uimahalli, Vantaa
+    253 Haapaniemenkatu 16, Helsinki
+    253 Jämeräntaival 10, Espoo
+    253 Mäkelänrinteen uintikeskus, Helsinki
+    254 Eiran sairaala, Helsinki
+    254 Iso Omena Shopping Center, Espoo
+    254 Keilaranta 1, Espoo
+    254 Valimotie 9, Vantaa
+    255 Opastinsilta 2, Helsinki
+    255 Salomonkatu 1, Helsinki
+    256 Akanapolku 1, Vantaa
+    256 Helmipöllönkatu 1, Espoo
+    256 Meripihkatie 1, Helsinki
+    256 Varsapuistikko, Helsinki
+    258 Haartmaninkatu 3, Helsinki
+    258 Hietaniemenkatu 14, Helsinki
+    258 Rosendalinkuja 1, Vantaa
+    258 Valimotie 9, Helsinki
+    258 Wanha Satama, Helsinki
+    259 Ratakatu 6, Helsinki
+    259 Tennispuisto, Laituri 31, Espoo
+    260 Kilon asema, Espoo
+    260 Turuntie 150, Espoo
+    261 Kaivokatu 2, Helsinki
+    261 Kyyhkysmäki 1, Espoo
+    261 Matinniitynkuja 1, Espoo
+    261 Sinikalliontie 1, Espoo
+    262 Arielinkatu 2, Helsinki
+    262 Helsinginkatu, Helsinki
+    262 Kauklahden asema, Espoo
+    262 Sturenkatu 27, Helsinki
+    263 Helsinginkatu 58, Helsinki
+    263 Mechelininkatu 34, Helsinki
+    264 Kirstinharju 3, Espoo
+    264 Myrskyläntie 1, Helsinki
+    264 Viides Linja 1, Helsinki
+    265 Berliininkatu 5, Helsinki
+    265 Hämeentie 68, Helsinki
+    266 Fleminginkatu 1, Helsinki
+    266 Intiankatu 21, Helsinki
+    266 Mäkelänkatu 1, Helsinki
+    266 Vanhaistentie 4, Helsinki
+    267 Simonkylän koulu, Vantaa
+    267 Stadi, Helsinki
+    268 Holmankorpi 1, Espoo
+    268 Jupperi, Espoo
+    268 Saunalahden koulu, Espoo
+    268 Toinen Linja 1, Helsinki
+    268 Valtimontie 1, Helsinki
+    269 Koskelantie 3, Helsinki
+    269 Maistraatinportti 1, Helsinki
+    269 Siilitie 11, Helsinki
+    270 Eläintarha, Helsinki
+    270 Väinö Auerin katu 13, Helsinki
+    271 Alppilan lukio, Helsinki
+    271 Lehtisaari, Helsinki
+    271 Mäkipellontie 19, Helsinki
+    272 Hagelstamintie 1, Vantaa
+    272 Vantaankosken asema, Vantaa
+    273 Fazerintie 6, Vantaa
+    273 Kansallismuseo, Helsinki
+    273 Porkkalankatu 13, Helsinki
+    274 Salmisaarenaukio 1, Helsinki
+    275 Terminaali 2, Vantaa
+    275 Vallila, Helsinki
+    276 Hiomotie 13, Helsinki
+    276 Iiluodontie, Helsinki
+    276 Kallion virastotalo, Helsinki
+    277 Haukilahti, Espoo
+    277 Kirstinmäki 7, Espoo
+    277 Mäkelänkatu 56, Helsinki
+    277 Sairaalakatu 1, Vantaa
+    278 Onnentie 18, Helsinki
+    278 Tapiolan keskus, Espoo
+    278 Von Daehnin katu 1, Helsinki
+    278 Ylästö, Vantaa
+    279 Mattlidens gymnasium, Espoo
+    279 Tehtaankatu 1, Helsinki
+    280 Porttisuontie 18, Vantaa
+    280 Upinniemi, Kirkkonummi
+    281 Kitarakuja 3, Helsinki
+    281 Kutojantie 3, Espoo
+    284 Ratapihantie 11, Helsinki
+    285 Rasinkatu 20, Vantaa
+    285 Siltakylänkuja 1, Helsinki
+    286 Kalastajatorpantie 1, Helsinki
+    286 Rosendalinkuja 7, Vantaa
+    286 Vilppulantie 14, Helsinki
+    286 Äyritie 8, Vantaa
+    287 Haartmanin sairaala, Helsinki
+    287 Vanhanlinnantie 3, Helsinki
+    288 Apollonkatu 1, Helsinki
+    288 Kustaankartanon vanhainkoti, Helsinki
+    289 Espoon keskus Park and Ride, Espoo
+    289 Puolarmetsän sairaala, Espoo
+    290 Aalto 1, Espoo
+    290 Sello Library, Espoo
+    290 Ulvilantie 19, Helsinki
+    291 Kirstinkatu 1, Helsinki
+    291 Lastenklinikka, Helsinki
+    291 Von Daehnin katu 14, Helsinki
+    292 Tukholmankatu 8, Helsinki
+    293 Kurkimäentie 19, Helsinki
+    293 Tekniikantie 12, Espoo
+    294 Hietakummuntie 1, Helsinki
+    294 Muusantori 5, Helsinki
+    294 Paciuksenkatu 21, Helsinki
+    295 Agronominkatu 1, Helsinki
+    296 Isokaari 19, Helsinki
+    296 Länsiväylä, Helsinki
+    297 Kolmas Linja 1, Helsinki
+    297 Laajavuorenkuja 1, Vantaa
+    297 Marian sairaala, Helsinki
+    297 Pitäjänmäentie 35, Helsinki
+    297 Ruoholahdenranta 3, Helsinki
+    297 Stenbäckinkatu 11, Helsinki
+    298 Hopeatie 10, Helsinki
+    298 Nihtisillankuja 4, Espoo
+    298 Postintaival 9, Helsinki
+    299 Intiankatu 20, Helsinki
+    300 Laivurinkatu 3, Helsinki
+    301 Oulunkylän yhteiskoulu, Helsinki
+    303 Ahertajantie 5, Espoo
+    304 Ulvilantie 17, Helsinki
+    304 Vieraskuja 5, Espoo
+    305 Bulevardi 1, Helsinki
+    305 Kaupintie 3, Helsinki
+    305 Vanha Maantie 1, Espoo
+    306 Kolmas Linja 17, Helsinki
+    307 Ensi Linja 1, Helsinki
+    308 Aleksanterin teatteri, Helsinki
+    308 Talkoorinne 1, Espoo
+    308 Thalian aukio, Helsinki
+    309 Hotel Sello, Espoo
+    309 Yliopistonkatu 3, Helsinki
+    310 Itäkeskus Library, Helsinki
+    310 Lassila, Helsinki
+    310 Nuijamiestentie 10, Helsinki
+    310 Rörstrandinkatu 3, Helsinki
+    311 Lönnrotinkatu 13, Helsinki
+    311 Revontulenkuja 1, Espoo
+    312 Vironkatu 2, Helsinki
+    313 Kunnalliskodintie 6, Helsinki
+    313 Töölöntullinkatu 8, Helsinki
+    315 Ericsson, Laituri 1, Kirkkonummi
+    315 Kulorastaantie 1, Vantaa
+    315 Käenkuja 3, Helsinki
+    316 Topeliuksenkatu 5, Helsinki
+    317 Viikinkaari 5, Helsinki
+    318 Pähkinärinne, Vantaa
+    319 Fleminginkatu 34, Helsinki
+    319 Jämeräntaival 11, Espoo
+    319 Kallion lukio, Helsinki
+    319 Pasteurinkatu 1, Helsinki
+    320 Urheilutalo, Helsinki
+    321 Nissas, Vantaa
+    322 Hämeentie 161, Helsinki
+    322 Suomenoja, Espoo
+    323 Hakaniemi Square, Helsinki
+    323 Ilmalantori 2, Helsinki
+    323 Isonnevantie 8, Helsinki
+    323 Kaikukatu 4, Helsinki
+    324 Kemistintie 1, Espoo
+    325 Kokkokalliontie 1, Helsinki
+    325 Linnanmäki Amusement Park, Helsinki
+    326 Mäkelänkatu 49, Helsinki
+    327 Erottajanpuiston hostelli, Helsinki
+    327 Ulvilantie 29, Helsinki
+    328 Majurinkulma 2, Espoo
+    328 Vantaanportinkatu 3, Vantaa
+    328 Viljelijäntie 4, Helsinki
+    329 Tammisto, Vantaa
+    330 Kutomokuja 4, Helsinki
+    330 Kuunsilta, Espoo
+    330 Ulvilantie 11, Helsinki
+    331 Kutojantie 1, Espoo
+    331 Ruoholahti metroasema, Helsinki
+    331 Sotungin lukio, Vantaa
+    333 Näyttelijäntie 22, Helsinki
+    333 Tikkurila Park and Ride, Vantaa
+    336 Hotel Sokos Tapiola Garden, Espoo
+    336 Martinlaaksontie 36, Vantaa
+    338 Pasilanraitio 6, Helsinki
+    338 Physicum Kumpula, Helsinki
+    338 Siltakylänkuja 3, Helsinki
+    339 Koskelan sairaala, Helsinki
+    340 Kapteeninkatu 26, Helsinki
+    340 Kauppakorkeakoulut, Helsinki
+    341 Laakson sairaala, Helsinki
+    344 Töölön ala-asteen koulu, Helsinki
+    345 Kantvik, Kirkkonummi
+    345 Keilaniementie 1, Espoo
+    345 Kontula metroasema, Helsinki
+    346 Helsinki-Vantaa lentoasema T1, Laituri 2, Vantaa
+    347 Hanken, Helsinki
+    347 Hämeentie 1, Helsinki
+    347 Lapinrinne 1, Helsinki
+    347 Mäkelänkatu 2, Helsinki
+    347 Väinö Auerin katu 3, Helsinki
+    349 Agricolankatu 1, Helsinki
+    350 Kluuvi, Helsinki
+    350 Opastinsilta 12, Helsinki
+    350 Piispansilta 11, Espoo
+    351 Malmin tori, Helsinki
+    351 Rautalammintie 3, Helsinki
+    353 Espoonlahti, Espoo
+    353 Kuusilahdenkuja 1, Helsinki
+    353 Tapiolansolmu, Espoo
+    354 Siltavuorenpenger 10, Helsinki
+    355 Maininkitie 4, Espoo
+    355 Suvela, Espoo
+    356 Asema-aukio 1, Helsinki
+    356 Kasarmikatu 11-13, Helsinki
+    356 Viikin kampus, Helsinki
+    357 Arkadiankatu 21, Helsinki
+    358 Hesperian puisto, Helsinki
+    358 Kannelmäen asema, Helsinki
+    359 Valimotie 17, Helsinki
+    360 Telakkakatu 8, Helsinki
+    362 Kirstinharju 1, Espoo
+    362 Nikinmäki, Vantaa
+    363 Haartmaninkatu 2, Helsinki
+    363 Riihimäki, -
+    363 Westend, Espoo
+    365 Kylänevantie 16, Helsinki
+    367 Tilanhoitajankaari 11, Helsinki
+    367 Ylioppilastalo, Helsinki
+    369 Katriinan sairaala, Vantaa
+    370 Olympiastadion, Helsinki
+    371 Konemies, Espoo
+    373 Maapadontie 2, Helsinki
+    373 Porkkalankatu 1, Helsinki
+    373 Topeliuksenkatu 41, Helsinki
+    377 Juhana Herttuan tie 3, Helsinki
+    377 Mellunmäki metroasema, Helsinki
+    378 Pihatörmä 1, Espoo
+    379 Hanasaari, Espoo
+    379 Pajamäki, Helsinki
+    379 Siltakuja 2, Espoo
+    380 Pariisinkuja 2, Helsinki
+    380 Pohjoinen Hesperiankatu 17, Helsinki
+    383 Helsinginkatu 1, Helsinki
+    384 Meilahden liikuntapuisto, Helsinki
+    385 Konala, Helsinki
+    385 Mäkelänkatu 84, Helsinki
+    385 Ruskeasuon varikko, Helsinki
+    386 Central Railway Station, Helsinki
+    386 Höyläämötie 1, Helsinki
+    386 Matinniitynkuja 4, Espoo
+    386 Otaniementie 17, Espoo
+    386 Radiokatu 5, Helsinki
+    387 Entresse kauppakeskus, Espoo
+    388 Kaivoksela, Vantaa
+    389 Kilonrinne 10, Espoo
+    393 Lentoasema T2, Vantaa
+    395 Helsinki-Vantaa Airport, Vantaa
+    396 Maapadontie 5, Helsinki
+    397 Jakomäentie 6, Helsinki
+    398 Tennistie 1, Vantaa
+    400 Tyynenmerenkatu 8, Helsinki
+    404 Jätkäsaari, Helsinki
+    405 Hämeentie 153, Helsinki
+    408 Karstulantie 8, Helsinki
+    408 Orionintie 1, Espoo
+    410 Avaruuskatu 3, Espoo
+    410 Hyljeluodontie 3, Espoo
+    410 Olarin lukio, Espoo
+    410 Otakaari 4, Espoo
+    411 Eteläinen Rautatiekatu 4, Helsinki
+    411 Järvenperä, Espoo
+    411 Teollisuuskatu 21, Helsinki
+    412 Kansaneläkelaitos, Helsinki
+    413 Hakaniemenranta 12, Helsinki
+    414 Mankkaa, Espoo
+    415 Arabianranta, Helsinki
+    415 Tuomarilan asema, Espoo
+    418 Linja-autoasema, Helsinki
+    419 Lapinmäentie 1, Helsinki
+    419 Munkkiniemen aukio, Helsinki
+    420 Helsinginkatu 26, Helsinki
+    420 Rautatientori metroasema, Helsinki
+    421 Finlandia-talo, Helsinki
+    426 Helsingin päärautatieasema, Helsinki
+    427 Karhunkierros 1, Vantaa
+    428 Karakaari 7, Espoo
+    429 Käenkuja 1, Helsinki
+    429 Toinen Linja 4, Helsinki
+    431 Hattulantie 1, Helsinki
+    432 Kitarakuja 1, Helsinki
+    433 Latokartanontie 12, Helsinki
+    434 Kaustisenpolku 1, Helsinki
+    434 Talontie 1, Helsinki
+    435 Kutomotie 1, Helsinki
+    435 Suurpelto, Espoo
+    436 WeeGee-talo, Espoo
+    437 Savio, Kerava
+    437 Tukholmankatu 1, Helsinki
+    440 Siltavuorenpenger 5, Helsinki
+    441 Itsehallintotie 1, Espoo
+    441 Jämeräntaival 1, Espoo
+    443 Kaari, Helsinki
+    444 Antti Korpin tie 4, Helsinki
+    444 Mannerheimintie 46, Helsinki
+    445 Helsinginkatu 24, Helsinki
+    446 Muusantori 1, Helsinki
+    449 Juustenintie 3, Helsinki
+    451 Keilaranta 17, Espoo
+    451 Lommila, Espoo
+    451 Pohjolankatu 38, Helsinki
+    452 Espoonlahden uimahalli, Espoo
+    452 Kuninkaantien lukio, Espoo
+    452 Viikinkaari 1, Helsinki
+    453 Munkkiniemen puistotie 1, Helsinki
+    456 Paavalin kirkko, Helsinki
+    456 Westendinasema, Espoo
+    457 Ida Aalbergin tie, Helsinki
+    457 Malmin sairaala, Helsinki
+    458 Ilkantie 4, Helsinki
+    461 Mäkkylä, Espoo
+    463 Westendin asema, Laituri 1, Espoo
+    464 Tapanilan asema, Helsinki
+    466 Jokiniementie 31, Vantaa
+    468 Salmisaari, Helsinki
+    468 Vantaanportti, Vantaa
+    471 Lakelankatu 1, Espoo
+    471 Niittykumpu, Espoo
+    472 Kauppakeskus Kaari, Helsinki
+    473 Porthania, Helsinki
+    474 Kauppakorkeakoulu, Helsinki
+    474 Rälssintie 16, Helsinki
+    476 Kulosaari, Helsinki
+    476 Tikkurilan lukio, Vantaa
+    477 Avaruuskatu 1, Espoo
+    478 Metsänpojankuja 1, Espoo
+    479 Siltavuorenpenger 1, Helsinki
+    479 Välimerenkatu 5, Helsinki
+    481 Mannerheimintie 50, Helsinki
+    481 Tasetie 8, Vantaa
+    482 Itäkeskus metroasema, Helsinki
+    483 Aleksis Kiven katu 1, Helsinki
+    483 Metsänpojankuja 3, Espoo
+    491 Areenankuja 1, Helsinki
+    493 Jan-magnus Janssonin aukio 1, Helsinki
+    493 Klaneettitie 1, Helsinki
+    494 Kumpula, Helsinki
+    496 Postintaival 7, Helsinki
+    496 Takomotie 1, Helsinki
+    497 Ruosilantie 1, Helsinki
+    498 Helsingin asema, Helsinki
+    498 Käpyläntie 1, Helsinki
+    498 Runeberginkatu 14, Helsinki
+    499 Rekola, Vantaa
+    500 Kallio, Helsinki
+    501 Ratapihantie 9, Helsinki
+    502 Bulevardi 31, Helsinki
+    502 Isonnevantie 16, Helsinki
+    508 Ilmala, Helsinki
+    509 Sonera Stadium, Helsinki
+    513 Kettutie 8, Helsinki
+    515 Otakaari 5, Espoo
+    516 Pihlajamäki, Helsinki
+    523 Helsinginkatu 25, Helsinki
+    524 Latokaski, Espoo
+    525 Saunalahti, Espoo
+    530 Valimotie 1, Helsinki
+    531 Akanapolku 2, Vantaa
+    533 Helsinki Railway Station, Helsinki
+    534 Vaskivuoren lukio, Vantaa
+    535 Aleksanterinkatu 1, Helsinki
+    536 Alvar Aallon kuja 1, Helsinki
+    536 Kuusitie 1, Helsinki
+    538 Töölönkatu 51, Helsinki
+    550 Auroran sairaala, Helsinki
+    551 Louhela, Vantaa
+    551 Lääkärinkatu 8, Helsinki
+    554 Karstulantie 6, Helsinki
+    555 Prinsessantie 2, Helsinki
+    556 Itämerenkatu 21, Helsinki
+    562 Vuolukiventie 1, Helsinki
+    564 Pukinmäen asema, Helsinki
+    565 Keilalahdentie 2, Espoo
+    566 Merihaka, Helsinki
+    566 Unioninkatu 40, Helsinki
+    567 Mäkelänrinteen lukio, Helsinki
+    567 Töölön sairaala, Helsinki
+    568 Biomedicum 1, Helsinki
+    569 Huokotie 5, Helsinki
+    572 Kirkkonummen asema, Kirkkonummi
+    572 Mannerheimintie 164, Helsinki
+    572 Tähkäkuja 5, Vantaa
+    578 Viherlaakso, Espoo
+    581 Kevätkatu 2, Helsinki
+    582 Lehtimäki, Espoo
+    583 Haartmaninkatu 8, Helsinki
+    587 Tenholantie 10, Helsinki
+    594 Pitäjänmäen asema, Helsinki
+    595 Gesterby, Kirkkonummi
+    595 Töölön Tulli 2, Helsinki
+    597 Arentikuja 1, Helsinki
+    601 Raumantie 1, Helsinki
+    602 Espoon asema, Espoo
+    603 Kalajärvi, Espoo
+    606 Senaatintori, Helsinki
+    609 Kutojantie 2, Espoo
+    612 Aapelinkatu 5, Espoo
+    616 Viikinkaari 11, Helsinki
+    624 Keran asema, Espoo
+    627 Leppävaara Park and Ride south, Espoo
+    629 Karakallio, Espoo
+    629 Nordenskiöldinkatu 1, Helsinki
+    636 Valimo, Helsinki
+    638 Koivuhovi liityntäpysäköinti, Espoo
+    640 Porvoonkatu 1, Helsinki
+    641 Tilkka, Helsinki
+    641 Töölöntullinkatu 6, Helsinki
+    643 Vanha Maantie 9, Espoo
+    644 Santahamina, Helsinki
+    645 Näätätie 20, Helsinki
+    654 Karhupuisto, Helsinki
+    665 Naistenklinikka, Helsinki
+    665 Viiskulman terveysasema, Helsinki
+    666 Väinö Auerin katu 1, Helsinki
+    669 Siilitie liityntäpysäköinti, Helsinki
+    669 Vantaankoski liityntäpysäköinti, Vantaa
+    671 Valimotie 8, Helsinki
+    681 Energiakatu 3, Helsinki
+    684 Linnoituksentie 10, Helsinki
+    685 Suomenlinna, Helsinki
+    694 Forum, Helsinki
+    694 Olari, Espoo
+    695 Sibeliuksenkatu 14, Helsinki
+    697 Helsinki keskusta, Helsinki
+    698 Rantaharju 10, Espoo
+    701 Musiikkitalo, Helsinki
+    702 Ida Aalbergin tie 1, Helsinki
+    703 Piispansilta 3, Espoo
+    704 Kamppi metroasema, Helsinki
+    711 Tyynenmerenkatu 11, Helsinki
+    715 Sörnäinen metroasema, Helsinki
+    718 Kulttuuritalo, Helsinki
+    724 Hyvinkää, -
+    729 Arcada, Helsinki
+    729 Jakomäki, Helsinki
+    731 Peijaksen sairaala, Vantaa
+    731 Viikin tiedepuisto, Helsinki
+    739 Peltokyläntie 3, Helsinki
+    741 Heikintori, Espoo
+    741 Peijas Hospital, Vantaa
+    743 Käpylän asema, Helsinki
+    747 Söderkulla, Sipoo
+    748 0
+    750 Kätilöopisto, Helsinki
+    753 Ikea Vantaa, Vantaa
+    757 Pasila Railway Station, Helsinki
+    762 Innopoli, Espoo
+    762 Sturenkatu 4, Helsinki
+    769 Messuaukio 1, Helsinki
+    783 Fabianinkatu 33, Helsinki
+    787 Alvar Aallon puisto, Espoo
+    787 Vanha Viertotie 23, Helsinki
+    789 Pasilanraitio 11, Helsinki
+    789 Vuosaari metroasema, Helsinki
+    790 Iivisniemi, Espoo
+    792 Alppikatu 2, Helsinki
+    799 Katajanokan terminaali, Helsinki
+    803 Oulunkylän asema, Helsinki
+    804 Tennispalatsi, Helsinki
+    808 Hattulantie 2, Helsinki
+    809 Munkkivuori, Helsinki
+    811 Tallberginkatu 1, Helsinki
+    813 Barona Areena, Espoo
+    818 Käpylä, Helsinki
+    828 Koivukylän asema, Vantaa
+    836 Kirkkokatu 16, Espoo
+    838 Hiekkaharju, Vantaa
+    841 Huopalahden asema, Helsinki
+    841 Lintukorventie 2, Espoo
+    847 Mikkola, Vantaa
+    850 Sturenkatu 2, Helsinki
+    860 Mäkelänrinne indoor swimming centre, Helsinki
+    866 Meilahti, Helsinki
+    867 Haartmaninkatu 1, Helsinki
+    867 Teekkarikylä, Espoo
+    868 Veikkola, Kirkkonummi
+    875 Munkkiniemi, Helsinki
+    882 Jäähalli, Helsinki
+    884 Makasiiniterminaali, Helsinki
+    885 Puustellinmäki, Espoo
+    885 Rastila, Helsinki
+    890 Läntinen Brahenkatu 2, Helsinki
+    895 Katajanokka, Helsinki
+    896 Puistolan asema, Helsinki
+    900 Lähderanta, Espoo
+    912 Hakaniemen tori, Helsinki
+    912 Kisahalli, Helsinki
+    915 Kaupinkalliontie 3, Espoo
+    916 Nihtisilta, Espoo
+    923 Pohjois-Haaga, Helsinki
+    943 Meilahdentie 2, Helsinki
+    952 Nikkilä, Sipoo
+    962 Lehtimäentie 1, Espoo
+    967 Myyrmanni, Vantaa
+    971 Mannerheimintie 1, Helsinki
+    973 Kuusitie 5, Helsinki
+    992 Mistelitie 26, Vantaa
+    998 Ruskeasuo, Helsinki
+   1020 Lauttasaari, Helsinki
+   1020 Sofianlehdonkatu 5, Helsinki
+   1022 Vanha Maantie 6, Espoo
+   1027 Konemiehentie 2, Espoo
+   1046 Matinkylä, Espoo
+   1057 Puotila, Helsinki
+   1065 Kauppatori, Helsinki
+   1069 Helsingin jäähalli, Helsinki
+   1091 Hakunila, Vantaa
+   1098 Soukka, Espoo
+   1099 Kiasma, Helsinki
+   1107 Espoontori, Espoo
+   1109 Kalasatama metroasema, Helsinki
+   1121 Stockmann, Helsinki
+   1124 Jorvin sairaala, Espoo
+   1131 Korson asema, Vantaa
+   1133 Kurvi, Helsinki
+   1157 Pajuniityntie 11, Helsinki
+   1177 Martinlaakson asema, Vantaa
+   1188 Ikea Espoo, Espoo
+   1189 Itis, Helsinki
+   1191 Tapanila, Helsinki
+   1210 Tivolikuja 1, Helsinki
+   1220 Olympiaterminaali, Helsinki
+   1229 Flamingo, Vantaa
+   1251 Kampin keskus, Helsinki
+   1258 Leiritie 1, Vantaa
+   1262 Kaivokatu 1, Helsinki
+   1277 Teollisuuskatu 23, Helsinki
+   1279 Otakaari 1, Espoo
+   1296 Railway Station, Helsinki
+   1327 Töölöntori, Helsinki
+   1341 Kivenlahti, Espoo
+   1347 Töölönkatu 37, Helsinki
+   1354 Herttoniemi metroasema, Helsinki
+   1366 Ratapihantie 13, Helsinki
+   1366 Ruusutorpantie 4, Espoo
+   1366 Tuomarila, Espoo
+   1381 Meilahden sairaala, Helsinki
+   1396 Albertinkatu 32, Helsinki
+   1397 Myyrmäen asema, Vantaa
+   1412 Arabia, Helsinki
+   1423 Maunula, Helsinki
+   1444 Oulunkylä, Helsinki
+   1445 Kantelettarentie 1, Helsinki
+   1458 Rautatientori Metro Station, Helsinki
+   1460 Gustaf Hällströmin katu 2, Helsinki
+   1462 Masala, Kirkkonummi
+   1471 Espoo, Espoo
+   1498 Jorvi, Espoo
+   1533 Lippulaiva, Espoo
+   1566 Haartmaninkatu 4, Helsinki
+   1572 Myllypuro, Helsinki
+   1594 Oopperatalo, Helsinki
+   1595 Järvenpää, -
+   1611 Pitäjänmäki, Helsinki
+   1630 Lasipalatsi, Helsinki
+   1634 Mannerheimintie 172, Helsinki
+   1640 Keravan asema, Kerava
+   1646 Huopalahti liityntäpysäköinti, Helsinki
+   1716 Malminkartano, Helsinki
+   1735 Töölön kisahalli, Helsinki
+   1783 Tukholmankatu 10, Helsinki
+   1849 Airport, Vantaa
+   1883 Länsiterminaali, Helsinki
+   1886 Katajanokanlaituri 6, Helsinki
+   1928 Dipoli, Espoo
+   1963 Puistola, Helsinki
+   1966 Keskusta, Helsinki
+   1978 Hämeentie 135, Helsinki
+   2085 Kauklahti, Espoo
+   2143 Martinlaakso, Vantaa
+   2201 Kannelmäki, Helsinki
+   2213 Keskuskatu 2, Helsinki
+   2228 Kilo, Espoo
+   2259 Pukinmäki, Helsinki
+   2287 Kaapelitehdas, Helsinki
+   2289 Viikki, Helsinki
+   2305 Opastinsilta 8, Helsinki
+   2343 Leppävaaran asema, Espoo
+   2347 Malmin asema, Helsinki
+   2360 Linnankatu 9, Helsinki
+   2443 Steissi, Helsinki
+   2516 Kauniainen, Kauniainen
+   2530 Kumpulan kampus, Helsinki
+   2532 Kontula, Helsinki
+   2547 Länsisatama, Helsinki
+   2603 Koivukylä, Vantaa
+   2791 Vuosaari, Helsinki
+   2807 Kamppi terminal, Helsinki
+   2886 Lentokenttä, Vantaa
+   2912 Kaisaniemi metroasema, Helsinki
+   3025 Helsinki-Vantaan lentoasema, Vantaa
+   3064 Messukeskus, Helsinki
+   3095 Hartwall Areena, Helsinki
+   3268 Ruoholahti, Helsinki
+   3271 Mellunmäki, Helsinki
+   3376 Otaniemi, Espoo
+   3622 Helsingin rautatieasema, Helsinki
+   3997 Kirkkonummi, Kirkkonummi
+   4112 Kerava, Kerava
+   4118 Tapiola, Espoo
+   4483 Korso, Vantaa
+   4666 Herttoniemi, Helsinki
+   4967 Jumbo, Vantaa
+   5003 Tikkurilan asema, Vantaa
+   5415 Lentoasema, Vantaa
+   5710 Myyrmäki, Vantaa
+   6356 Hakaniemi metroasema, Helsinki
+   7111 Iso Omena, Espoo
+   7568 Malmi, Helsinki
+   7670 Espoon keskus, Espoo
+   7969 Sörnäinen, Helsinki
+   8348 Sello, Espoo
+   8852 Pasilan asema, Helsinki
+   9984 Itäkeskus, Helsinki
+  10428 Elielinaukio, Helsinki
+  12949 Tikkurila, Vantaa
+  14675 Pasila, Helsinki
+  15952 Leppävaara, Espoo
+  23350 Helsinki, Helsinki
+  26261 Rautatieasema, Helsinki
+  27350 Rautatientori, Helsinki
+  43341 Kamppi, Helsinki

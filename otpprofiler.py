@@ -10,7 +10,7 @@ from copy import copy
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
-DATE = '2014-12-30'
+DATE = '2016-09-20'
 # split out base and specific endpoint
 SHOW_PARAMS = False
 SHOW_URL = False
@@ -63,10 +63,10 @@ def get_params(fast):
 def getServerInfo(host):
     """Get information about the server that is being profiled. Returns a tuple of:
     (sha1, version, cpuName, nCores)
-    where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which 
-    includes the last tag and how many commits have been made on top of that tag), 
+    where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which
+    includes the last tag and how many commits have been made on top of that tag),
     cpuName is the model of the cpu as reported by /proc/cpuinfo via the OTP serverinfo API,
-    and nCores is the number of (logical) cores reported by that same API, including hyperthreading. 
+    and nCores is the number of (logical) cores reported by that same API, including hyperthreading.
     """
     url_meta = "http://"+host+"/otp/"
 
@@ -285,21 +285,21 @@ def run(connect_args) :
     host = connect_args.pop('host')
     profile = connect_args.pop('profile')
     print("profile=%s"%profile)
-    info = getServerInfo(host)
-    while retry > 0 and info == None:
-        print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
-        time.sleep(10)
-        info = getServerInfo(host)
-        retry -= 1
-
-    if info == None :
-        print "Failed to identify OTP version. Exiting."
-        exit(-2)
+    # info = getServerInfo(host)
+    # while retry > 0 and info == None:
+    #     print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
+    #     time.sleep(10)
+    #     info = getServerInfo(host)
+    #     retry -= 1
+    #
+    # if info == None :
+    #     print "Failed to identify OTP version. Exiting."
+    #     exit(-2)
 
     # Create a dict describing this particular run of the profiler, which will be output as JSON
     run_time_id = int(time.time())
-    run_row = info + (notes, run_time_id)
-    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes','id'), run_row))
+    run_row = (notes, run_time_id)
+    run_json = dict(zip(('notes','id'), run_row))
 
     all_params = get_params(fast)
     random.shuffle(all_params)
@@ -325,7 +325,7 @@ def run(connect_args) :
             params['numItineraries'] = 3
 
         qstring = urllib.urlencode(params)
-        url = "http://%s/otp/routers/default/%s?%s"%(host, api_method, qstring)
+        url = "http://%s/routing/v1/routers/hsl/%s?%s"%(host, api_method, qstring)
 
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
         if SHOW_PARAMS :
@@ -374,5 +374,3 @@ if __name__=="__main__":
     # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name),
     # so convert it to a dict before passing it into the run function.
     run(vars(args))
-
-
