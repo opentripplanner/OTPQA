@@ -1,6 +1,14 @@
 OTPQA
 =====
 
+## Docker quickstart
+
+1. Build image: `docker build -t hsldevcom/otpqa .`
+2. Run tests against host `docker run -p8000:8000 -e TARGET_HOST=dev-api.digitransit.fi hsldevcom/otpqa`
+3. Check results: http://localhost:8000/results.html
+
+## Original OTPQA docs
+
 Keep track of changes in OTP performance as development progresses, and catch breaking changes to input data sets by observing changes in routing results.
 
 You will need Python and some Python libraries. For the libraries, on a Debian based system like Ubuntu you can run:
@@ -26,7 +34,7 @@ It takes no arguments, assumes the presence of endpoints_random.csv and endpoint
 Then run the profiler with 
 
     $ python otpprofiler.py hostname
-    
+
 That will generate run_summary.TIMESTAMP.json and full_itins.TIMESTAMP.json
 That one can do with what one pleases.
 
@@ -37,4 +45,3 @@ To generate a report run
 To generate an HTML report, run
 
     $ python hreport.py f1 [fn2 [fn3 ...]] > report.html
-
