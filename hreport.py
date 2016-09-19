@@ -17,14 +17,12 @@ def main(filenames):
     border-collapse: collapse;
 }
 th, td {
-    text-align: left;    
+    text-align: left;
 }</style></head>"""
 
 	datasets = []
-	shas = []
 	for fn in filenames:
 		blob = json.load( open(fn) )
-		shas.append( blob['git_sha1'] )
 		dataset = dict( [(response["id_tuple"], response) for response in blob['responses']] )
 		datasets.append( dataset )
 
@@ -35,11 +33,6 @@ th, td {
 	dataset_total_times = dict(zip( range(len(datasets)),[[] for x in range(len(datasets))]) )
 	dataset_avg_times = dict(zip(range(len(datasets)),[[] for x in range(len(datasets))]) )
 	dataset_fails = dict(zip(range(len(datasets)), [0]*len(datasets)))
-
-	yield "<tr><td>request id</td>"
-	for fn,sha in zip(filenames,shas):
-		yield "<td>%s (commit:%s)</td>"%(fn,sha)
-	yield "</tr>"
 
 	for id_tuple in id_tuples:
 		yield """<tr><td rowspan="2"><a href="%s">%s</a></td>"""%(datasets[0][id_tuple]['url'], id_tuple)
