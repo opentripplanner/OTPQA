@@ -10,7 +10,7 @@ const TEMPLATE = 'http://dev-api.digitransit.fi/geocoding/v1/search?boundary.rec
 const agent = new http.Agent({
   keepAlive: true,
   keepAliveMsecs: 60000,
-  maxSockets: 50
+  maxSockets: 2
 });
 
 readline.createInterface({
