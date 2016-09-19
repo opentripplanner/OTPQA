@@ -10,9 +10,7 @@ ENV TARGET_HOST dev-api.digitransit.fi
 ADD . /opt/OTPQA
 
 RUN apt-get update && \
-  apt-get install -y python-simplejson python-scipy curl
-
-RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python
+  apt-get install -y python-simplejson python-scipy python-pip curl
 
 RUN pip install grequests
 
