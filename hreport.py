@@ -28,6 +28,10 @@ th, td {
 
 	id_tuples = datasets[0].keys()
 
+        if len(id_tuples)==0:
+                print "Input does not contain any data"
+                exit()
+
 	yield """<table border="1">"""
 
 	dataset_total_times = dict(zip( range(len(datasets)),[[] for x in range(len(datasets))]) )
