@@ -273,6 +273,7 @@ def response_callback_factory(row, profile) :
 
         if SHOW_RESPONSE :
             pp.pprint(row)
+        response.connection.close();
     # return the function definition, a closure for a specific instance of 'row'
     return handle_response
 
