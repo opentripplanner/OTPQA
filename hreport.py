@@ -11,15 +11,6 @@ def main(filenames):
 	if len(filenames)==0:
 		return
 
-	yield "<html>"
-	yield """<head><style>table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    text-align: left;
-}</style></head>"""
-
 	datasets = []
 	for fn in filenames:
 		blob = json.load( open(fn) )
@@ -31,6 +22,15 @@ th, td {
         if len(id_tuples)==0:
                 print "Input does not contain any data"
                 exit()
+
+	yield "<html>"
+	yield """<head><style>table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    text-align: left;
+}</style></head>"""
 
 	yield """<table border="1">"""
 
