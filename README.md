@@ -5,7 +5,7 @@ OTPQA
 
 1. Build image: `docker build -t hsldevcom/otpqa .`
 2. Run tests against host `docker run -p8000:8000 -e TARGET_HOST=dev-api.digitransit.fi hsldevcom/otpqa`
-3. Check results: http://localhost:8000/results.html
+3. Check results: http://localhost:8000/report.html
 
 ## Original OTPQA docs
 
