@@ -5,12 +5,23 @@ import subprocess, urllib, random
 import simplejson
 import pprint
 from copy import copy
+from datetime import date
+
 # python-requests no longer has first-class support for concurrent asynchronous HTTP requests
 # the author has moved it to https://github.com/kennethreitz/grequests
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
-DATE = '2016-09-20'
+# generate test date on a recent/upcoming monday. Use a fixed work day to keep results comparable
+cdate = date.today()
+dd = cdate.day - cdate.weekday() # monday = 0. want monday!
+if dd < 1:
+    dd = dd + 7 # use next monday
+
+DATE = "%s-%s-%s"%(cdate.year, cdate.month, dd)
+
+print "TEST DATE:", DATE
+
 # split out base and specific endpoint
 SHOW_PARAMS = False
 SHOW_URL = False
@@ -326,7 +337,20 @@ def run(connect_args) :
             params['numItineraries'] = 3
 
         qstring = urllib.urlencode(params)
-        url = "http://%s/routing/v1/routers/hsl/%s?%s"%(host, api_method, qstring)
+
+        if "http" in host:
+            url = host
+        else:
+            url = "http://" + host
+
+        # check if url path requires completion
+        if (not "/otp/routers" in host) and (not "/routing/v1/routers" in host):
+            url = url + "/routing/v1/routers/hsl"
+
+        if not url.endswith('/'):
+            url = url + "/"
+
+        url = "%s%s?%s"%(url, api_method, qstring)
 
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
         if SHOW_PARAMS :
