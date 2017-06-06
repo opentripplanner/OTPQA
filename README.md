@@ -7,6 +7,7 @@ OTPQA
 2. Run tests against host `docker run -p8000:8000 -e TARGET_HOST=dev-api.digitransit.fi hsldevcom/otpqa`
 3. Check results: http://localhost:8000/report.html
 
+
 ## Original OTPQA docs
 
 Keep track of changes in OTP performance as development progresses, and catch breaking changes to input data sets by observing changes in routing results.
@@ -45,3 +46,19 @@ To generate a report run
 To generate an HTML report, run
 
     $ python hreport.py f1 [fn2 [fn3 ...]] > report.html
+
+
+## Routing performance and regression detection
+
+Generate a benchmark file:
+
+    $ python otpprofiler.py hostname
+
+When data or OTP changes, generate a test file:
+
+    $ python otpprofiler.py hostname
+
+Then run comparison:
+
+    $ python compare.py benchmark_profile.json new_profile.json
+
