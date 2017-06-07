@@ -6,6 +6,7 @@ import simplejson
 import pprint
 from copy import copy
 from datetime import date
+from random import randint, seed
 
 # python-requests no longer has first-class support for concurrent asynchronous HTTP requests
 # the author has moved it to https://github.com/kennethreitz/grequests
@@ -51,13 +52,46 @@ def pairs(iterable):
         yield (x, next(it, None))
 
 
-def get_params(fast):
+def get_params(fast, count):
     requests_json = simplejson.load(open("requests.json"))
     requests = requests_json['requests']
     endpoints = requests_json['endpoints']
+    elen = len(endpoints);
+
+    if elen < 2:
+        print "Not enough endpoints"
+        exit()
+    print "test count=%d"%count
+
+    if elen > 2 * count:
+        endpoints = endpoints[:2*count]
+    elif elen < 2 * count:
+        newpoints = []
+        pairIds = {}
+        i = 0
+        prevr = 0
+        seed(1) # use a fixed random sequence to get repeatable results
+        for j in range (0, count*10): # apply a large top limit to ensure the loop ends
+            r = randint(0, elen-1)
+            if i%2 != 0:
+                pair_id = str(prevr) + "_" + str(r)
+                if pair_id in pairIds:
+                    # point pair already exists, pick a new one
+                    continue
+                pairIds[pair_id] = True
+            # got a valid new endpoint, continue with new endpoint
+            newpoints.append(endpoints[r])
+            prevr = r
+            i+=1
+            if i >= count*2:
+                break #done
+
+        endpoints = newpoints
+
     # Make sure there is an even number of endpoints
     if len(endpoints) % 2 != 0 :
         endpoints = endpoints[:-1]
+
     ret = []
     # if fast :
     # else :
@@ -294,6 +328,7 @@ def run(connect_args) :
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
+    count = connect_args.pop('count')
     host = connect_args.pop('host')
     profile = connect_args.pop('profile')
     print("profile=%s"%profile)
@@ -313,7 +348,7 @@ def run(connect_args) :
     run_row = (notes, run_time_id)
     run_json = dict(zip(('notes','id'), run_row))
 
-    all_params = get_params(fast)
+    all_params = get_params(fast, count)
     random.shuffle(all_params)
     global t0, N # HACK
     t0 = time.time()
@@ -393,6 +428,7 @@ if __name__=="__main__":
     parser.add_argument('-f', '--fast', action='store_true', default=False)
     parser.add_argument('-n', '--notes')
     parser.add_argument('-r', '--retry', type=int, default=5)
+    parser.add_argument('-c', '--count', type=int, default=1100)
     parser.add_argument('-p', '--profile', action='store_true', default=False)
     args = parser.parse_args()
 

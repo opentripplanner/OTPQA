@@ -32,6 +32,9 @@ def main(filenames):
         count = 0
 
 	for id in dur1:
+                if not id in dur1 or not id in dur2:
+                        print "test data is not comparable"
+                        exit()
                 t1 = dur1[id]
                 t2 = dur2[id]
                 if t1 != t2:
