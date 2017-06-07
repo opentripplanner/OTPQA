@@ -15,10 +15,11 @@ RUN apt-get update && \
 RUN pip install grequests
 
 RUN cd data && \
+  echo "name,lat,lon" > ../endpoints_custom_hsl.csv && \
   npm install node-fetch && \
-  node parse_places.js | tee ../endpoints_custom_hsl
+  node parse_places.js | tee -a ../endpoints_custom_hsl.csv
 
-RUN python gen_requests.py 
+RUN python gen_requests.py
 
 EXPOSE 8000
 

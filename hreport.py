@@ -11,6 +11,18 @@ def main(filenames):
 	if len(filenames)==0:
 		return
 
+	datasets = []
+	for fn in filenames:
+		blob = json.load( open(fn) )
+		dataset = dict( [(response["id_tuple"], response) for response in blob['responses']] )
+		datasets.append( dataset )
+
+	id_tuples = datasets[0].keys()
+
+        if len(id_tuples)==0:
+                print "Input does not contain any data"
+                exit()
+
 	yield "<html>"
 	yield """<head><style>table, th, td {
     border: 1px solid black;
@@ -19,14 +31,6 @@ def main(filenames):
 th, td {
     text-align: left;
 }</style></head>"""
-
-	datasets = []
-	for fn in filenames:
-		blob = json.load( open(fn) )
-		dataset = dict( [(response["id_tuple"], response) for response in blob['responses']] )
-		datasets.append( dataset )
-
-	id_tuples = datasets[0].keys()
 
 	yield """<table border="1">"""
 
