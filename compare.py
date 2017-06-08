@@ -15,7 +15,7 @@ def extractdurations(filename):
         for id_tuple in dataset:
                 response = dataset[id_tuple]
 
-                if len(response["itins"]) == 0:
+                if not "itins" in response or len(response["itins"]) == 0:
                         durations[id_tuple] = -1
                 else:
 			durations[id_tuple] = parsetime( response["itins"][0]["duration"] )
@@ -32,7 +32,7 @@ def main(filenames):
         count = 0
 
 	for id in dur1:
-                if not id in dur1 or not id in dur2:
+                if not id in dur2:
                         print "test data is not comparable"
                         exit()
                 t1 = dur1[id]
