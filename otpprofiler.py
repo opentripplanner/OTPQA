@@ -164,7 +164,7 @@ def summarize_plan (itinerary) :
             waits.append(wait)
     ret = {
         'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
-        'duration' : '%d msec' % int(itinerary['duration']),
+        'duration' : '%d sec' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
         'walk_distance' : itinerary['walkDistance'],
