@@ -11,35 +11,32 @@ def main(filenames):
 	if len(filenames)==0:
 		return
 
+	datasets = []
+	for fn in filenames:
+		blob = json.load( open(fn) )
+		dataset = dict( [(response["id_tuple"], response) for response in blob['responses']] )
+		datasets.append( dataset )
+
+	id_tuples = datasets[0].keys()
+
+        if len(id_tuples)==0:
+                print "Input does not contain any data"
+                exit()
+
 	yield "<html>"
 	yield """<head><style>table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
 }
 th, td {
-    text-align: left;    
+    text-align: left;
 }</style></head>"""
-
-	datasets = []
-	shas = []
-	for fn in filenames:
-		blob = json.load( open(fn) )
-		shas.append( blob['git_sha1'] )
-		dataset = dict( [(response["id_tuple"], response) for response in blob['responses']] )
-		datasets.append( dataset )
-
-	id_tuples = datasets[0].keys()
 
 	yield """<table border="1">"""
 
 	dataset_total_times = dict(zip( range(len(datasets)),[[] for x in range(len(datasets))]) )
 	dataset_avg_times = dict(zip(range(len(datasets)),[[] for x in range(len(datasets))]) )
 	dataset_fails = dict(zip(range(len(datasets)), [0]*len(datasets)))
-
-	yield "<tr><td>request id</td>"
-	for fn,sha in zip(filenames,shas):
-		yield "<td>%s (commit:%s)</td>"%(fn,sha)
-	yield "</tr>"
 
 	for id_tuple in id_tuples:
 		yield """<tr><td rowspan="2"><a href="%s">%s</a></td>"""%(datasets[0][id_tuple]['url'], id_tuple)

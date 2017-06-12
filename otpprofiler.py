@@ -5,12 +5,24 @@ import subprocess, urllib, random
 import simplejson
 import pprint
 from copy import copy
+from datetime import date
+from random import randint, seed
+
 # python-requests no longer has first-class support for concurrent asynchronous HTTP requests
 # the author has moved it to https://github.com/kennethreitz/grequests
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
-DATE = '2014-12-30'
+TIME='14:00:00'
+
+# generate test date on a recent/upcoming monday. Use a fixed work day to keep results comparable
+cdate = date.today()
+dd = cdate.day - cdate.weekday() # monday = 0. want monday!
+if dd < 1:
+    dd = dd + 7 # use next monday
+
+DATE = "%s-%s-%s"%(cdate.year, cdate.month, dd)
+
 # split out base and specific endpoint
 SHOW_PARAMS = False
 SHOW_URL = False
@@ -40,13 +52,46 @@ def pairs(iterable):
         yield (x, next(it, None))
 
 
-def get_params(fast):
+def get_params(fast, count):
     requests_json = simplejson.load(open("requests.json"))
     requests = requests_json['requests']
     endpoints = requests_json['endpoints']
+    elen = len(endpoints);
+
+    if elen < 2:
+        print "Not enough endpoints"
+        exit()
+    print "test count=%d"%count
+
+    if elen > 2 * count:
+        endpoints = endpoints[:2*count]
+    elif elen < 2 * count:
+        newpoints = []
+        pairIds = {}
+        i = 0
+        prevr = 0
+        seed(1) # use a fixed random sequence to get repeatable results
+        for j in range (0, count*10): # apply a large top limit to ensure the loop ends
+            r = randint(0, elen-1)
+            if i%2 != 0:
+                pair_id = str(prevr) + "_" + str(r)
+                if pair_id in pairIds:
+                    # point pair already exists, pick a new one
+                    continue
+                pairIds[pair_id] = True
+            # got a valid new endpoint, continue with new endpoint
+            newpoints.append(endpoints[r])
+            prevr = r
+            i+=1
+            if i >= count*2:
+                break #done
+
+        endpoints = newpoints
+
     # Make sure there is an even number of endpoints
     if len(endpoints) % 2 != 0 :
         endpoints = endpoints[:-1]
+
     ret = []
     # if fast :
     # else :
@@ -63,10 +108,10 @@ def get_params(fast):
 def getServerInfo(host):
     """Get information about the server that is being profiled. Returns a tuple of:
     (sha1, version, cpuName, nCores)
-    where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which 
-    includes the last tag and how many commits have been made on top of that tag), 
+    where sha1 is the hash of the HEAD commit, version is the output of 'git describe' (which
+    includes the last tag and how many commits have been made on top of that tag),
     cpuName is the model of the cpu as reported by /proc/cpuinfo via the OTP serverinfo API,
-    and nCores is the number of (logical) cores reported by that same API, including hyperthreading. 
+    and nCores is the number of (logical) cores reported by that same API, including hyperthreading.
     """
     url_meta = "http://"+host+"/otp/"
 
@@ -119,7 +164,7 @@ def summarize_plan (itinerary) :
             waits.append(wait)
     ret = {
         'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
-        'duration' : '%d msec' % int(itinerary['duration']),
+        'duration' : '%d sec' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
         'walk_distance' : itinerary['walkDistance'],
@@ -273,6 +318,7 @@ def response_callback_factory(row, profile) :
 
         if SHOW_RESPONSE :
             pp.pprint(row)
+        response.connection.close();
     # return the function definition, a closure for a specific instance of 'row'
     return handle_response
 
@@ -282,27 +328,32 @@ def run(connect_args) :
     notes = connect_args.pop('notes')
     retry = connect_args.pop('retry')
     fast  = connect_args.pop('fast')
+    count = connect_args.pop('count')
     host = connect_args.pop('host')
     profile = connect_args.pop('profile')
-    print("profile=%s"%profile)
-    info = getServerInfo(host)
-    while retry > 0 and info == None:
-        print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
-        time.sleep(10)
-        info = getServerInfo(host)
-        retry -= 1
+    Date = connect_args.pop('date')
+    Time = connect_args.pop('time')
 
-    if info == None :
-        print "Failed to identify OTP version. Exiting."
-        exit(-2)
+    print "TEST DATE:", Date, Time
+
+    print("profile=%s"%profile)
+    # info = getServerInfo(host)
+    # while retry > 0 and info == None:
+    #     print "Failed to connect to OTP server. Waiting to retry (%d)." % retry
+    #     time.sleep(10)
+    #     info = getServerInfo(host)
+    #     retry -= 1
+    #
+    # if info == None :
+    #     print "Failed to identify OTP version. Exiting."
+    #     exit(-2)
 
     # Create a dict describing this particular run of the profiler, which will be output as JSON
     run_time_id = int(time.time())
-    run_row = info + (notes, run_time_id)
-    run_json = dict(zip(('git_sha1','git_describe','cpu_name','cpu_cores','notes','id'), run_row))
+    run_row = (notes, run_time_id)
+    run_json = dict(zip(('notes','id'), run_row))
 
-    all_params = get_params(fast)
-    random.shuffle(all_params)
+    all_params = get_params(fast, count)
     global t0, N # HACK
     t0 = time.time()
     N = len(all_params)
@@ -313,7 +364,8 @@ def run(connect_args) :
         oid = params.pop('oid')
         tid = params.pop('tid')
 
-        params['date'] = DATE
+        params['date'] = Date
+        params['time'] = Time
         if profile:
             api_method = 'profile'
             params['from'] = params.pop('fromPlace')
@@ -322,10 +374,23 @@ def run(connect_args) :
             params['limit'] = 3
         else:
             api_method = 'plan'
-            params['numItineraries'] = 3
+            params['numItineraries'] = 1
 
         qstring = urllib.urlencode(params)
-        url = "http://%s/otp/routers/default/%s?%s"%(host, api_method, qstring)
+
+        if "http" in host:
+            url = host
+        else:
+            url = "http://" + host
+
+        # check if url path requires completion
+        if (not "/otp/routers" in host) and (not "/routing/v1/routers" in host):
+            url = url + "/routing/v1/routers/hsl"
+
+        if not url.endswith('/'):
+            url = url + "/"
+
+        url = "%s%s?%s"%(url, api_method, qstring)
 
         # Tomcat server + spaces in URLs -> HTTP 505 confusion
         if SHOW_PARAMS :
@@ -367,12 +432,13 @@ if __name__=="__main__":
     parser.add_argument('host')
     parser.add_argument('-f', '--fast', action='store_true', default=False)
     parser.add_argument('-n', '--notes')
+    parser.add_argument('-d', '--date', default=DATE)
+    parser.add_argument('-t', '--time', default='14:00')
     parser.add_argument('-r', '--retry', type=int, default=5)
+    parser.add_argument('-c', '--count', type=int, default=1100)
     parser.add_argument('-p', '--profile', action='store_true', default=False)
     args = parser.parse_args()
 
     # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name),
     # so convert it to a dict before passing it into the run function.
     run(vars(args))
-
-
