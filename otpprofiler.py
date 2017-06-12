@@ -13,6 +13,8 @@ from random import randint, seed
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
+TIME='14:00:00'
+
 # generate test date on a recent/upcoming monday. Use a fixed work day to keep results comparable
 cdate = date.today()
 dd = cdate.day - cdate.weekday() # monday = 0. want monday!
@@ -20,8 +22,6 @@ if dd < 1:
     dd = dd + 7 # use next monday
 
 DATE = "%s-%s-%s"%(cdate.year, cdate.month, dd)
-
-print "TEST DATE:", DATE
 
 # split out base and specific endpoint
 SHOW_PARAMS = False
@@ -164,7 +164,7 @@ def summarize_plan (itinerary) :
             waits.append(wait)
     ret = {
         'start_time' : time.asctime(time.gmtime(itinerary['startTime'] / 1000)) + ' GMT',
-        'duration' : '%d msec' % int(itinerary['duration']),
+        'duration' : '%d sec' % int(itinerary['duration']),
         'n_legs' : n_legs,
         'n_vehicles' : n_vehicles,
         'walk_distance' : itinerary['walkDistance'],
@@ -331,6 +331,11 @@ def run(connect_args) :
     count = connect_args.pop('count')
     host = connect_args.pop('host')
     profile = connect_args.pop('profile')
+    Date = connect_args.pop('date')
+    Time = connect_args.pop('time')
+
+    print "TEST DATE:", Date, Time
+
     print("profile=%s"%profile)
     # info = getServerInfo(host)
     # while retry > 0 and info == None:
@@ -349,7 +354,6 @@ def run(connect_args) :
     run_json = dict(zip(('notes','id'), run_row))
 
     all_params = get_params(fast, count)
-    random.shuffle(all_params)
     global t0, N # HACK
     t0 = time.time()
     N = len(all_params)
@@ -360,7 +364,8 @@ def run(connect_args) :
         oid = params.pop('oid')
         tid = params.pop('tid')
 
-        params['date'] = DATE
+        params['date'] = Date
+        params['time'] = Time
         if profile:
             api_method = 'profile'
             params['from'] = params.pop('fromPlace')
@@ -369,7 +374,7 @@ def run(connect_args) :
             params['limit'] = 3
         else:
             api_method = 'plan'
-            params['numItineraries'] = 3
+            params['numItineraries'] = 1
 
         qstring = urllib.urlencode(params)
 
@@ -427,6 +432,8 @@ if __name__=="__main__":
     parser.add_argument('host')
     parser.add_argument('-f', '--fast', action='store_true', default=False)
     parser.add_argument('-n', '--notes')
+    parser.add_argument('-d', '--date', default=DATE)
+    parser.add_argument('-t', '--time', default='14:00')
     parser.add_argument('-r', '--retry', type=int, default=5)
     parser.add_argument('-c', '--count', type=int, default=1100)
     parser.add_argument('-p', '--profile', action='store_true', default=False)
