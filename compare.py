@@ -38,7 +38,7 @@ def main(filenames):
                 t1 = dur1[id]
                 t2 = dur2[id]
                 if t1 != t2:
-                        print "Test %s t1=%d t2=%d"%(id, t1, t2)
+                        print "Test %s t1=%d t2=%d diff=%d"%(id, t1, t2, t2-t1)
                 if t1 < 0 and t2 > 0:
                         fails1+=1
                 elif t1 > 0 and t2 < 0:
