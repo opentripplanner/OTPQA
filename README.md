@@ -20,21 +20,24 @@ We also use grequests to handle multiple concurrent HTTP requests.
 
 `$ sudo pip install grequests`
 
-Generate random points with: 
+Generate random points with:
 
     $ python gen_points.py dirname num_points
 
 `dirname` is the name of a directory with OSM and GTFS data.
 
-Generate the request parameters and save the request endpoints with: 
+Generate the request parameters and save the request endpoints with:
 
-    $ python gen_requests.py 
+    $ python gen_requests.py
 
 It takes no arguments, assumes the presence of endpoints_random.csv and endpoints_custom.csv in the same directory.
 
-Then run the profiler with 
+Then run the profiler with
 
     $ python otpprofiler.py hostname
+
+Here hostname can be briefly a digitransit service API root address such as 'api.digitransit.fi',
+or a full path to a local OTP instance routing: 'localhost:9080/otp/routers/default'.
 
 That will generate run_summary.TIMESTAMP.json and full_itins.TIMESTAMP.json
 That one can do with what one pleases.
@@ -49,6 +52,7 @@ To generate an HTML report, run
 
     $ python hreport.py f1 [fn2 [fn3 ...]] > report.html
 
+
 ## Routing performance and regression detection
 
 Generate a benchmark file:
@@ -62,3 +66,9 @@ When data or OTP changes, generate a test file:
 Then run comparison:
 
     $ python compare.py benchmark_profile.json new_profile.json
+
+The test uses, by default, a time threshold of 60 seconds. This means that changes less than one minute in route duration are not considered
+significant in regression detection. A custom threshold can be set using -t parameter: python compare.py -t 10 ...
+
+The test computes a performance measurement ratio 100% * (#equally good routes / #all routes). If the ratio is below the given limit value
+(parameter -l , default=95), the test exits with code 1. So, by default, test fails if 5% of routes have become significantly slower.
