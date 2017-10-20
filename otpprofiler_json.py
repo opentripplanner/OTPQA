@@ -15,28 +15,29 @@ f = open('otpqa_router_requests.json')
 router_sites = json.load(f)
 f.close()
 
-target_host = 'https://api.digitransit.fi'
+OTP_URL = 'https://dev-api.digitransit.fi/routing/v1/routers/%s'
 if len(sys.argv) >= 2:
-    target_host = sys.argv[1]
-else:
-    print('Usage: python ottprofiler_json.py <target_host> <target_routers>')
-    sys.exit(2)
+    OTP_URL = sys.argv[1]
 
 test_routers = set(router_sites.keys())
 if len(sys.argv) == 3:
     test_routers = set(sys.argv[2].split(','))
 
-OTP_URL_TEMPLATE = '%s/routing/v1/routers/%%s' % target_host
-print('OTP TEMPLATE',OTP_URL_TEMPLATE)
+print('TARGET OTP',OTP_URL)
 for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
     print(router)
     nfailed = 0
     nnone = 0
     totaln = 0
+
+    router_url = OTP_URL
+    if OTP_URL.find('%s') > -1:
+        router_url = OTP_URL % {'router':router}
+
     f = open('otpqa_report_%s.html' % router, 'w+')
     for site in rsites:
         print(site['name'])
-        OTP_URL = OTP_URL_TEMPLATE % router
+
 
         params = {
             'date': otpprofiler.DATE,
@@ -46,7 +47,7 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
             'notes': None,
             'fast': False,
             'profile': False,
-            'host': OTP_URL
+            'host': router_url
 
         }
         response_json = otpprofiler.run(params, requests_json=site['requests'])
