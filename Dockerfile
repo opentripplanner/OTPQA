@@ -19,8 +19,5 @@ RUN pip install grequests
 RUN pip install unicodecsv
 RUN pip install utm
 
-EXPOSE 8000
-
-CMD python otpprofiler_json.py ${TARGET_HOST} ${TARGET_ROUTER} && \
-  python -m SimpleHTTPServer
+CMD python otpprofiler_json.py ${TARGET_HOST} ${TARGET_ROUTER}
 
