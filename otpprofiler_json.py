@@ -32,7 +32,7 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
 
     router_url = OTP_URL
     if OTP_URL.find('%s') > -1:
-        router_url = OTP_URL % {'router':router}
+        router_url = OTP_URL % router
 
     f = open('otpqa_report_%s.html' % router, 'w+')
     for site in rsites:
