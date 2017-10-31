@@ -21,17 +21,16 @@ piwik_baseurl = os.getenv('PIWIK_URL', 'https://piwik.digitransit.fi')
 period = 'month'
 
 sites_router = {
-    'reittiopas.fi': {'router': 'hsl', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'reittiopas.fi': {'router': 'finland', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'opas.matka.fi': {'router': 'finland', 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    'joensuu.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'turku.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'hameenlinna.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'jyvaskyla.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'kuopio.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    #'lahti.digitransit.fi': {'router': 'waltti', 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    #'lappeenranta.digitransit.fi': {'router': 'waltti', 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    'oulu.digitransit.fi': {'router': 'waltti','eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'reittiopas.fi': {'router': ('hsl','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'opas.matka.fi': {'router': ('finland',), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    'joensuu.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'turku.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'hameenlinna.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'jyvaskyla.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'kuopio.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    #'lahti.digitransit.fi': {'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    #'lappeenranta.digitransit.fi': {'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    'oulu.digitransit.fi': {'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
 }
 
 router_sites = {}
@@ -48,14 +47,14 @@ for psite in piwiksites:
         continue
 
     siteinfo = sites_router[sitename]
-    router = siteinfo['router']
+    routers = siteinfo['router']
+    for router in routers:
+        if not router in router_sites:
+            router_sites[router] = []
 
-    if not router in router_sites:
-        router_sites[router] = []
-
-    siteinfo['name'] = sitename
-    siteinfo['idsite'] = psite['idsite']
-    router_sites[router].append(siteinfo)
+        siteinfo['name'] = sitename
+        siteinfo['idsite'] = psite['idsite']
+        router_sites[router].append(siteinfo)
 
 
 def clean_label(label):
