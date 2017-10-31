@@ -26,9 +26,7 @@ if len(sys.argv) == 3:
 print('TARGET OTP',OTP_URL)
 for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
     print(router)
-    nfailed = 0
-    nnone = 0
-    totaln = 0
+
 
     router_url = OTP_URL
     if OTP_URL.find('%s') > -1:
@@ -37,7 +35,9 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
     f = open('otpqa_report_%s.html' % router, 'w+')
     for site in rsites:
         print(site['name'])
-
+        nfailed = 0
+        nnone = 0
+        totaln = 0
 
         params = {
             'date': otpprofiler.DATE,
@@ -57,25 +57,34 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
             if not 'itins' in r:
                 nfailed += 1
                 continue
+
+            if all((itin['walk_limit_exceeded'] for itin in r['itins'])):
+                nfailed += 1
+                continue
+
             if len(r['itins']) == 0:
                 nnone += 1
 
         totaln += float(len(response_json['responses']))
 
+        ratio = (nfailed + nnone) / totaln
+
+        print('total:', totaln, 'failed:', nfailed, 'none:', nnone, 'ratio:', ratio)
 
         report_html = ''.join(hreport.main(None, response_json, site['name']))
 
         f.write('<h1>%s</h1>' % site['name'])
         f.write(report_html)
+
+        if ratio > RATIO_LIMIT:
+            print('FAILED RATIO >',RATIO_LIMIT)
+            f.close()
+            sys.exit(1)
+
     f.close()
 
-    ratio = (nfailed + nnone) / totaln
 
-    print('total:', totaln, 'failed:', nfailed, 'none:', nnone, 'ratio:', ratio)
 
-    if ratio > RATIO_LIMIT:
-        print('FAILED RATIO >',RATIO_LIMIT)
-        sys.exit(1)
 
 
     sys.exit(0)
