@@ -102,7 +102,6 @@ th, td {
             response = dataset[id_tuple]
 
             # Filter out long walks (OTP has only soft walk limitin)
-            response['itins'] = filter(lambda itin: itin['walk_distance'] <= response['max_walkdistance'],response['itins'])
 
             yield "<table border=1 width=100%><tr>"
             if not 'itins' in response:
@@ -111,8 +110,13 @@ th, td {
 
             if len(response['itins']) == 0:
                 dataset_fails[i] += 1
-                yield "<td style=\"background-color:#EDA1A1\">NONE</td>"
+                yield "<td style=\"background-color:#EDA1A1\">NONE</td></tr></table></tr>"
+                continue
 
+            if all((itin['walk_limit_exceeded'] for itin in response['itins'])):
+                dataset_fails[i] += 1
+                yield "<td style=\"background-color:#EDA1A1\">LONG WALK (%.1f km)</td></tr></table></tr>" % (min((itin['walk_distance'] for itin in response['itins']))/1000.0)
+                continue
 
             for itin in response['itins']:
                 filling = list(zip(itin['leg_modes'],(humanize(lt) for lt in itin['leg_times'])))
@@ -120,7 +124,7 @@ th, td {
                     color = "#EDECA1"
                 else:
                     color = "#AEEDA1"
-                yield "<td style=\"background-color:%s\"><small>%s</small><br/>walk distance: %.1f km - wait: %s</td>" % (color, filling,itin['walk_distance']/1000.0, humanize(itin['wait_time_sec']))
+                yield "<td style=\"background-color:%s\"><small>%s</small><br/>total walk distance: %.1f km - wait: %s</td>" % (color, filling,itin['walk_distance']/1000.0, humanize(itin['wait_time_sec']))
 
             yield "</tr></table>"
             yield "</td>"
