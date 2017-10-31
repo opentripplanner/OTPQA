@@ -18,13 +18,14 @@ def generateRequestsFromEndpoints(endpoints,TEST_ALL_MODES=True,random=False):
 
     if TEST_ALL_MODES:
         # (mode, walk, min)
-        modes = [ ("WALK,TRANSIT", 20000, "QUICK") ]
-        modes.append( ("BICYCLE,TRANSIT", 40000, "QUICK") )
-        modes.append( ("WALK", 20000, "QUICK") )
-        modes.append( ("BICYCLE", 20000, "SAFE") )
+        # OTP clamps walk distance to max 15km
+        modes = [ ("WALK,TRANSIT", 2000, "QUICK"), ("WALK,TRANSIT", 2000, "QUICK") ] # More WALK, TRANSIT
+        modes.append( ("BICYCLE,TRANSIT", 15000, "QUICK") )
+        modes.append( ("WALK", 15000, "QUICK") )
+        modes.append( ("BICYCLE", 15000, "SAFE") )
     else:
         # (mode, walk, min)
-        modes = [ ("WALK,TRANSIT", 20000, "QUICK") ]
+        modes = [ ("WALK,TRANSIT", 2000, "QUICK") ]
 
     all_params = [(time, walk, mode, minimize, arriveBy)
         for (time, arriveBy) in times
