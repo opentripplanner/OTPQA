@@ -34,7 +34,7 @@ def clusterEndpoints(orig_endpoints, eps=2500, min_samples=2, return_outliers=Tr
     coords = np.array(coords)
     coordhits = np.array(coordhits)
 
-    db = DBSCAN(eps=eps, min_samples=min_samples, algorithm='auto', metric='euclidean', n_jobs=-1).fit(coords)
+    db = DBSCAN(eps=eps, min_samples=min_samples, algorithm='auto', metric='euclidean').fit(coords)
     coords = np.hstack((coords,coordhits))
     cluster_labels = db.labels_
     n_clusters = len(set(cluster_labels))
