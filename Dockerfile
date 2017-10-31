@@ -5,24 +5,19 @@ RUN mkdir -p /opt/OTPQA
 
 WORKDIR /opt/OTPQA
 
-ENV TARGET_HOST dev-api.digitransit.fi
+ENV TARGET_HOST https://dev-api.digitransit.fi
+ENV TARGET_ROUTER finland
+ENV OTPQA_COUNT 200
 
 ADD . /opt/OTPQA
 
 RUN apt-get update && \
-  apt-get install -y python-simplejson python-scipy python-pip curl
+  apt-get install -y python-scipy python-sklearn python-pip python-numpy curl
 
+RUN pip install future
 RUN pip install grequests
+RUN pip install unicodecsv
+RUN pip install utm
 
-RUN cd data && \
-  echo "name,lat,lon" > ../endpoints_custom_hsl.csv && \
-  npm install node-fetch && \
-  node parse_places.js | tee -a ../endpoints_custom_hsl.csv
+CMD python otpprofiler_json.py ${TARGET_HOST} ${TARGET_ROUTER}
 
-RUN python gen_requests.py
-
-EXPOSE 8000
-
-CMD python otpprofiler.py ${TARGET_HOST} && \
-  python hreport.py run_summary.*json > report.html && \
-  python -m SimpleHTTPServer
