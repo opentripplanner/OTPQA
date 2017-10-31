@@ -22,6 +22,7 @@ period = 'month'
 
 sites_router = {
     'reittiopas.fi': {'router': 'hsl', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    'reittiopas.fi': {'router': 'finland', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
     'opas.matka.fi': {'router': 'finland', 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
     'joensuu.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
     'turku.digitransit.fi': {'router': 'waltti', 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
@@ -63,14 +64,16 @@ def clean_label(label):
 
 
 def parse_place(place):
-    name, coords = place.split('::')
-    lat, lon = map(float, coords.split(','))
+    try:
+        name, coords = place.split('::')
+        lat, lon = map(float, coords.split(','))
+    except ValueError:
+        return None
     return dict(name=name, lat=lat, lon=lon)
 
 
 def response_callback_factory(places, label, idsubdatatable, hits):
     fromp = parse_place(label)
-
     def handle_response(response, *args, **kwargs):
         if response.status_code != 200:
             status = 'failed'
@@ -90,10 +93,11 @@ def response_callback_factory(places, label, idsubdatatable, hits):
             tohits = tu['nb_hits']
             top = parse_place(tolabel)
 
-            if tolabel in places:
-                places[tolabel] += tohits
-            else:
-                places[tolabel] = tohits
+            if fromp and top:
+                if tolabel in places:
+                    places[tolabel] += tohits
+                else:
+                    places[tolabel] = tohits
         response.connection.close()
         #print(idsubdatatable, label, hits, response)
 
@@ -160,7 +164,6 @@ for router in router_sites:
 
         def exception_handler(request, exception):
             raise exception
-
 
         res = grequests.imap(reqs, size=20, exception_handler=exception_handler)
         for i,_ in enumerate(res):

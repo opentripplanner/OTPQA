@@ -4,6 +4,8 @@ import json
 import numpy as np
 import math
 from datetime import datetime
+import pprint
+
 
 install_aliases()
 from urllib.parse import urlparse, parse_qs
@@ -94,9 +96,13 @@ th, td {
         yield "</tr>"
 
         for i, dataset in enumerate(datasets):
+            
             yield "<td>"
 
             response = dataset[id_tuple]
+
+            # Filter out long walks (OTP has only soft walk limitin)
+            response['itins'] = filter(lambda itin: itin['walk_distance'] <= response['max_walkdistance'],response['itins'])
 
             yield "<table border=1 width=100%><tr>"
             if not 'itins' in response:
@@ -106,6 +112,7 @@ th, td {
             if len(response['itins']) == 0:
                 dataset_fails[i] += 1
                 yield "<td style=\"background-color:#EDA1A1\">NONE</td>"
+
 
             for itin in response['itins']:
                 filling = list(zip(itin['leg_modes'],(humanize(lt) for lt in itin['leg_times'])))
