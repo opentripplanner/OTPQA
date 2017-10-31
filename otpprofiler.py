@@ -13,7 +13,7 @@ import time, itertools, json
 import subprocess, urllib, random
 import pprint
 from copy import copy
-from datetime import date
+from datetime import date, timedelta
 from random import randint, seed
 
 import sys
@@ -27,10 +27,10 @@ TIME = '14:00:00'
 
 # generate test date on a recent/upcoming monday. Use a fixed work day to keep results comparable
 cdate = date.today()
-dd = cdate.day - cdate.weekday()  # monday = 0. want monday!
-dd += 7  # use next monday
+cdate -= timedelta(days=cdate.weekday())
+cdate += timedelta(days=7)
 
-DATE = "%s-%s-%s" % (cdate.year, cdate.month, dd)
+DATE = cdate.strftime('%Y-%m-%d')
 
 # split out base and specific endpoint
 SHOW_PARAMS = False
