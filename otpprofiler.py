@@ -13,8 +13,9 @@ import time, itertools, json
 import subprocess, urllib, random
 import pprint
 from copy import copy
-from datetime import date
+from datetime import date, timedelta
 from random import randint, seed
+from vincenty import vincenty_inverse
 
 import sys
 
@@ -27,10 +28,10 @@ TIME = '14:00:00'
 
 # generate test date on a recent/upcoming monday. Use a fixed work day to keep results comparable
 cdate = date.today()
-dd = cdate.day - cdate.weekday()  # monday = 0. want monday!
-dd += 7  # use next monday
+cdate -= timedelta(days=cdate.weekday())
+cdate += timedelta(days=7)
 
-DATE = "%s-%s-%s" % (cdate.year, cdate.month, dd)
+DATE = cdate.strftime('%Y-%m-%d')
 
 # split out base and specific endpoint
 SHOW_PARAMS = False
@@ -113,6 +114,11 @@ def get_params(fast, count, filename="requests.json", requests_json=None):
         req['tid'] = target['id']
         req['fromPlace'] = "%s,%s" % (origin['lat'], origin['lon'])
         req['toPlace'] = "%s,%s" % (target['lat'], target['lon'])
+        
+        dist = vincenty_inverse((origin['lat'], origin['lon']),(target['lat'], target['lon']))
+        if dist > (0.9/1000)*req['maxWalkDistance'] and req['mode'] in ('BICYCLE','WALK'):
+            req['mode'] += ',TRANSIT'
+
         ret.append(req)
 
     # TODO yield
@@ -184,6 +190,7 @@ def summarize_plan(itinerary):
         'n_legs': n_legs,
         'n_vehicles': n_vehicles,
         'walk_distance': itinerary['walkDistance'],
+        'walk_limit_exceeded': itinerary['walkLimitExceeded'],
         'wait_time_sec': itinerary['waitingTime'],
         'ride_time_sec': itinerary['transitTime'],
         'routes': routes,
