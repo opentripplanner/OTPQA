@@ -24,12 +24,30 @@ import sys
 # python-requests wraps urllib2 providing a much nicer API.
 import grequests
 
+IGNORED_DATES = set((
+    '-12-06',
+    '-12-24',
+    '-12-25',
+    '-12-26',
+    '-12-31',
+    '-01-01',
+    '-01-06',
+    '-05-01',
+    '-05-10'
+))
+
 TIME = '14:00:00'
 
 # generate test date on a recent/upcoming monday. Use a fixed work day to keep results comparable
 cdate = date.today()
 cdate -= timedelta(days=cdate.weekday())
 cdate += timedelta(days=7)
+
+while cdate.strftime('%Y-%m-%d') in IGNORED_DATES or cdate.strftime('-%m-%d') in IGNORED_DATES:
+    cdate += timedelta(days=1)
+
+while cdate.weekday() not in set((0,1,2,3,4)):
+    cdate += timedelta(days=1)
 
 DATE = cdate.strftime('%Y-%m-%d')
 
