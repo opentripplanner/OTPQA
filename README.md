@@ -72,3 +72,5 @@ significant in regression detection. A custom threshold can be set using -t para
 
 The test computes a performance measurement ratio 100% * (#equally good routes / #all routes). If the ratio is below the given limit value
 (parameter -l , default=95), the test exits with code 1. So, by default, test fails if 5% of routes have become significantly slower.
+
+By default, otpprofiler.py tries to fetch only one itinerary per request. It is possible to control the number of requested itineraries with parameter -i (default 1). When using parameter -i in compare.py, additional comparison of number of itineraries returned by OTP is done. Parameter -m adds a comparison of number of different modes (WALK, BICYCLE and CAR are only counted towards this number if they are the only mode(s) in some request) used in the different itineraries in each route. By default, the threshold for both additional comparisons is 1 but you can control the thresholds with -it (for itineraries) and -mt (for modes).
