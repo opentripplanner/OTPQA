@@ -22,7 +22,7 @@ period = 'month'
 
 sites_router = {
     'reittiopas.fi': {'router': ('hsl','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'opas.matka.fi': {'router': ('finland',), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    #'opas.matka.fi': {'router': ('finland',), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
     'joensuu.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
     'turku.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
     'hameenlinna.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
