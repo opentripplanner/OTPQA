@@ -56,7 +56,7 @@ def generateRequestsFromEndpoints(endpoints,TEST_ALL_MODES=True,random=False):
 
 
 if __name__ == '__main__':
-    endpoints = open("hsl_places.csv.clustered")
+    endpoints = open("hsl_clustered_test.csv")
     reader = csv.DictReader(endpoints)
 
     endpoints = list(reader)

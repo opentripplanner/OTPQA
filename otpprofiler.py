@@ -395,13 +395,15 @@ def run(connect_args, requests_json=None):
 
     "This is the principal function..."
     notes = connect_args.pop('notes')
-    retry = connect_args.pop('retry')
+    # retry = connect_args.pop('retry')
     fast = connect_args.pop('fast')
     count = connect_args.pop('count')
     host = connect_args.pop('host')
     profile = connect_args.pop('profile')
     Date = connect_args.pop('date')
     Time = connect_args.pop('time')
+    num_itineraries = connect_args.pop('itineraries')
+    output = connect_args.pop('output')
 
     print("TEST DATE:", Date, Time)
 
@@ -443,7 +445,7 @@ def run(connect_args, requests_json=None):
             params['limit'] = 3
         else:
             api_method = 'plan'
-            params['numItineraries'] = 1
+            params['numItineraries'] = num_itineraries
 
         qstring = urlencode(params)
 
@@ -493,16 +495,15 @@ def run(connect_args, requests_json=None):
 
     run_json['responses'] = response_json
 
-    '''
-    fpout = open("run_summary.%s.json" % run_time_id, "w")
-    
-    json.dump(run_json, fpout, indent=2)
-    fpout.close()
+    if output:
+        fpout = open("run_summary.%s.json" % run_time_id, "w")
 
-    fpout = open("full_itins.%s.json" % run_time_id, "w")
-    json.dump(full_itins_json, fpout, indent=2)
-    fpout.close()
-    '''
+        json.dump(run_json, fpout, indent=2)
+        fpout.close()
+
+        fpout = open("full_itins.%s.json" % run_time_id, "w")
+        json.dump(full_itins_json, fpout, indent=2)
+        fpout.close()
     return run_json
 
 
@@ -520,6 +521,8 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--retry', type=int, default=5)
     parser.add_argument('-c', '--count', type=int, default=1100)
     parser.add_argument('-p', '--profile', action='store_true', default=False)
+    parser.add_argument('-i', '--itineraries', type=int, default=1) # number of itineraries
+    parser.add_argument('-o', '--output', action='store_true', default=False) # generate run_summary and full_itins files
     args = parser.parse_args()
 
     # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name),
