@@ -166,9 +166,9 @@ def main(args):
         print "Routes that are slower in %s: %d"%(fname1, slower1)
         print "Routes that are slower in %s: %d"%(fname2, slower2)
 
-        print "Regressions: %d"%(fails2 + slower2)
+        print "Route duration regressions: %d"%(fails2 + slower2)
         rate = int(100*float(count + fails1 - fails2 + slower1 - slower2)/float(count))
-        print "Comparison rate: %d"%rate
+        print "Route duration comparison rate: %d"%rate
         fail = False
         if rate < limit:
                 print "Route duration test failed, %d < %d"%(rate, limit)
