@@ -35,7 +35,7 @@ sites_router = {
 
 router_sites = {}
 
-sitesurl = '%(baseurl)s/index.php?module=API&method=SitesManager.getAllSites&format=JSON&token_auth=%(token)s' % {
+sitesurl = '%(baseurl)s/index.php?module=API&method=SitesManager.getSitesWithAtLeastViewAccess&format=JSON&token_auth=%(token)s' % {
     'baseurl': piwik_baseurl, 'token': token}
 r = requests.get(sitesurl)
 piwiksites = r.json()
