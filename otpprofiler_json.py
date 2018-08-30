@@ -89,5 +89,5 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
 
 
 
-    sys.exit(0)
+sys.exit(0)
 
