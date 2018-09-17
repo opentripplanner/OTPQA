@@ -144,7 +144,10 @@ def get_params(fast, count, filename="requests.json", requests_json=None):
         req['tid'] = target['id']
         req['fromPlace'] = "%s,%s" % (origin['lat'], origin['lon'])
         req['toPlace'] = "%s,%s" % (target['lat'], target['lon'])
-        
+
+        if req['fromPlace'] == req['toPlace']:
+            continue
+
         dist = vincenty_inverse((origin['lat'], origin['lon']),(target['lat'], target['lon']))
         if dist > (0.9/1000)*req['maxWalkDistance'] and req['mode'] in ('BICYCLE','WALK'):
             req['mode'] += ',TRANSIT'
