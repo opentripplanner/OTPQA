@@ -61,6 +61,21 @@ def extractmodes(filename):
                         num_modes[id_tuple] = len(modes_set)
         return num_modes
 
+def extractlegs(filename):
+        blob = json.load( open(filename) )
+        dataset = dict( [(response["id_tuple"], response) for response in blob["responses"]] )
+
+        num_legs = {}
+
+        for id_tuple in dataset:
+                response = dataset[id_tuple]
+
+                if not "itins" in response or len(response["itins"]) == 0:
+                        num_legs[id_tuple] = 0
+                else:
+                        num_legs[id_tuple] = response["itins"][0]["n_legs"]
+        return num_legs
+
 def main(args):
         fname1 = args.pop('benchmark')
         fname2 = args.pop('profile')
@@ -70,6 +85,8 @@ def main(args):
         itinerary_threshold = args.pop('itinerarythreshold')
         modes = args.pop('modes')
         mode_threshold = args.pop('modethreshold')
+        legs = args.pop('legs')
+        leg_threshold = args.pop('legthreshold')
 
         print "Detecting regressions with a time threshold of %d seconds and test threshold %d "%(threshold, limit)
 
@@ -92,6 +109,14 @@ def main(args):
                 modes1 = extractmodes(fname1)
                 modes2 = extractmodes(fname2)
 
+        legs1 = {}
+        legs2 = {}
+
+        if legs:
+                print "Detecting regressions with a mode number threshold of %d and test threshold %d "%(leg_threshold, limit)
+                legs1 = extractlegs(fname1)
+                legs2 = extractlegs(fname2)
+
         fails1 = 0
         fails2 = 0
         slower1 = 0
@@ -103,6 +128,9 @@ def main(args):
 
         less_mode1 = 0
         less_mode2 = 0
+
+        less_legs1 = 0
+        less_legs2 = 0
 
 	for id in dur1:
                 if not id in dur2:
@@ -146,12 +174,28 @@ def main(args):
                         m1 = modes1[id]
                         m2 = modes2[id]
 
-                        if i1 != i2:
+                        if m1 != m2:
                                 diffmsg = "Test modes %s t1=%d t2=%d diff=%d"%(id, m1, m2, m2-m1)
-                                if m2 >= m1 + itinerary_threshold:
+                                if m2 >= m1 + mode_threshold:
                                         less_mode1+=1
-                                elif m1 >= m2 + itinerary_threshold:
+                                elif m1 >= m2 + mode_threshold:
                                         less_mode2+=1
+                                else:
+                                        diffmsg = ""
+
+                                if diffmsg:
+                                        print diffmsg
+
+                if legs:
+                        l1 = legs1[id]
+                        l2 = legs2[id]
+
+                        if l1 != l2:
+                                diffmsg = "Test legs %s t1=%d t2=%d diff=%d"%(id, l1, l2, l2-l1)
+                                if l2 >= l1 + leg_threshold:
+                                        less_legs1+=1
+                                elif l1 >= l2 + leg_threshold:
+                                        less_legs2+=1
                                 else:
                                         diffmsg = ""
 
@@ -187,6 +231,13 @@ def main(args):
                 if rate < limit:
                         print "Mode test failed, %d < %d"%(rate, limit)
                         fail = True
+        if legs:
+                print "Routes that have less legs in %s: %d"%(fname1, less_legs1)
+                print "Routes that have less legs in %s: %d"%(fname2, less_legs2)
+                rate = int(100*float(count + less_legs1 - less_legs2)/float(count))
+                if rate < limit:
+                        print "Legs test failed, %d < %d"%(rate, limit)
+                        fail = True
         if fail:
                 exit(1)
         print "Test passed"
@@ -204,6 +255,8 @@ if __name__=="__main__":
         parser.add_argument('-it', '--itinerarythreshold', type=int, default=1) #Changes in number of itineraries less than this are ignored
         parser.add_argument('-m', '--modes', action='store_true', default=False) #compare mode variation in itineraries
         parser.add_argument('-mt', '--modethreshold', type=int, default=1) #Changes in number of modes less than this are ignored
+        parser.add_argument('-legs', '--legs', action='store_true', default=False) #compare number of legs in first initinerary
+        parser.add_argument('-legt', '--legthreshold', type=int, default=1) #Changes in number of legs less than this are ignored
 
         args = parser.parse_args()
         main(vars(args))

@@ -144,6 +144,7 @@ def get_params(fast, count, filename="requests.json", requests_json=None):
         req['tid'] = target['id']
         req['fromPlace'] = "%s,%s" % (origin['lat'], origin['lon'])
         req['toPlace'] = "%s,%s" % (target['lat'], target['lon'])
+        req['walkSpeed'] = 1.222
 
         if req['fromPlace'] == req['toPlace']:
             continue
