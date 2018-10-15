@@ -82,6 +82,10 @@ def extractspeeds(filename):
 
         walk_speeds = {}
         bicycle_speeds = {}
+        walk_count = 0
+        bicycle_count = 0
+        walk_speed_sum = 0
+        bicycle_speed_sum = 0
 
         for id_tuple in dataset:
                 response = dataset[id_tuple]
@@ -109,15 +113,19 @@ def extractspeeds(filename):
                                                 elif itin["leg_modes"][i] == "BICYCLE":
                                                         bicycle_time += itin["leg_times"][i]
                                                 i += 1
-                print(float(bicycle_distance))
-                print(float(walk_distance))
                 if bicycle_time > 0:
-                        bicycle_speeds[id_tuple] = float(bicycle_distance) / float(bicycle_time)
+                        response_bicycle_speed = float(bicycle_distance) / float(bicycle_time)
+                        bicycle_count += 1
+                        bicycle_speed_sum += response_bicycle_speed
+                        bicycle_speeds[id_tuple] = response_bicycle_speed
                 elif walk_time > 0:
-                        walk_speeds[id_tuple] = float(walk_distance) / float(walk_time)
-                else:
-                        walk_speeds[id_tuple] = 0
-        return {"walk_speeds": walk_speeds, "bicycle_speeds": bicycle_speeds}
+                        response_walk_speed = float(walk_distance) / float(walk_time)
+                        walk_count += 1
+                        walk_speed_sum += response_walk_speed
+                        walk_speeds[id_tuple] = response_walk_speed
+        average_walk_speed = 0 if walk_speed_sum is 0 else walk_speed_sum / walk_count
+        average_cycling_speed = 0 if bicycle_speed_sum is 0 else bicycle_speed_sum / bicycle_count
+        return {"walk_speeds": walk_speeds, "bicycle_speeds": bicycle_speeds, "average_walk_speed": average_walk_speed, "average_cycling_speed": average_cycling_speed}
 
 def main(args):
         fname1 = args.pop('benchmark')
@@ -268,7 +276,7 @@ def main(args):
                                 s2 = speeds2[speed_type][id]
 
                                 if s1 != s2:
-                                        diffmsg = "Test %s %s t1=%d t2=%d diff=%d"%(speed_type, id, s1, s2, s2-s1)
+                                        diffmsg = "Test %s %s t1=%f t2=%f diff=%f"%(speed_type, id, s1, s2, s2-s1)
                                         if s2 >= s1 + speed_threshold:
                                                 if speed_type is "walk_speeds":
                                                         slower_walk1+=1
@@ -330,6 +338,10 @@ def main(args):
                 if rate < limit:
                         print "Speed test failed, %d < %d"%(rate, limit)
                         fail = True
+                print "Average walk speed %s: %f"%(fname1, speeds1["average_walk_speed"])
+                print "Average cycling speed %s: %f"%(fname1, speeds1["average_cycling_speed"])
+                print "Average walk speed %s: %f"%(fname2, speeds2["average_walk_speed"])
+                print "Average cycling speed %s: %f"%(fname2, speeds2["average_cycling_speed"])
         if fail:
                 exit(1)
         print "Test passed"
