@@ -76,6 +76,49 @@ def extractlegs(filename):
                         num_legs[id_tuple] = response["itins"][0]["n_legs"]
         return num_legs
 
+def extractspeeds(filename):
+        blob = json.load( open(filename) )
+        dataset = dict( [(response["id_tuple"], response) for response in blob["responses"]] )
+
+        walk_speeds = {}
+        bicycle_speeds = {}
+
+        for id_tuple in dataset:
+                response = dataset[id_tuple]
+                walk_time = 0
+                walk_distance = 0
+                bicycle_time = 0
+                bicycle_distance = 0
+                if "itins" in response:
+                        for itin in response["itins"]:
+                                if "BICYCLE" not in itin["leg_modes"]:
+                                        walk_distance += itin["walk_distance"]
+                                        i = 0
+                                        while i < len(itin["leg_modes"]):
+                                                if itin["leg_modes"][i] == "WALK":
+                                                        walk_time += itin["leg_times"][i]
+                                                i += 1
+                                else:
+                                        # walk_distance includes walk and bicycle distance
+                                        bicycle_distance += itin["walk_distance"]
+                                        i = 0
+                                        while i < len(itin["leg_modes"]):
+                                                if itin["leg_modes"][i] == "WALK":
+                                                        # remove walk distance calculated with default walk speed from bicycle_distance
+                                                        bicycle_distance -= itin["leg_times"][i] * 1.222
+                                                elif itin["leg_modes"][i] == "BICYCLE":
+                                                        bicycle_time += itin["leg_times"][i]
+                                                i += 1
+                print(float(bicycle_distance))
+                print(float(walk_distance))
+                if bicycle_time > 0:
+                        bicycle_speeds[id_tuple] = float(bicycle_distance) / float(bicycle_time)
+                elif walk_time > 0:
+                        walk_speeds[id_tuple] = float(walk_distance) / float(walk_time)
+                else:
+                        walk_speeds[id_tuple] = 0
+        return {"walk_speeds": walk_speeds, "bicycle_speeds": bicycle_speeds}
+
 def main(args):
         fname1 = args.pop('benchmark')
         fname2 = args.pop('profile')
@@ -87,6 +130,8 @@ def main(args):
         mode_threshold = args.pop('modethreshold')
         legs = args.pop('legs')
         leg_threshold = args.pop('legthreshold')
+        speeds = args.pop('speeds')
+        speed_threshold = args.pop('speedthreshold')
 
         print "Detecting regressions with a time threshold of %d seconds and test threshold %d "%(threshold, limit)
 
@@ -113,9 +158,17 @@ def main(args):
         legs2 = {}
 
         if legs:
-                print "Detecting regressions with a mode number threshold of %d and test threshold %d "%(leg_threshold, limit)
+                print "Detecting regressions with a leg number threshold of %d and test threshold %d "%(leg_threshold, limit)
                 legs1 = extractlegs(fname1)
                 legs2 = extractlegs(fname2)
+        
+        speeds1 = {}
+        speeds2 = {}
+
+        if speeds:
+                print "Detecting regressions with a speed difference threshold of %d and test threshold %d "%(leg_threshold, limit)
+                speeds1 = extractspeeds(fname1)
+                speeds2 = extractspeeds(fname2)
 
         fails1 = 0
         fails2 = 0
@@ -131,6 +184,11 @@ def main(args):
 
         less_legs1 = 0
         less_legs2 = 0
+
+        slower_walk1 = 0
+        slower_walk2 = 0
+        slower_bicycle1 = 0
+        slower_bicycle2 = 0
 
 	for id in dur1:
                 if not id in dur2:
@@ -202,6 +260,31 @@ def main(args):
                                 if diffmsg:
                                         print diffmsg
 
+                if speeds:
+                        if (id in speeds1["walk_speeds"] and id in speeds2["walk_speeds"]) or (id in speeds1["bicycle_speeds"] and id in speeds2["bicycle_speeds"]):
+                                speed_type = "bicycle_speeds" if id in speeds1["bicycle_speeds"] else "walk_speeds"
+
+                                s1 = speeds1[speed_type][id]
+                                s2 = speeds2[speed_type][id]
+
+                                if s1 != s2:
+                                        diffmsg = "Test %s %s t1=%d t2=%d diff=%d"%(speed_type, id, s1, s2, s2-s1)
+                                        if s2 >= s1 + speed_threshold:
+                                                if speed_type is "walk_speeds":
+                                                        slower_walk1+=1
+                                                else:
+                                                        slower_bicycle1+=1
+                                        elif s1 >= s2 + speed_threshold:
+                                                if speed_type is "walk_speeds":
+                                                        slower_walk2+=1
+                                                else:
+                                                        slower_bicycle2+=1
+                                        else:
+                                                diffmsg = ""
+
+                                        if diffmsg:
+                                                print diffmsg
+
                 count+=1
 
         print "Test count: %d"%count
@@ -238,6 +321,15 @@ def main(args):
                 if rate < limit:
                         print "Legs test failed, %d < %d"%(rate, limit)
                         fail = True
+        if speeds:
+                print "Routes that have slower walk in %s: %d"%(fname1, slower_walk1)
+                print "Routes that have slower cycling in %s: %d"%(fname1, slower_bicycle1)
+                print "Routes that have slower walk in %s: %d"%(fname2, slower_walk2)
+                print "Routes that have slower cycling in %s: %d"%(fname2, slower_bicycle2)
+                rate = int(100*float(count + (slower_walk1 + slower_bicycle1) - (slower_walk2 + slower_bicycle2))/float(count))
+                if rate < limit:
+                        print "Speed test failed, %d < %d"%(rate, limit)
+                        fail = True
         if fail:
                 exit(1)
         print "Test passed"
@@ -257,6 +349,8 @@ if __name__=="__main__":
         parser.add_argument('-mt', '--modethreshold', type=int, default=1) #Changes in number of modes less than this are ignored
         parser.add_argument('-legs', '--legs', action='store_true', default=False) #compare number of legs in first initinerary
         parser.add_argument('-legt', '--legthreshold', type=int, default=1) #Changes in number of legs less than this are ignored
+        parser.add_argument('-s', '--speeds', action='store_true', default=False) #compare bicycle and walk speeds
+        parser.add_argument('-st', '--speedthreshold', type=int, default=1) #Changes in average speed less than this is ignored
 
         args = parser.parse_args()
         main(vars(args))
