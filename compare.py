@@ -362,7 +362,7 @@ if __name__=="__main__":
         parser.add_argument('-legs', '--legs', action='store_true', default=False) #compare number of legs in first initinerary
         parser.add_argument('-legt', '--legthreshold', type=int, default=1) #Changes in number of legs less than this are ignored
         parser.add_argument('-s', '--speeds', action='store_true', default=False) #compare bicycle and walk speeds
-        parser.add_argument('-st', '--speedthreshold', type=int, default=1) #Changes in average speed less than this is ignored
+        parser.add_argument('-st', '--speedthreshold', type=float, default=0.2) #Changes in average speed less than this is ignored
 
         args = parser.parse_args()
         main(vars(args))
