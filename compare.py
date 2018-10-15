@@ -338,10 +338,10 @@ def main(args):
                 if rate < limit:
                         print "Speed test failed, %d < %d"%(rate, limit)
                         fail = True
-                print "Average walk speed %s: %f"%(fname1, speeds1["average_walk_speed"])
-                print "Average cycling speed %s: %f"%(fname1, speeds1["average_cycling_speed"])
-                print "Average walk speed %s: %f"%(fname2, speeds2["average_walk_speed"])
-                print "Average cycling speed %s: %f"%(fname2, speeds2["average_cycling_speed"])
+                print "Average walk speed in %s: %f m/s"%(fname1, speeds1["average_walk_speed"])
+                print "Average cycling speed %s: %f m/s"%(fname1, speeds1["average_cycling_speed"])
+                print "Average walk speed %s: %f m/s"%(fname2, speeds2["average_walk_speed"])
+                print "Average cycling speed %s: %f m/s"%(fname2, speeds2["average_cycling_speed"])
         if fail:
                 exit(1)
         print "Test passed"
@@ -361,8 +361,8 @@ if __name__=="__main__":
         parser.add_argument('-mt', '--modethreshold', type=int, default=1) #Changes in number of modes less than this are ignored
         parser.add_argument('-legs', '--legs', action='store_true', default=False) #compare number of legs in first initinerary
         parser.add_argument('-legt', '--legthreshold', type=int, default=1) #Changes in number of legs less than this are ignored
-        parser.add_argument('-s', '--speeds', action='store_true', default=False) #compare bicycle and walk speeds
-        parser.add_argument('-st', '--speedthreshold', type=float, default=0.2) #Changes in average speed less than this is ignored
+        parser.add_argument('-s', '--speeds', action='store_true', default=False) #compare bicycle and walk speeds in m/s
+        parser.add_argument('-st', '--speedthreshold', type=float, default=0.2) #Changes in average speed (m/s) less than this is ignored
 
         args = parser.parse_args()
         main(vars(args))
