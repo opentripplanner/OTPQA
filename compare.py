@@ -127,6 +127,23 @@ def extractspeeds(filename):
         average_cycling_speed = 0 if bicycle_speed_sum is 0 else bicycle_speed_sum / bicycle_count
         return {"walk_speeds": walk_speeds, "bicycle_speeds": bicycle_speeds, "average_walk_speed": average_walk_speed, "average_cycling_speed": average_cycling_speed}
 
+def extractperformance(filename):
+        blob = json.load( open(filename) )
+        dataset = dict( [(response["id_tuple"], response) for response in blob["responses"]] )
+
+        total_times = {}
+        avg_times = {}
+        timeouts = {}
+
+        for id_tuple in dataset:
+                response = dataset[id_tuple]
+
+                total_times[id_tuple] = response["debug"]["totalTime"]
+                avg_times[id_tuple] = float(response["avg_time"][:5])
+                timeouts[id_tuple] = response["debug"]["timedOut"]
+
+        return {"total_times": total_times, "avg_times": avg_times, "timeouts": timeouts}
+
 def main(args):
         fname1 = args.pop('benchmark')
         fname2 = args.pop('profile')
@@ -140,6 +157,9 @@ def main(args):
         leg_threshold = args.pop('legthreshold')
         speeds = args.pop('speeds')
         speed_threshold = args.pop('speedthreshold')
+        performance = args.pop('performance')
+        total_times_threshold = args.pop('totaltimethreshold')
+        avg_times_threshold = args.pop('averagetimethreshold')
 
         print "Detecting regressions with a time threshold of %d seconds and test threshold %d "%(threshold, limit)
 
@@ -178,6 +198,15 @@ def main(args):
                 speeds1 = extractspeeds(fname1)
                 speeds2 = extractspeeds(fname2)
 
+        performance1 = {}
+        performance2 = {}
+
+        if performance:
+                print "Detecting regressions with a total request time difference threshold of %d, an average request time difference threshold of %d, \
+                and test threshold %d "%(total_times_threshold, avg_times_threshold, limit)
+                performance1 = extractperformance(fname1)
+                performance2 = extractperformance(fname2)
+
         fails1 = 0
         fails2 = 0
         slower1 = 0
@@ -197,6 +226,13 @@ def main(args):
         slower_walk2 = 0
         slower_bicycle1 = 0
         slower_bicycle2 = 0
+
+        longer_totaltime1 = 0
+        longer_totaltime2 = 0
+        longer_avgtime1 = 0
+        longer_avgtime2 = 0
+        more_timeouts1 = 0
+        more_timeouts2 = 0
 
 	for id in dur1:
                 if not id in dur2:
@@ -293,6 +329,46 @@ def main(args):
                                         if diffmsg:
                                                 print diffmsg
 
+                if performance:
+                        total_time1 = performance1["total_times"][id]
+                        total_time2 = performance2["total_times"][id]
+                        avg_times1 = performance1["avg_times"][id]
+                        avg_times2 = performance2["avg_times"][id]
+                        timeout1 = performance1["timeouts"][id]
+                        timeout2 = performance2["timeouts"][id]
+
+                        if total_time1 != total_time2:
+                                diffmsg = "Test total time %s t1=%d t2=%d diff=%d"%(id, total_time1, total_time2, total_time1-total_time2)
+                                if total_time1 >= total_time2 + total_times_threshold:
+                                        longer_totaltime1+=1
+                                elif total_time2 >= total_time1 + total_times_threshold:
+                                        longer_totaltime2+=1
+                                else:
+                                        diffmsg = ""
+
+                                if diffmsg:
+                                        print diffmsg
+
+                        if avg_times1 != avg_times2:
+                                diffmsg = "Test average time %s t1=%f t2=%f diff=%f"%(id, avg_times1, avg_times2, avg_times1-avg_times2)
+                                if avg_times1 >= avg_times2 + avg_times_threshold:
+                                        longer_avgtime1+=1
+                                elif avg_times2 >= avg_times1 + avg_times_threshold:
+                                        longer_avgtime2+=1
+                                else:
+                                        diffmsg = ""
+
+                                if diffmsg:
+                                        print diffmsg
+
+                        if timeout1 != timeout2:
+                                diffmsg = "Test timeouts %s t1=%r t2=%r"%(id, timeout1, timeout2)
+                                if timeout1:
+                                        more_timeouts1+=1
+                                else:
+                                        more_timeouts2+=1
+                                print diffmsg
+
                 count+=1
 
         print "Test count: %d"%count
@@ -342,6 +418,26 @@ def main(args):
                 print "Average cycling speed %s: %f m/s"%(fname1, speeds1["average_cycling_speed"])
                 print "Average walk speed %s: %f m/s"%(fname2, speeds2["average_walk_speed"])
                 print "Average cycling speed %s: %f m/s"%(fname2, speeds2["average_cycling_speed"])
+
+        if performance:
+                print "Routes that have longer total request time in %s: %d"%(fname1, longer_totaltime1)
+                print "Routes that have longer total request time in %s: %d"%(fname2, longer_totaltime2)
+                print "Routes that have longer average request time in %s: %d"%(fname1, longer_avgtime1)
+                print "Routes that have longer average request time in %s: %d"%(fname2, longer_avgtime2)
+                print "Routes that have more timeouts in %s: %d"%(fname1, more_timeouts1)
+                print "Routes that have more timeouts in %s: %d"%(fname2, more_timeouts2)
+                rate = int(100*float(count + longer_totaltime1 - longer_totaltime2)/float(count))
+                if rate < limit:
+                        print "Total request time test failed, %d < %d"%(rate, limit)
+                        fail = True
+                rate = int(100*float(count + longer_avgtime1 - longer_avgtime2)/float(count))
+                if rate < limit:
+                        print "Average request time test failed, %d < %d"%(rate, limit)
+                        fail = True
+                rate = int(100*float(count + more_timeouts1 - more_timeouts2)/float(count))
+                if rate < limit:
+                        print "Timeout test failed, %d < %d"%(rate, limit)
+                        fail = True
         if fail:
                 exit(1)
         print "Test passed"
@@ -363,6 +459,9 @@ if __name__=="__main__":
         parser.add_argument('-legt', '--legthreshold', type=int, default=1) #Changes in number of legs less than this are ignored
         parser.add_argument('-s', '--speeds', action='store_true', default=False) #compare bicycle and walk speeds in m/s
         parser.add_argument('-st', '--speedthreshold', type=float, default=0.2) #Changes in average speed (m/s) less than this is ignored
+        parser.add_argument('-p', '--performance', action='store_true', default=False) #compare performance in handling requests
+        parser.add_argument('-tt', '--totaltimethreshold', type=int, default=200) #Changes in total request times (ms) less than this are ignored
+        parser.add_argument('-at', '--averagetimethreshold', type=int, default=40) #Changes in total request times (ms) less than this are ignored
 
         args = parser.parse_args()
         main(vars(args))
