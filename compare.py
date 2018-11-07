@@ -233,6 +233,8 @@ def main(args):
         longer_avgtime2 = 0
         more_timeouts1 = 0
         more_timeouts2 = 0
+        totaltime_sum1 = 0
+        totaltime_sum2 = 0
 
 	for id in dur1:
                 if not id in dur2:
@@ -337,6 +339,9 @@ def main(args):
                         timeout1 = performance1["timeouts"][id]
                         timeout2 = performance2["timeouts"][id]
 
+                        totaltime_sum1 += total_time1
+                        totaltime_sum2 += total_time2
+
                         if total_time1 != total_time2:
                                 diffmsg = "Test total time %s t1=%d t2=%d diff=%d"%(id, total_time1, total_time2, total_time1-total_time2)
                                 if total_time1 >= total_time2 + total_times_threshold:
@@ -420,6 +425,10 @@ def main(args):
                 print "Average cycling speed %s: %f m/s"%(fname2, speeds2["average_cycling_speed"])
 
         if performance:
+                print "Total request time of all requests summed in %s: %d"%(fname1, totaltime_sum1)
+                print "Total request time of all requests summed in %s: %d"%(fname2, totaltime_sum2)
+                print "Difference in total request time of all requests summed %d"%(totaltime_sum1 - totaltime_sum2)
+                print "Percentage difference in total request time of all requests summed %f"%((float(totaltime_sum1 - totaltime_sum2) / totaltime_sum1) * 100)
                 print "Routes that have longer total request time in %s: %d"%(fname1, longer_totaltime1)
                 print "Routes that have longer total request time in %s: %d"%(fname2, longer_totaltime2)
                 print "Routes that have longer average request time in %s: %d"%(fname1, longer_avgtime1)
