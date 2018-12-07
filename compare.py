@@ -139,7 +139,11 @@ def extractperformance(filename):
                 response = dataset[id_tuple]
 
                 total_times[id_tuple] = response["debug"]["totalTime"]
-                avg_times[id_tuple] = float(response["avg_time"][:5])
+
+                if response["avg_time"] != None:
+                        avg_times[id_tuple] = float(response["avg_time"][:5])
+                else:
+                        avg_times[id_tuple] = 0
                 timeouts[id_tuple] = response["debug"]["timedOut"]
 
         return {"total_times": total_times, "avg_times": avg_times, "timeouts": timeouts}
