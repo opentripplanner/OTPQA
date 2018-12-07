@@ -94,13 +94,12 @@ def pairs(iterable):
         yield (x, next(it, None))
 
 
-def get_params(fast, count, filename="requests.json", requests_json=None):
+def get_params(fast, count, filename="requests.json", requests_json=None, modes=None):
     if requests_json is None and filename is not None:
         requests_json = json.load(open(filename))
     requests = requests_json['requests']
     endpoints = requests_json['endpoints']
     elen = len(endpoints)
-
     if elen < 2:
         print("Not enough endpoints")
         exit()
@@ -149,9 +148,12 @@ def get_params(fast, count, filename="requests.json", requests_json=None):
         if req['fromPlace'] == req['toPlace']:
             continue
 
-        dist = vincenty_inverse((origin['lat'], origin['lon']),(target['lat'], target['lon']))
-        if dist > (0.9/1000)*req['maxWalkDistance'] and req['mode'] in ('BICYCLE','WALK'):
-            req['mode'] += ',TRANSIT'
+        if modes is None:
+            dist = vincenty_inverse((origin['lat'], origin['lon']),(target['lat'], target['lon']))
+            if dist > (0.9/1000)*req['maxWalkDistance'] and req['mode'] in ('BICYCLE','WALK'):
+                req['mode'] += ',TRANSIT'
+        else:
+            req['mode'] = modes
 
         ret.append(req)
 
@@ -408,6 +410,7 @@ def run(connect_args, requests_json=None):
     Time = connect_args.pop('time')
     num_itineraries = connect_args.pop('itineraries')
     output = connect_args.pop('output')
+    modes = connect_args.pop('modes')
 
     print("TEST DATE:", Date, Time)
 
@@ -428,7 +431,7 @@ def run(connect_args, requests_json=None):
     run_row = (notes, run_time_id)
     run_json = dict(zip(('notes', 'id'), run_row))
 
-    all_params = get_params(fast, count, requests_json=requests_json)
+    all_params = get_params(fast, count, requests_json=requests_json, modes=modes)
 
     t0 = time.time()
     N = len(all_params)
@@ -527,6 +530,7 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--profile', action='store_true', default=False)
     parser.add_argument('-i', '--itineraries', type=int, default=1) # number of itineraries
     parser.add_argument('-o', '--output', action='store_true', default=False) # generate run_summary and full_itins files
+    parser.add_argument('-m', '--modes', type=str, default=None) # Define modes used in requests, for example "BICYCLE,TRANSIT"
     args = parser.parse_args()
 
     # args is a non-iterable, non-mapping Namespace (allowing usage in the form args.name),
