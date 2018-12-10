@@ -49,7 +49,8 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
             'profile': False,
             'host': router_url,
             'itineraries': 1,
-            'output': False
+            'output': False,
+            'modes': None
 
         }
         response_json = otpprofiler.run(params, requests_json=site['requests'])
