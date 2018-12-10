@@ -1,6 +1,7 @@
 *.py[co]
 *~
 *.json
+!requests.json
 endpoints_custom.csv
 endpoints_random.csv
 
