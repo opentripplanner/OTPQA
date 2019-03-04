@@ -451,7 +451,7 @@ def main(args):
         print("Total request time of all requests summed in %s: %d" % (fname2, totaltime_sum2))
         print("Difference in total request time of all requests summed %d" % (totaltime_sum1 - totaltime_sum2))
         print("Percentage difference in total request time of all requests summed %f" % (
-                (float(totaltime_sum1 - totaltime_sum2) / totaltime_sum1) * 100))
+                (float(totaltime_sum1 - totaltime_sum2) / totaltime_sum2) * 100))
         print("Routes that have longer total request time in %s: %d" % (fname1, longer_totaltime1))
         print("Routes that have longer total request time in %s: %d" % (fname2, longer_totaltime2))
         print("Routes that have longer average request time in %s: %d" % (fname1, longer_avgtime1))
