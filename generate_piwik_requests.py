@@ -16,7 +16,7 @@ token = os.getenv('PIWIK_TOKEN', None)
 
 assert token, "Token is none"
 
-piwik_baseurl = os.getenv('PIWIK_URL', 'https://digiaiiris.com/web-analytics/')
+piwik_baseurl = os.getenv('PIWIK_URL', 'https://digiaiiris.com/web-analytics')
 
 period = 'month'
 
