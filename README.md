@@ -56,8 +56,9 @@ To generate an HTML report, run
 ## Routing performance and regression detection
 
 In order to run to run the otpprofiler.py, you need to have requests.json in the same directory.
-You can generate it by running `PIWIK_TOKEN=<some_valid_API_token> python` generate_piwik_requests.py and then 
-`python gen_requests.py`.
+You need to have your client certificate named as client.pem in the root of this repository
+and then you can generate it by running `PIWIK_TOKEN=<some_valid_API_token> python` generate_piwik_requests.py
+and then `python gen_requests.py`.
 
 Generate a benchmark file:
 
