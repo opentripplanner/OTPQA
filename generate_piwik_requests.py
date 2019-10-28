@@ -16,43 +16,49 @@ token = os.getenv('PIWIK_TOKEN', None)
 
 assert token, "Token is none"
 
-piwik_baseurl = os.getenv('PIWIK_URL', 'https://piwik.digitransit.fi')
+piwik_baseurl = os.getenv('PIWIK_URL', 'https://digiaiiris.com/web-analytics')
 
 period = 'month'
 
+client_cert = 'client.pem'
+
 sites_router = {
-    'reittiopas.fi': {'router': ('hsl','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '4': {'name': 'HSL Reittiopas', 'router': ('hsl','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
     #'opas.matka.fi': {'router': ('finland',), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    'joensuu.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'turku.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'hameenlinna.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'jyvaskyla.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    'kuopio.digitransit.fi': {'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    #'lahti.digitransit.fi': {'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    #'lappeenranta.digitransit.fi': {'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    'oulu.digitransit.fi': {'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '11': {'name': 'Digitransit Joensuu', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '27': {'name': 'Digitransit Turku', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '14': {'name': 'Digitransit Hameenlinna', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '15': {'name': 'Digitransit Jyvaskyla', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '16': {'name': 'Digitransit Kuopio', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '17': {'name': 'Digitransit Lahti', 'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    '18': {'name': 'Digitransit Lappeenranta', 'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    '21': {'name': 'Digitransit Oulu', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '29': {'name': 'Digitransit Kotka', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '31': {'name': 'Digitransit Mikkeli', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '35': {'name': 'Digitransit Tampere', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '43': {'name': 'Digitransit Kouvola', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '49': {'name': 'Digitransit Rovaniemi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
 }
 
 router_sites = {}
 
-sitesurl = '%(baseurl)s/index.php?module=API&method=SitesManager.getSitesWithAtLeastViewAccess&format=JSON&token_auth=%(token)s' % {
+sitesurl = '%(baseurl)s/?module=API&method=SitesManager.getSitesWithAtLeastViewAccess&format=JSON&token_auth=%(token)s' % {
     'baseurl': piwik_baseurl, 'token': token}
-r = requests.get(sitesurl)
+r = requests.get(sitesurl, cert=client_cert)
 piwiksites = r.json()
 r.close()
 
 for psite in piwiksites:
-    sitename = psite['name']
-    if not sitename in sites_router:
+    siteid = psite['idsite']
+    if not siteid in sites_router:
         continue
 
-    siteinfo = sites_router[sitename]
+    siteinfo = sites_router[siteid]
     routers = siteinfo['router']
     for router in routers:
         if not router in router_sites:
             router_sites[router] = []
 
-        siteinfo['name'] = sitename
         siteinfo['idsite'] = psite['idsite']
         router_sites[router].append(siteinfo)
 
@@ -114,10 +120,10 @@ for router in router_sites:
 
         siteid = site['idsite']
 
-        url = '%(baseurl)s/index.php?module=API&method=Actions.getPageUrls&idSite=%(siteid)s&period=%(period)s&date=today&format=JSON&token_auth=%(token)s&filter_column=label&filter_pattern=^reitti$' % {
+        url = '%(baseurl)s/?module=API&method=Actions.getPageUrls&idSite=%(siteid)s&period=%(period)s&date=today&format=JSON&token_auth=%(token)s&filter_column=label&filter_pattern=^reitti$' % {
             'baseurl': piwik_baseurl, 'siteid': siteid, 'period': period, 'token': token}
 
-        r = requests.get(url)
+        r = requests.get(url, cert=client_cert)
         pageurls = r.json()
         r.close()
 
@@ -129,10 +135,10 @@ for router in router_sites:
 
         idsubtable = reitti_page['idsubdatatable']
 
-        subdataurl = '%(baseurl)s/index.php?module=API&method=Actions.getPageUrls&idSite=%(siteid)s&period=%(period)s&date=today&format=JSON&token_auth=%(token)s&filter_limit=5000&idSubtable=%(idsubtable)s' % {
+        subdataurl = '%(baseurl)s/?module=API&method=Actions.getPageUrls&idSite=%(siteid)s&period=%(period)s&date=today&format=JSON&token_auth=%(token)s&filter_limit=5000&idSubtable=%(idsubtable)s' % {
             'baseurl': piwik_baseurl, 'idsubtable': idsubtable, 'period': period, 'siteid': siteid, 'token': token}
 
-        r = requests.get(subdataurl)
+        r = requests.get(subdataurl, cert=client_cert)
         frompageurls = r.json()
         r.close()
 
@@ -151,13 +157,13 @@ for router in router_sites:
 
             site_places[label] = hits
 
-            url = '%(baseurl)s/index.php?module=API&method=Actions.getPageUrls&idSite=%(siteid)s&period=%(period)s&date=today&format=JSON&token_auth=%(token)s&filter_limit=5000&idSubtable=%(idsubtable)s' % {
+            url = '%(baseurl)s/?module=API&method=Actions.getPageUrls&idSite=%(siteid)s&period=%(period)s&date=today&format=JSON&token_auth=%(token)s&filter_limit=5000&idSubtable=%(idsubtable)s' % {
                 'baseurl': piwik_baseurl, 'idsubtable': idsubdatatable, 'period': period, 'siteid': siteid,
                 'token': token}
 
             response_callback = response_callback_factory(site_places, label, idsubdatatable, hits)
             headers = {'Accept': 'application/json'}
-            req = grequests.get(url, headers=headers, hooks=dict(response=response_callback))
+            req = grequests.get(url, cert=client_cert, headers=headers, hooks=dict(response=response_callback))
             reqs.append(req)
 
 
@@ -173,7 +179,8 @@ for router in router_sites:
         endpoints = []
         for rawplace in sorted((p[1], p[0]) for p in site_places.items()):
             place = parse_place(rawplace[1])
-            endpoints.append({'name': place['name'], 'lat': place['lat'], 'lon': place['lon'], 'hits': rawplace[0]})
+            if place is not None:
+                endpoints.append({'name': place['name'], 'lat': place['lat'], 'lon': place['lon'], 'hits': rawplace[0]})
 
 
         clustered_endpoints = cluster_places.clusterEndpoints(endpoints,
