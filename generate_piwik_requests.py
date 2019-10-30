@@ -23,21 +23,21 @@ period = 'month'
 client_cert = 'client.pem'
 
 sites_router = {
-    '4': {'name': 'HSL Reittiopas', 'router': ('hsl','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '4': {'name': 'reittiopas.hsl.fi', 'router': ('hsl','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
     #'opas.matka.fi': {'router': ('finland',), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    '11': {'name': 'Digitransit Joensuu', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '27': {'name': 'Digitransit Turku', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '14': {'name': 'Digitransit Hameenlinna', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '15': {'name': 'Digitransit Jyvaskyla', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '16': {'name': 'Digitransit Kuopio', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '17': {'name': 'Digitransit Lahti', 'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    '18': {'name': 'Digitransit Lappeenranta', 'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
-    '21': {'name': 'Digitransit Oulu', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '29': {'name': 'Digitransit Kotka', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '31': {'name': 'Digitransit Mikkeli', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '35': {'name': 'Digitransit Tampere', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '43': {'name': 'Digitransit Kouvola', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
-    '49': {'name': 'Digitransit Rovaniemi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '11': {'name': 'joensuu.digitransit.fi', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '27': {'name': 'turku.digitransit.fi', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '14': {'name': 'hameenlinna.digitransit.fi', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '15': {'name': 'jyvaskyla.digitransit.fi', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '16': {'name': 'kuopio.digitransit.fi', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '17': {'name': 'lahti.digitransit.fi', 'router': ('waltti','finland'), 'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '18': {'name': 'lappeenranta.digitransit.fi', 'router': ('waltti','finland'), 'eps': 250, 'min_samples': 2, 'hits_percentile': 40},
+    '21': {'name': 'oulu.digitransit.fi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '29': {'name': 'kotka.digitransit.fi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '31': {'name': 'mikkeli.digitransit.fi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '35': {'name': 'tampere.digitransit.fi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '43': {'name': 'kouvola.digitransit.fi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
+    '49': {'name': 'rovaniemi.digitransit.fi', 'router': ('waltti','finland'),'eps': 100, 'min_samples': 2, 'hits_percentile': 50},
 }
 
 router_sites = {}
