@@ -85,6 +85,7 @@ The test computes a performance measurement ratio 100% * (#equally good routes /
 (parameter -l , default=95), the test exits with code 1. So, by default, test fails if 5% of routes have become significantly slower.
 
 By default, otpprofiler.py tries to fetch only one itinerary per request. It is possible to control the number of requested itineraries with parameter -i (default 1). When using parameter -i in compare.py, additional comparison of number of itineraries returned by OTP is done. Parameter -m adds a comparison of number of different modes (WALK, BICYCLE and CAR are only counted towards this number if they are the only mode(s) in some request) used in the different itineraries in each route. By default, the threshold for both additional comparisons is 1 but you can control the thresholds with -it (for itineraries) and -mt (for modes). You can also compare
-number of legs in the first itinerary by using -legs (and -legt to change the threshold, default is 1). If you want to know how some changes affect walking or cycling
+number of legs in the first itinerary by using -legs (and -legt to change the threshold, default is 1). Comparison of
+number of trips in the first itinerary is activated with -trips (and -tript to change the threshold, default is 1). If you want to know how some changes affect walking or cycling
 speeds, use -s (-st allows you to change the threshold, default 0.2 (m/s)). To evaluate if queries are faster/slower to execute, use -p (with -tt you can give threshold
 value for totaltime difference in ms and with -at average time threshold value in ms).
