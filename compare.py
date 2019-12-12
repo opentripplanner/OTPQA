@@ -83,6 +83,21 @@ def extractlegs(filename):
             num_legs[id_tuple] = response["itins"][0]["n_legs"]
     return num_legs
 
+def extracttrips(filename):
+    blob = json.load(open(filename))
+    dataset = dict([(response["id_tuple"], response) for response in blob["responses"]])
+
+    num_trips = {}
+
+    for id_tuple in dataset:
+        response = dataset[id_tuple]
+
+        if not "itins" in response or len(response["itins"]) == 0:
+            num_trips[id_tuple] = 0
+        else:
+            num_trips[id_tuple] = len(response["itins"][0]["trips"])
+    return num_trips
+
 
 def extractspeeds(filename):
     blob = json.load(open(filename))
@@ -170,6 +185,8 @@ def main(args):
     mode_threshold = args.pop('modethreshold')
     legs = args.pop('legs')
     leg_threshold = args.pop('legthreshold')
+    trips = args.pop('trips')
+    trip_threshold = args.pop('tripthreshold')
     speeds = args.pop('speeds')
     speed_threshold = args.pop('speedthreshold')
     performance = args.pop('performance')
@@ -207,12 +224,20 @@ def main(args):
         legs1 = extractlegs(fname1)
         legs2 = extractlegs(fname2)
 
+    trips1 = {}
+    trips2 = {}
+
+    if trips:
+        print("Detecting regressions with a trip number threshold of %d and test threshold %d " % (trip_threshold, limit))
+        trips1 = extracttrips(fname1)
+        trips2 = extracttrips(fname2)
+
     speeds1 = {}
     speeds2 = {}
 
     if speeds:
         print("Detecting regressions with a speed difference threshold of %d and test threshold %d " % (
-            leg_threshold, limit))
+            speed_threshold, limit))
         speeds1 = extractspeeds(fname1)
         speeds2 = extractspeeds(fname2)
 
@@ -239,6 +264,9 @@ def main(args):
 
     less_legs1 = 0
     less_legs2 = 0
+
+    less_trips1 = 0
+    less_trips2 = 0
 
     slower_walk1 = 0
     slower_walk2 = 0
@@ -318,6 +346,22 @@ def main(args):
                     less_legs1 += 1
                 elif l1 >= l2 + leg_threshold:
                     less_legs2 += 1
+                else:
+                    diffmsg = ""
+
+                if diffmsg:
+                    print(diffmsg)
+
+        if trips:
+            t1 = trips1[id]
+            t2 = trips2[id]
+
+            if t1 != t2:
+                diffmsg = "Test trips %s t1=%d t2=%d diff=%d" % (id, t1, t2, t2 - t1)
+                if t2 >= t1 + trip_threshold:
+                    less_trips1 += 1
+                elif t1 >= t2 + trip_threshold:
+                    less_trips2 += 1
                 else:
                     diffmsg = ""
 
@@ -431,6 +475,13 @@ def main(args):
         if rate < limit:
             print("Legs test failed, %d < %d" % (rate, limit))
             fail = True
+    if trips:
+        print("Routes that have less trips in %s: %d" % (fname1, less_trips1))
+        print("Routes that have less trips in %s: %d" % (fname2, less_trips2))
+        rate = int(100 * float(count + less_trips1 - less_trips2) / float(count))
+        if rate < limit:
+            print("Trips test failed, %d < %d" % (rate, limit))
+            fail = True
     if speeds:
         print("Routes that have slower walk in %s: %d" % (fname1, slower_walk1))
         print("Routes that have slower cycling in %s: %d" % (fname1, slower_bicycle1))
@@ -495,6 +546,10 @@ if __name__ == "__main__":
     parser.add_argument('-legs', '--legs', action='store_true',
                         default=False)  # compare number of legs in first initinerary
     parser.add_argument('-legt', '--legthreshold', type=int,
+                        default=1)  # Changes in number of legs less than this are ignored
+    parser.add_argument('-trips', '--trips', action='store_true',
+                        default=False)  # compare number of trips in first initinerary
+    parser.add_argument('-tript', '--tripthreshold', type=int,
                         default=1)  # Changes in number of legs less than this are ignored
     parser.add_argument('-s', '--speeds', action='store_true', default=False)  # compare bicycle and walk speeds in m/s
     parser.add_argument('-st', '--speedthreshold', type=float,
