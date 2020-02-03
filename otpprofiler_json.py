@@ -9,7 +9,7 @@ import json
 import hreport
 
 
-RATIO_LIMIT = 0.18
+RATIO_LIMIT = 0.1
 
 f = open('otpqa_router_requests.json')
 router_sites = json.load(f)
