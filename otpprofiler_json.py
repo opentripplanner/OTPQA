@@ -48,7 +48,7 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
             'fast': False,
             'profile': False,
             'host': router_url,
-            'itineraries': 1,
+            'itineraries': 2,
             'output': False,
             'modes': None
 
