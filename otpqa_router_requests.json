@@ -47110,7 +47110,7 @@
             "min_samples": 2
         }
     ],
-    "waltti": [
+    "waltti-alt": [
         {
             "name": "kotka.digitransit.fi",
             "eps": 100,
@@ -47118,6 +47118,7 @@
             "idsite": "29",
             "router": [
                 "waltti",
+                "waltti-alt",
                 "finland"
             ],
             "requests": {
@@ -48019,6 +48020,7 @@
             "idsite": "43",
             "router": [
                 "waltti",
+                "waltti-alt",
                 "finland"
             ],
             "requests": {
