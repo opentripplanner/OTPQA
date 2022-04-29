@@ -23,6 +23,10 @@ test_routers = set(router_sites.keys())
 if len(sys.argv) == 3:
     test_routers = set(sys.argv[2].split(','))
 
+skipped_sites = set()
+if len(sys.argv) == 4:
+    skipped_sites = set(sys.argv[3].split(','))
+
 print('TARGET OTP',OTP_URL)
 for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
     print(router)
@@ -34,6 +38,9 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
 
     f = open('otpqa_report_%s.html' % router, 'w+')
     for site in rsites:
+        if site['name'] in skipped_sites:
+            print("Skipping tests for " + site['name'])
+            continue
         print(site['name'])
         nfailed = 0
         nnone = 0
