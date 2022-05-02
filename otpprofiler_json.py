@@ -20,11 +20,11 @@ if len(sys.argv) >= 2:
     OTP_URL = sys.argv[1]
 
 test_routers = set(router_sites.keys())
-if len(sys.argv) == 3:
+if len(sys.argv) >= 3:
     test_routers = set(sys.argv[2].split(','))
 
 skipped_sites = set()
-if len(sys.argv) == 4:
+if len(sys.argv) >= 4:
     skipped_sites = set(sys.argv[3].split(','))
 
 print('TARGET OTP',OTP_URL)
