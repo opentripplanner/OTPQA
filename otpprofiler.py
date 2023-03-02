@@ -498,8 +498,8 @@ def run(connect_args, requests_json=None):
     def exception_handler(request, exception):
         raise exception
 
-    # Set max number of concurrent requests to 20, OTP should throttle this via worker threads
-    grequests.map(reqs, size=5, exception_handler=exception_handler)
+    # Set max number of concurrent requests to 8
+    grequests.map(reqs, size=8, exception_handler=exception_handler)
 
     # Write out all results at the end. Really, this should probably be done in streaming fashion.
 
