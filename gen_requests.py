@@ -18,7 +18,6 @@ def generateRequestsFromEndpoints(endpoints,TEST_ALL_MODES=True,random=False):
 
     if TEST_ALL_MODES:
         # (mode, walk, min)
-        # OTP clamps walk distance to max 15km
         modes = [ ("WALK,TRANSIT", 2000, "QUICK"), ("WALK,TRANSIT", 2000, "QUICK") ] # More WALK, TRANSIT
         modes.append( ("WALK", 5000, "QUICK") )
         modes.append( ("BICYCLE", 10000, "SAFE") )
