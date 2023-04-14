@@ -11,18 +11,16 @@ def generateRequestsFromEndpoints(endpoints,TEST_ALL_MODES=True,random=False):
     # view as a constrained product of all the other tables (probably eliminating the synthetic keys).
 
     # (time, arriveBy)
-    times = [ ("08:50:00", False ),
-              ("14:00:00", True ),
-              ("18:00:00", False),
-              ("23:45:00", True) ]
+    times = [ ("06:50:00", False ),
+              ("09:30:00", False ),
+              ("18:00:00", True ),
+              ("20:45:00", True ) ]
 
     if TEST_ALL_MODES:
         # (mode, walk, min)
-        # OTP clamps walk distance to max 15km
         modes = [ ("WALK,TRANSIT", 2000, "QUICK"), ("WALK,TRANSIT", 2000, "QUICK") ] # More WALK, TRANSIT
-        modes.append( ("BICYCLE,TRANSIT", 15000, "QUICK") )
-        modes.append( ("WALK", 15000, "QUICK") )
-        modes.append( ("BICYCLE", 15000, "SAFE") )
+        modes.append( ("WALK", 5000, "QUICK") )
+        modes.append( ("BICYCLE", 10000, "SAFE") )
     else:
         # (mode, walk, min)
         modes = [ ("WALK,TRANSIT", 2000, "QUICK") ]
