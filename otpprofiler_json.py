@@ -28,9 +28,11 @@ if len(sys.argv) >= 4:
     skipped_sites = set(sys.argv[3].split(','))
 
 print('TARGET OTP',OTP_URL)
-for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
-    print(router)
 
+for router in test_routers:
+  if router in router_sites:
+    rsites = router_sites[router]
+    print(router)
 
     router_url = OTP_URL
     if OTP_URL.find('%s') > -1:
@@ -62,7 +64,6 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
         }
         response_json = otpprofiler.run(params, requests_json=site['requests'])
 
-
         for r in response_json['responses']:
             if not 'itins' in r:
                 nfailed += 1
@@ -92,10 +93,6 @@ for router, rsites in ((tr, router_sites[tr]) for tr in test_routers):
             sys.exit(1)
 
     f.close()
-
-
-
-
 
 sys.exit(0)
 
